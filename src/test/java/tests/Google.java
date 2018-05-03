@@ -20,7 +20,7 @@ public class Google extends TestBase
         UserInterface.Action.visitUrl(GOOGLE_URL);
         UserInterface.Action.fillField(SEARCH_FIELD, "wetter");
         UserInterface.Verify.appeared(AUTO_COMPLETION_LIST_BOX);
-        UserInterface.Action.pressEscape(SEARCH_FIELD);
+        UserInterface.Action.pressEscape();
         UserInterface.Action.clickElement(SEARCH_BUTTON);
     }
 }

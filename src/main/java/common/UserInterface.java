@@ -21,6 +21,8 @@ public final class UserInterface
     private final static int STANDARD_TIMEOUT_IN_SECONDS = 10;
     private final static int INTERVALL_IN_MILLISECONDS = 200;
     
+    private final static By ANY_ELEMENT = By.xpath("//*");
+    
     private UserInterface()
     {
         
@@ -78,14 +80,14 @@ public final class UserInterface
             throw new UnsupportedOperationException();
         }
         
-        public static void pressEnter(By location)
+        public static void pressEnter()
         {
-            Helper.pressKey(location, Keys.ENTER);
+            Helper.pressKey(Keys.ENTER);
         }
         
-        public static void pressEscape(By location)
+        public static void pressEscape()
         {
-            Helper.pressKey(location, Keys.ESCAPE);
+            Helper.pressKey(Keys.ESCAPE);
         }
         
         public static void reloadPage()
@@ -303,9 +305,9 @@ public final class UserInterface
     
     private static class Helper
     {
-        public static void pressKey(By location, Keys key)
+        public static void pressKey(Keys key)
         {
-            Helper.getWebElement(location).sendKeys(key);
+            getWebElement(ANY_ELEMENT).sendKeys(key);
         }
 
         public static WebElement getWebElement(By location)
