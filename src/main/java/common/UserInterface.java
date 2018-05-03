@@ -1,19 +1,25 @@
 package common;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public final class UserInterface
 {
     private static WebDriver driver;
-    private static WebDriverWait wait;
+    private static FluentWait<WebDriver> wait;
+    
+    private final static int STANDARD_TIMEOUT_IN_SECONDS = 10;
+    private final static int INTERVALL_IN_MILLISECONDS = 200;
     
     private UserInterface()
     {
@@ -24,7 +30,7 @@ public final class UserInterface
     {
         public static <T> void fillField(By location, T value)
         {
-            throw new UnsupportedOperationException();
+            Helper.getWebElement(location).sendKeys(String.valueOf(value));
         }
         
         public static void clickElement(By location)
@@ -104,7 +110,7 @@ public final class UserInterface
     {
         public static void appeared(By location)
         {
-            throw new UnsupportedOperationException();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(location));
         }
         
         public static void appeared(By location, String value)
@@ -288,18 +294,23 @@ public final class UserInterface
             throw new UnsupportedOperationException();
         }
         
-        public static void setup(WebDriver driver, WebDriverWait wait)
+        public static void setup(WebDriver driver)
         {
             UserInterface.driver = driver;
-            UserInterface.wait = wait;
+            UserInterface.wait = new WebDriverWait(driver, STANDARD_TIMEOUT_IN_SECONDS).pollingEvery(INTERVALL_IN_MILLISECONDS, TimeUnit.MILLISECONDS);
         }
     }
     
     private static class Helper
     {
-        public static void pressKey(By location, Keys enter)
+        public static void pressKey(By location, Keys key)
         {
-            throw new UnsupportedOperationException();
+            Helper.getWebElement(location).sendKeys(key);
+        }
+
+        public static WebElement getWebElement(By location)
+        {
+            return wait.until(ExpectedConditions.visibilityOfElementLocated(location));
         }
     }
 }
