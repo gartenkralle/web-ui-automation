@@ -1,0 +1,25 @@
+package tests;
+
+import org.junit.Test;
+import org.openqa.selenium.By;
+
+import common.UserInterface;
+import common.TestBase;
+
+public class Google extends TestBase
+{
+    private final static String GOOGLE_URL = "https://www.google.com";
+    
+    private final static By SEARCH_FIELD = By.xpath("//input[@id='lst-ib']");
+    private final static By AUTO_COMPLETION_LIST_BOX = By.xpath("//*[@id=\"sbtc\"]/div[2][not(contains(@style,'none'))]");
+    
+    @Test
+    public void weatherSearch()
+    {
+        UserInterface.Action.visitUrl(GOOGLE_URL);
+        UserInterface.Action.fillField(SEARCH_FIELD, "wetter");
+        UserInterface.Verify.appeared(AUTO_COMPLETION_LIST_BOX);
+        UserInterface.Action.pressEscape(SEARCH_FIELD);
+        UserInterface.Verify.disappeared(AUTO_COMPLETION_LIST_BOX);
+    }
+}
