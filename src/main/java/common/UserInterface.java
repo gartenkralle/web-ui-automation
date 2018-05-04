@@ -68,7 +68,12 @@ public final class UserInterface
             throw new UnsupportedOperationException();
         }
         
-        public static void moveMouse(By location)
+        public static void moveSlider(By location, float percent) 
+        {
+            throw new UnsupportedOperationException();
+        }
+        
+        public static void mouseOver(By location)
         {
             throw new UnsupportedOperationException();
         }
