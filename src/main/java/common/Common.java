@@ -1,6 +1,6 @@
 package common;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 import java.util.function.Function;
 
 import org.junit.Assert;
@@ -87,7 +87,7 @@ final class Common
         public static void setup(WebDriver driver)
         {
             Common.driver = driver;
-            Common.wait = new WebDriverWait(driver, STANDARD_TIMEOUT_IN_SECONDS).pollingEvery(INTERVALL_IN_MILLISECONDS, TimeUnit.MILLISECONDS);
+            Common.wait = new WebDriverWait(driver, STANDARD_TIMEOUT_IN_SECONDS).pollingEvery(Duration.ofMillis(INTERVALL_IN_MILLISECONDS));
         }
     }
     
