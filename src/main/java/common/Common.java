@@ -122,5 +122,4 @@ final class Common
         
         return result;
     }
-
 }
