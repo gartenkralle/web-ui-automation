@@ -1,26 +1,12 @@
 package common;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public final class UserInterface
 {
-    private static WebDriver driver;
-    private static FluentWait<WebDriver> wait;
-    
-    private final static int STANDARD_TIMEOUT_IN_SECONDS = 10;
-    private final static int INTERVALL_IN_MILLISECONDS = 200;
-    
-    private final static By ANY_ELEMENT = By.xpath("//*");
-    
     private UserInterface()
     {
         
@@ -28,14 +14,19 @@ public final class UserInterface
     
     public static class Action
     {
+        private Action()
+        {
+            
+        }
+        
         public static <T> void fillField(By location, T value)
         {
-            Helper.getWebElement(location).sendKeys(String.valueOf(value));
+            Common.Action.fillField(location, value);
         }
         
         public static void clickElement(By location)
         {
-            wait.until(ExpectedConditions.elementToBeClickable(location)).click();
+            Common.Action.clickElement(location);
         }
         
         public static void clickElement(By location, String linkText)
@@ -85,12 +76,12 @@ public final class UserInterface
         
         public static void pressEnter()
         {
-            Helper.pressKey(Keys.ENTER);
+            Common.Action.pressKey(Keys.ENTER);
         }
         
         public static void pressEscape()
         {
-            Helper.pressKey(Keys.ESCAPE);
+            Common.Action.pressKey(Keys.ESCAPE);
         }
         
         public static void reloadPage()
@@ -100,15 +91,20 @@ public final class UserInterface
         
         public static void visitUrl(String url)
         {
-            driver.get(url);
+            Common.Action.visitUrl(url);
         }
     }
     
     public static class Verify
     {
+        private Verify()
+        {
+            
+        }
+        
         public static void appeared(By location)
         {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(location));
+            Common.Verify.appeared(location);
         }
         
         public static void appeared(By location, String value)
@@ -224,6 +220,11 @@ public final class UserInterface
     
     public static class DataReceive
     {
+        private DataReceive()
+        {
+            
+        }
+        
         public static int getCount(By location)
         {
             throw new UnsupportedOperationException();
@@ -282,6 +283,11 @@ public final class UserInterface
     
     public static class Setting
     {
+        private Setting()
+        {
+            
+        }
+        
         public static void setTimeout(int seconds)
         {
             throw new UnsupportedOperationException();
@@ -290,25 +296,6 @@ public final class UserInterface
         public static void resetTimeout()
         {
             throw new UnsupportedOperationException();
-        }
-        
-        public static void setup(WebDriver driver)
-        {
-            UserInterface.driver = driver;
-            UserInterface.wait = new WebDriverWait(driver, STANDARD_TIMEOUT_IN_SECONDS).pollingEvery(INTERVALL_IN_MILLISECONDS, TimeUnit.MILLISECONDS);
-        }
-    }
-    
-    private static class Helper
-    {
-        public static void pressKey(Keys key)
-        {
-            getWebElement(ANY_ELEMENT).sendKeys(key);
-        }
-
-        public static WebElement getWebElement(By location)
-        {
-            return wait.until(ExpectedConditions.visibilityOfElementLocated(location));
         }
     }
 }

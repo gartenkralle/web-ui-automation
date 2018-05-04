@@ -16,7 +16,7 @@ final class Driver
     {
         driver = new ChromeDriver();
         
-        UserInterface.Setting.setup(driver);
+        Common.Setting.setup(driver);
     }
     
     public static void quit()
