@@ -47,8 +47,7 @@ final class Common
         
         public static <T> void fillField(By location, T value)
         {
-            String s = String.valueOf(value);
-            sendKeys(location, s);
+            sendKeys(location, String.valueOf(value));
         }
         
         public static void clickElement(By location)
