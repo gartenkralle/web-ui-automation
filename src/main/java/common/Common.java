@@ -1,9 +1,12 @@
 package common;
 
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -96,12 +99,28 @@ final class Common
         
     private static WebElement getVisibleWebElement(By location)
     {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(location));
+        return handleTimeout(wait::until, ExpectedConditions.visibilityOfElementLocated(location));
     }
     
     private static WebElement getClickableWebElement(By location)
     {
-        return wait.until(ExpectedConditions.elementToBeClickable(location));
+        return handleTimeout(wait::until, ExpectedConditions.elementToBeClickable(location));
+    }
+    
+    private static <T1, R> R handleTimeout(Function<T1, R> functionPointer, T1 by)
+    {
+        R result = null;
+        
+        try
+        {
+            result = functionPointer.apply(by);
+        }
+        catch(TimeoutException e)
+        {
+            Assert.fail();;
+        }
+        
+        return result;
     }
 
 }
