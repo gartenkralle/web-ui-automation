@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.unitils.reflectionassert.ReflectionAssert;
 
 final class Common
 {
@@ -66,6 +67,11 @@ final class Common
         public static void appeared(By location)
         {
             getVisibleWebElement(location);
+        }
+
+        public static <T> void equals(T expectedValue, T actualValue)
+        {
+            ReflectionAssert.assertReflectionEquals(expectedValue, actualValue);
         }
     }
     

@@ -164,7 +164,7 @@ public final class UserInterface
         
         public static <T> void equals(T expectedValue, T actualValue)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.equals(expectedValue, actualValue);
         }
         
         public static <T> void notEquals(T expectedValue, T actualValue)
