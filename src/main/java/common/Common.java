@@ -117,7 +117,7 @@ final class Common
         }
         catch(TimeoutException e)
         {
-            Assert.fail();;
+            Assert.fail(System.lineSeparator() + "Timeout: " + by.toString());;
         }
         
         return result;
