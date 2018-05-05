@@ -26,7 +26,7 @@ final class Common
     private final static int STANDARD_TIMEOUT_IN_SECONDS = 10;
     private final static int INTERVALL_IN_MILLISECONDS = 200;
     
-    private final static By ANY_ELEMENT = By.xpath("//*");
+    private final static By ANY_ELEMENT = By.xpath(StringCollection.XPath.ANY_ELEMENT);
     
     private Common()
     {
@@ -152,6 +152,6 @@ final class Common
     
     private static <T> void errorMessage(T arg1)
     {
-        Assert.fail(System.lineSeparator() + "Timeout: " + arg1.toString());;
+        Assert.fail(System.lineSeparator() + StringCollection.Error.TIMEOUT_HEADER + arg1.toString());;
     }
 }
