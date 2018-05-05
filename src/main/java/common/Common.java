@@ -1,6 +1,8 @@
 package common;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.junit.Assert;
@@ -8,7 +10,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriver.Timeouts;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -38,7 +42,7 @@ final class Common
         
         public static void visitUrl(String url)
         {
-            driver.get(url);
+            handleTimeout((Consumer<String>)driver::get, url);
         }
         
         public static void pressKey(Keys key)
@@ -93,6 +97,12 @@ final class Common
         public static void setup(WebDriver driver)
         {
             Common.driver = driver;
+            
+            Timeouts timeouts = driver.manage().timeouts();
+            
+            timeouts.implicitlyWait(STANDARD_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS);
+            timeouts.pageLoadTimeout(STANDARD_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS);
+            
             Common.wait = new WebDriverWait(driver, STANDARD_TIMEOUT_IN_SECONDS).pollingEvery(Duration.ofMillis(INTERVALL_IN_MILLISECONDS));
         }
     }
@@ -104,27 +114,39 @@ final class Common
         
     private static WebElement getVisibleWebElement(By location)
     {
-        return handleTimeout(wait::until, ExpectedConditions.visibilityOfElementLocated(location));
+        return handleTimeout((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, ExpectedConditions.visibilityOfElementLocated(location));
     }
     
     private static WebElement getClickableWebElement(By location)
     {
-        return handleTimeout(wait::until, ExpectedConditions.elementToBeClickable(location));
+        return handleTimeout((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, ExpectedConditions.elementToBeClickable(location));
     }
     
-    private static <T1, R> R handleTimeout(Function<T1, R> functionPointer, T1 by)
+    private static <T1, R> R handleTimeout(Function<T1, R> functionPointer, T1 arg1)
     {
         R result = null;
         
         try
         {
-            result = functionPointer.apply(by);
+            result = functionPointer.apply(arg1);
         }
         catch(TimeoutException e)
         {
-            Assert.fail(System.lineSeparator() + "Timeout: " + by.toString());;
+            Assert.fail(System.lineSeparator() + "Timeout: " + arg1.toString());;
         }
         
         return result;
+    }
+    
+    private static <T> void handleTimeout(Consumer<T> functionPointer, T arg1)
+    {
+        try
+        {
+            functionPointer.accept(arg1);
+        }
+        catch(TimeoutException e)
+        {
+            Assert.fail(System.lineSeparator() + "Timeout: " + arg1.toString());;
+        }
     }
 }
