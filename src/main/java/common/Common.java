@@ -132,7 +132,7 @@ final class Common
         }
         catch(TimeoutException e)
         {
-            Assert.fail(System.lineSeparator() + "Timeout: " + arg1.toString());;
+            errorMessage(arg1);
         }
         
         return result;
@@ -146,7 +146,12 @@ final class Common
         }
         catch(TimeoutException e)
         {
-            Assert.fail(System.lineSeparator() + "Timeout: " + arg1.toString());;
+            errorMessage(arg1);
         }
+    }
+    
+    private static <T> void errorMessage(T arg1)
+    {
+        Assert.fail(System.lineSeparator() + "Timeout: " + arg1.toString());;
     }
 }
