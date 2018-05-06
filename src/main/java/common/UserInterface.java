@@ -29,11 +29,6 @@ public final class UserInterface
             Common.Action.clickElement(location);
         }
         
-        public static void clickElement(By location, String linkText)
-        {
-            throw new UnsupportedOperationException();
-        }
-        
         public static void clickRadioButton(By location)
         {
             Common.Action.clickRadioButton(location);
@@ -69,11 +64,6 @@ public final class UserInterface
             throw new UnsupportedOperationException();
         }
         
-        public static void openNewTab()
-        {
-            throw new UnsupportedOperationException();
-        }
-        
         public static void pressEnter()
         {
             Common.Action.pressKey(Keys.ENTER);
@@ -94,11 +84,6 @@ public final class UserInterface
             Common.Action.selectFrame(iframeNameOrId);
         }
         
-        public static void reloadPage()
-        {
-            throw new UnsupportedOperationException();
-        }
-        
         public static void visitUrl(String url)
         {
             Common.Action.visitUrl(url);
@@ -117,19 +102,9 @@ public final class UserInterface
             Common.Verify.appeared(location);
         }
         
-        public static void appeared(By location, String value)
-        {
-            throw new UnsupportedOperationException();
-        }
-        
-        public static void appeared(By location, List<String> values)
-        {
-            throw new UnsupportedOperationException();
-        }
-        
         public static void available(By location)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.available(location);
         }
         
         public static void available(By location, String expectedValue)
@@ -138,11 +113,6 @@ public final class UserInterface
         }
         
         public static void disappeared(By location)
-        {
-            throw new UnsupportedOperationException();
-        }
-        
-        public static void disappeared(By location, String value)
         {
             throw new UnsupportedOperationException();
         }

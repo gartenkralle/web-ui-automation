@@ -112,6 +112,11 @@ final class Common
         {
             equals(url, driver.getCurrentUrl());
         }
+
+        public static void available(By location)
+        {
+            getPresentWebElement(location);
+        }
     }
     
     public static class DataReceive
@@ -161,6 +166,11 @@ final class Common
     {
         Select select =  handleException(Common::getSelect, Common::getUnexpectedTagNameMessage, Common.getClickableWebElement(location));
         handleException(select::selectByVisibleText, Common::getNoSuchElementMessage, item);
+    }
+    
+    private static WebElement getPresentWebElement(By location)
+    {
+        return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.presenceOfElementLocated(location));
     }
     
     private static WebElement getVisibleWebElement(By location)
