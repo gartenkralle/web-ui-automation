@@ -64,6 +64,16 @@ final class Common
         {
             Common.chooseDropDownItem(location, item);
         }
+
+        public static void selectDefaultFrame()
+        {
+            Common.selectDefaultFrame();
+        }
+        
+        public static void selectFrame(String iframeNameOrId)
+        {
+            Common.selectFrame(iframeNameOrId);
+        }
     }
     
     public static class Verify
@@ -132,15 +142,20 @@ final class Common
         handleException((Consumer<String>)driver::get, Common::getTimeoutMessage, url);
     }
     
+    private static void selectDefaultFrame()
+    {
+        driver.switchTo().defaultContent();
+    }
+    
+    private static void selectFrame(String iframeNameOrId)
+    {
+        handleException((Function<ExpectedCondition<WebDriver>, WebDriver>)wait::until, Common::getTimeoutMessage, ExpectedConditions.frameToBeAvailableAndSwitchToIt(iframeNameOrId));
+    }
+
     private static void chooseDropDownItem(By location, String item)
     {
         Select select =  handleException(Common::getSelect, Common::getUnexpectedTagNameMessage, Common.getClickableWebElement(location));
         handleException(select::selectByVisibleText, Common::getNoSuchElementMessage, item);
-    }
-    
-    private static Select getSelect(WebElement webElement)
-    {
-        return new Select(webElement);
     }
     
     private static WebElement getVisibleWebElement(By location)
@@ -151,6 +166,11 @@ final class Common
     private static WebElement getClickableWebElement(By location)
     {
         return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeClickable(location));
+    }
+    
+    private static Select getSelect(WebElement webElement)
+    {
+        return new Select(webElement);
     }
     
     private static <T1, R> R handleException(Function<T1, R> executeFunction, Function<T1, String> exceptionMessageFunction, T1 arg1)

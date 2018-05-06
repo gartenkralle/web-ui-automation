@@ -84,6 +84,16 @@ public final class UserInterface
             Common.Action.pressKey(Keys.ESCAPE);
         }
         
+        public static void selectDefaultFrame()
+        {
+            Common.Action.selectDefaultFrame();
+        }
+        
+        public static void selectFrame(String iframeNameOrId)
+        {
+            Common.Action.selectFrame(iframeNameOrId);
+        }
+        
         public static void reloadPage()
         {
             throw new UnsupportedOperationException();
