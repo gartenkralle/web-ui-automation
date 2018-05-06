@@ -46,7 +46,7 @@ public final class UserInterface
         
         public static void chooseDropDownItem(By location, String item)
         {
-            throw new UnsupportedOperationException();
+            Common.Action.chooseDropDownItem(location, item);
         }
         
         public static void uncheckCheckbox(By location)

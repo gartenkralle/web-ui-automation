@@ -25,5 +25,7 @@ public class StringCollection
         }
         
         public static final String TIMEOUT_HEADER = "Timeout: ";
+        public static final String UNEXPECTED_TAG_NAME_HEADER = "Unexpected tag name: ";
+        public static final String NO_SUCH_ELEMENT_HEADER = "No such element: ";
     }
 }

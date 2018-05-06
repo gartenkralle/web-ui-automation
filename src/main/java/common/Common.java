@@ -14,6 +14,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.unitils.reflectionassert.ReflectionAssert;
 
@@ -57,6 +58,11 @@ final class Common
         public static void clickElement(By location)
         {
             Common.getClickableWebElement(location).click();
+        }
+
+        public static void chooseDropDownItem(By location, String item)
+        {
+            Common.chooseDropDownItem(location, item);
         }
     }
     
@@ -125,7 +131,18 @@ final class Common
     {
         handleException((Consumer<String>)driver::get, Common::getTimeoutMessage, url);
     }
-
+    
+    private static void chooseDropDownItem(By location, String item)
+    {
+        Select select =  handleException(Common::getSelect, Common::getUnexpectedTagNameMessage, Common.getClickableWebElement(location));
+        handleException(select::selectByVisibleText, Common::getNoSuchElementMessage, item);
+    }
+    
+    private static Select getSelect(WebElement webElement)
+    {
+        return new Select(webElement);
+    }
+    
     private static WebElement getVisibleWebElement(By location)
     {
         return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.visibilityOfElementLocated(location));
@@ -167,6 +184,16 @@ final class Common
     private static <T> String getTimeoutMessage(T arg1)
     {
         return getMessage(StringCollection.Error.TIMEOUT_HEADER, arg1.toString());
+    }
+    
+    private static <T> String getUnexpectedTagNameMessage(T arg1)
+    {
+        return getMessage(StringCollection.Error.UNEXPECTED_TAG_NAME_HEADER, arg1.toString());
+    }
+    
+    private static <T> String getNoSuchElementMessage(T arg1)
+    {
+        return getMessage(StringCollection.Error.NO_SUCH_ELEMENT_HEADER, arg1.toString());
     }
     
     private static String getMessage(String header, String content)
