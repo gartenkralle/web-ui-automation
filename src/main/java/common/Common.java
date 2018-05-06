@@ -45,11 +45,6 @@ final class Common
             Common.visitUrl(url);
         }
         
-        public static void pressKey(Keys key)
-        {
-            Common.getVisibleWebElement(ANY_ELEMENT).sendKeys(key);
-        }
-        
         public static <T> void fillField(By location, T value)
         {
             Common.getVisibleWebElement(location).sendKeys(String.valueOf(value));
@@ -59,12 +54,12 @@ final class Common
         {
             Common.getClickableWebElement(location).click();
         }
-
+        
         public static void chooseDropDownItem(By location, String item)
         {
             Common.chooseDropDownItem(location, item);
         }
-
+        
         public static void selectDefaultFrame()
         {
             Common.selectDefaultFrame();
@@ -74,10 +69,20 @@ final class Common
         {
             Common.selectFrame(iframeNameOrId);
         }
-
+        
         public static void clickRadioButton(By location)
         {
             Common.getClickableWebElement(location).click();
+        }
+        
+        public static void pressEnter()
+        {
+            pressKey(Keys.ENTER);
+        }
+        
+        public static void pressEscape()
+        {
+            pressKey(Keys.ESCAPE);
         }
     }
     
@@ -90,32 +95,37 @@ final class Common
         
         public static void appeared(By location)
         {
-            getVisibleWebElement(location);
+            Common.getVisibleWebElement(location);
         }
-
+        
+        public static void available(By location)
+        {
+            Common.getPresentWebElement(location);
+        }
+        
         public static <T> void equals(T expectedValue, T actualValue)
         {
-            ReflectionAssert.assertReflectionEquals(expectedValue, actualValue);
+            Common.equals(expectedValue, actualValue);
         }
         
         public static void _true(boolean condition)
         {
-            equals(true, condition);
+            Common.equals(true, condition);
         }
         
         public static void _false(boolean condition)
         {
-            equals(false, condition);
+            Common.equals(false, condition);
         }
         
         public static void url(String url)
         {
-            equals(url, driver.getCurrentUrl());
+            Common.equals(url, driver.getCurrentUrl());
         }
-
-        public static void available(By location)
+        
+        public static void contains(String containmentValue, String actualValue)
         {
-            getPresentWebElement(location);
+            Common.contains(containmentValue, actualValue);
         }
     }
     
@@ -145,6 +155,24 @@ final class Common
             
             Common.wait = new WebDriverWait(driver, STANDARD_TIMEOUT_IN_SECONDS).pollingEvery(Duration.ofMillis(INTERVALL_IN_MILLISECONDS));
         }
+    }
+    
+    private static void pressKey(Keys key)
+    {
+        getVisibleWebElement(ANY_ELEMENT).sendKeys(key);
+    }
+    
+    private static void contains(String containment, String actualValue) 
+    {
+        if(!actualValue.contains(containment))
+        {
+            errorMessage(getNotContainsMessage(containment, actualValue));
+        }
+    }
+    
+    private static <T> void equals(T expectedValue, T actualValue)
+    {
+        ReflectionAssert.assertReflectionEquals(expectedValue, actualValue);
     }
     
     private static void visitUrl(String url)
@@ -188,47 +216,52 @@ final class Common
         return new Select(webElement);
     }
     
-    private static <T1, R> R handleException(Function<T1, R> executeFunction, Function<T1, String> exceptionMessageFunction, T1 arg1)
+    private static <T, R> R handleException(Function<T, R> executeFunction, Function<T, String> exceptionMessageFunction, T arg)
     {
         R result = null;
         
         try
         {
-            result = executeFunction.apply(arg1);
+            result = executeFunction.apply(arg);
         }
         catch(RuntimeException e)
         {
-            errorMessage(exceptionMessageFunction.apply(arg1));
+            errorMessage(exceptionMessageFunction.apply(arg));
         }
         
         return result;
     }
     
-    private static <T> void handleException(Consumer<T> executeFunction, Function<T, String> exceptionMessageFunction, T arg1)
+    private static <T> void handleException(Consumer<T> executeFunction, Function<T, String> exceptionMessageFunction, T arg)
     {
         try
         {
-            executeFunction.accept(arg1);
+            executeFunction.accept(arg);
         }
         catch(RuntimeException e)
         {
-            errorMessage(exceptionMessageFunction.apply(arg1));
+            errorMessage(exceptionMessageFunction.apply(arg));
         }
     }
     
-    private static <T> String getTimeoutMessage(T arg1)
+    private static <T> String getNotContainsMessage(T containmentValue, T actualValue)
     {
-        return getMessage(StringCollection.Error.TIMEOUT_HEADER, arg1.toString());
+        return getMessage(StringCollection.Error.NOT_CONTAINS_HEADER, StringCollection.Identifier.ACTUAL_VALUE + actualValue.toString() + System.lineSeparator() + StringCollection.Identifier.CONTAINMENT_VALUE + containmentValue);
     }
     
-    private static <T> String getUnexpectedTagNameMessage(T arg1)
+    private static <T> String getTimeoutMessage(T arg)
     {
-        return getMessage(StringCollection.Error.UNEXPECTED_TAG_NAME_HEADER, arg1.toString());
+        return getMessage(StringCollection.Error.TIMEOUT_HEADER, arg.toString());
     }
     
-    private static <T> String getNoSuchElementMessage(T arg1)
+    private static <T> String getUnexpectedTagNameMessage(T arg)
     {
-        return getMessage(StringCollection.Error.NO_SUCH_ELEMENT_HEADER, arg1.toString());
+        return getMessage(StringCollection.Error.UNEXPECTED_TAG_NAME_HEADER, arg.toString());
+    }
+    
+    private static <T> String getNoSuchElementMessage(T arg)
+    {
+        return getMessage(StringCollection.Error.NO_SUCH_ELEMENT_HEADER, arg.toString());
     }
     
     private static String getMessage(String header, String content)

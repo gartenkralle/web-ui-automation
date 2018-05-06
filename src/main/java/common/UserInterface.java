@@ -3,7 +3,6 @@ package common;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 
 public final class UserInterface
 {
@@ -66,12 +65,12 @@ public final class UserInterface
         
         public static void pressEnter()
         {
-            Common.Action.pressKey(Keys.ENTER);
+            Common.Action.pressEnter();
         }
         
         public static void pressEscape()
         {
-            Common.Action.pressKey(Keys.ESCAPE);
+            Common.Action.pressEscape();
         }
         
         public static void selectDefaultFrame()
@@ -105,11 +104,6 @@ public final class UserInterface
         public static void available(By location)
         {
             Common.Verify.available(location);
-        }
-        
-        public static void available(By location, String expectedValue)
-        {
-            throw new UnsupportedOperationException();
         }
         
         public static void disappeared(By location)
@@ -152,9 +146,9 @@ public final class UserInterface
             throw new UnsupportedOperationException();
         }
         
-        public static void contains(String containment, String baseString)
+        public static void contains(String containment, String actualValue)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.contains(containment, actualValue);
         }
         
         public static void contains(String expectedValue, List<String> actualValues)
