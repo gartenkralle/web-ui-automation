@@ -80,18 +80,12 @@ final class Common
         
         public static void _true(boolean condition)
         {
-            if(!condition)
-            {
-                errorMessage(getConditionMessage(condition));
-            }
+            equals(true, condition);
         }
         
         public static void _false(boolean condition)
         {
-            if(condition)
-            {
-                errorMessage(getConditionMessage(condition));
-            }
+            equals(false, condition);
         }
         
         public static void url(String url)
@@ -174,11 +168,6 @@ final class Common
     private static <T> String getTimeoutMessage(T arg1)
     {
         return System.lineSeparator() + StringCollection.Error.TIMEOUT_HEADER + arg1.toString();
-    }
-    
-    private static String getConditionMessage(boolean condition)
-    {
-        return System.lineSeparator() + "Condition is '" + condition + "' but should be '" + !condition + "'";
     }
     
     private static void errorMessage(String errorMessage)
