@@ -209,12 +209,12 @@ public final class UserInterface
         
         public static void _true(boolean condition)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify._true(condition);
         }
         
         public static void _false(boolean condition)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify._false(condition);
         }
     }
     

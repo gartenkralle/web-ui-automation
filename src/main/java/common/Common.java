@@ -42,22 +42,22 @@ final class Common
         
         public static void visitUrl(String url)
         {
-            handleTimeout((Consumer<String>)driver::get, url);
+            Common.visitUrl(url);
         }
         
         public static void pressKey(Keys key)
         {
-            sendKeys(ANY_ELEMENT, key);
+            Common.getVisibleWebElement(ANY_ELEMENT).sendKeys(key);
         }
         
         public static <T> void fillField(By location, T value)
         {
-            sendKeys(location, String.valueOf(value));
+            Common.getVisibleWebElement(location).sendKeys(String.valueOf(value));
         }
         
         public static void clickElement(By location)
         {
-            getClickableWebElement(location).click();
+            Common.getClickableWebElement(location).click();
         }
     }
     
@@ -76,6 +76,22 @@ final class Common
         public static <T> void equals(T expectedValue, T actualValue)
         {
             ReflectionAssert.assertReflectionEquals(expectedValue, actualValue);
+        }
+        
+        public static void _true(boolean condition)
+        {
+            if(!condition)
+            {
+                errorMessage(getConditionMessage(condition));
+            }
+        }
+        
+        public static void _false(boolean condition)
+        {
+            if(condition)
+            {
+                errorMessage(getConditionMessage(condition));
+            }
         }
     }
     
@@ -107,11 +123,11 @@ final class Common
         }
     }
     
-    private static void sendKeys(By location, CharSequence charSequence)
+    private static void visitUrl(String url)
     {
-        getVisibleWebElement(location).sendKeys(charSequence);
+        handleTimeout((Consumer<String>)driver::get, url);
     }
-        
+    
     private static WebElement getVisibleWebElement(By location)
     {
         return handleTimeout((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, ExpectedConditions.visibilityOfElementLocated(location));
@@ -132,7 +148,7 @@ final class Common
         }
         catch(TimeoutException e)
         {
-            errorMessage(arg1);
+            errorMessage(getTimeoutMessage(arg1));
         }
         
         return result;
@@ -146,12 +162,22 @@ final class Common
         }
         catch(TimeoutException e)
         {
-            errorMessage(arg1);
+            errorMessage(getTimeoutMessage(arg1));
         }
     }
     
-    private static <T> void errorMessage(T arg1)
+    private static <T> String getTimeoutMessage(T arg1)
     {
-        Assert.fail(System.lineSeparator() + StringCollection.Error.TIMEOUT_HEADER + arg1.toString());;
+        return System.lineSeparator() + StringCollection.Error.TIMEOUT_HEADER + arg1.toString();
+    }
+    
+    private static String getConditionMessage(boolean condition)
+    {
+        return System.lineSeparator() + "Condition is '" + condition + "' but should be '" + !condition + "'";
+    }
+    
+    private static void errorMessage(String errorMessage)
+    {
+        Assert.fail(errorMessage);
     }
 }
