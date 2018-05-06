@@ -13,7 +13,7 @@ import common.TestBase;
 
 public class Google extends TestBase
 {
-    private final static String GOOGLE_URL = "https://www.google.com";
+    private final static String GOOGLE_URL = "https://www.google.com/";
     
     private final static By SEARCH_FIELD = By.xpath("//input[@id='lst-ib']");
     private final static By AUTO_COMPLETION_LIST_BOX = By.xpath("//*[@id='sbtc']/div[2][not(contains(@style,'none'))]");

@@ -93,6 +93,11 @@ final class Common
                 errorMessage(getConditionMessage(condition));
             }
         }
+        
+        public static void url(String url)
+        {
+            equals(url, driver.getCurrentUrl());
+        }
     }
     
     public static class DataReceive

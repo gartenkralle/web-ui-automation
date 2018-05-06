@@ -159,7 +159,7 @@ public final class UserInterface
         
         public static void url(String url)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.url(url);
         }
         
         public static <T> void equals(T expectedValue, T actualValue)
