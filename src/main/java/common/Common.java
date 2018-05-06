@@ -8,7 +8,6 @@ import java.util.function.Function;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Timeouts;
 import org.openqa.selenium.WebElement;
@@ -124,50 +123,55 @@ final class Common
     
     private static void visitUrl(String url)
     {
-        handleTimeout((Consumer<String>)driver::get, url);
+        handleException((Consumer<String>)driver::get, Common::getTimeoutMessage, url);
     }
-    
+
     private static WebElement getVisibleWebElement(By location)
     {
-        return handleTimeout((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, ExpectedConditions.visibilityOfElementLocated(location));
+        return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.visibilityOfElementLocated(location));
     }
     
     private static WebElement getClickableWebElement(By location)
     {
-        return handleTimeout((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, ExpectedConditions.elementToBeClickable(location));
+        return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeClickable(location));
     }
     
-    private static <T1, R> R handleTimeout(Function<T1, R> functionPointer, T1 arg1)
+    private static <T1, R> R handleException(Function<T1, R> executeFunction, Function<T1, String> exceptionMessageFunction, T1 arg1)
     {
         R result = null;
         
         try
         {
-            result = functionPointer.apply(arg1);
+            result = executeFunction.apply(arg1);
         }
-        catch(TimeoutException e)
+        catch(RuntimeException e)
         {
-            errorMessage(getTimeoutMessage(arg1));
+            errorMessage(exceptionMessageFunction.apply(arg1));
         }
         
         return result;
     }
     
-    private static <T> void handleTimeout(Consumer<T> functionPointer, T arg1)
+    private static <T> void handleException(Consumer<T> executeFunction, Function<T, String> exceptionMessageFunction, T arg1)
     {
         try
         {
-            functionPointer.accept(arg1);
+            executeFunction.accept(arg1);
         }
-        catch(TimeoutException e)
+        catch(RuntimeException e)
         {
-            errorMessage(getTimeoutMessage(arg1));
+            errorMessage(exceptionMessageFunction.apply(arg1));
         }
     }
     
     private static <T> String getTimeoutMessage(T arg1)
     {
-        return System.lineSeparator() + StringCollection.Error.TIMEOUT_HEADER + arg1.toString();
+        return getMessage(StringCollection.Error.TIMEOUT_HEADER, arg1.toString());
+    }
+    
+    private static String getMessage(String header, String content)
+    {
+        return System.lineSeparator() + header + content;
     }
     
     private static void errorMessage(String errorMessage)
