@@ -74,6 +74,11 @@ final class Common
         {
             Common.selectFrame(iframeNameOrId);
         }
+
+        public static void clickRadioButton(By location)
+        {
+            Common.getClickableWebElement(location).click();
+        }
     }
     
     public static class Verify

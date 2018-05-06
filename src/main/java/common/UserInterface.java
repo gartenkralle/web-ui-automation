@@ -36,7 +36,7 @@ public final class UserInterface
         
         public static void clickRadioButton(By location)
         {
-            throw new UnsupportedOperationException();
+            Common.Action.clickRadioButton(location);
         }
         
         public static void checkCheckbox(By location)

@@ -12,8 +12,9 @@ public class Dropdown extends TestBase
     private final static String RESULT_IFRAME = "iframeResult";
     
     private final static By DROPDOWN_MENU = By.xpath("/html/body/select");
+    
     @Test
-    public void testDropdown()
+    public void chooseDropDownItem()
     {
         UserInterface.Action.visitUrl(DROPDOWN_URL);
         UserInterface.Action.selectFrame(RESULT_IFRAME);
