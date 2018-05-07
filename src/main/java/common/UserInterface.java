@@ -35,17 +35,17 @@ public final class UserInterface
         
         public static void checkCheckbox(By location)
         {
-            throw new UnsupportedOperationException();
+            Common.Action.checkCheckbox(location);
+        }
+        
+        public static void uncheckCheckbox(By location)
+        {
+            Common.Action.uncheckCheckbox(location);
         }
         
         public static void chooseDropDownItem(By location, String item)
         {
             Common.Action.chooseDropDownItem(location, item);
-        }
-        
-        public static void uncheckCheckbox(By location)
-        {
-            throw new UnsupportedOperationException();
         }
         
         public static void moveSlider(By location, int pixel) 
@@ -123,12 +123,12 @@ public final class UserInterface
         
         public static void checked(By location)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.checked(location);
         }
         
         public static void unchecked(By location)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.unchecked(location);
         }
         
         public static void url(String url)
@@ -246,12 +246,12 @@ public final class UserInterface
         
         public static boolean isChecked(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.isChecked(location);
         }
         
         public static boolean isUnchecked(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.isUnchecked(location);
         }
     }
     

@@ -77,12 +77,28 @@ final class Common
         
         public static void pressEnter()
         {
-            pressKey(Keys.ENTER);
+            Common.pressKey(Keys.ENTER);
         }
         
         public static void pressEscape()
         {
-            pressKey(Keys.ESCAPE);
+            Common.pressKey(Keys.ESCAPE);
+        }
+
+        public static void checkCheckbox(By location)
+        {
+            if(!DataReceive.isChecked(location))
+            {
+                getClickableWebElement(location).click();
+            }
+        }
+
+        public static void uncheckCheckbox(By location)
+        {
+            if(DataReceive.isChecked(location))
+            {
+                getClickableWebElement(location).click();
+            }
         }
     }
     
@@ -110,12 +126,12 @@ final class Common
         
         public static void _true(boolean condition)
         {
-            Common.equals(true, condition);
+            Common._true(condition);
         }
         
         public static void _false(boolean condition)
         {
-            Common.equals(false, condition);
+            Common._false(condition);
         }
         
         public static void url(String url)
@@ -127,6 +143,16 @@ final class Common
         {
             Common.contains(containmentValue, actualValue);
         }
+
+        public static void checked(By location)
+        {
+            Common._true(DataReceive.isChecked(location));
+        }
+
+        public static void unchecked(By location)
+        {
+            Common._true(DataReceive.isUnchecked(location));
+        }
     }
     
     public static class DataReceive
@@ -134,6 +160,16 @@ final class Common
         private DataReceive()
         {
             
+        }
+
+        public static boolean isChecked(By location)
+        {
+            return getClickableWebElement(location).isSelected();
+        }
+
+        public static boolean isUnchecked(By location)
+        {
+            return !getClickableWebElement(location).isSelected();
         }
     }
     
@@ -155,6 +191,16 @@ final class Common
             
             Common.wait = new WebDriverWait(driver, STANDARD_TIMEOUT_IN_SECONDS).pollingEvery(Duration.ofMillis(INTERVALL_IN_MILLISECONDS));
         }
+    }
+    
+    private static void _true(boolean condition)
+    {
+        Common.equals(true, condition);
+    }
+    
+    private static void _false(boolean condition)
+    {
+        Common.equals(false, condition);
     }
     
     private static void pressKey(Keys key)
