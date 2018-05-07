@@ -226,11 +226,6 @@ final class Common
         driver.switchTo().defaultContent();
     }
     
-    private static Select getSelect(WebElement webElement)
-    {
-        return new Select(webElement);
-    }
-    
     private static void checked(By location)
     {
         handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeSelected(location));
@@ -253,7 +248,7 @@ final class Common
 
     private static void chooseDropDownItem(By location, String item)
     {
-        Select select =  handleException(Common::getSelect, Common::getUnexpectedTagNameMessage, Common.getClickableWebElement(location));
+        Select select =  handleException((WebElement webElement) -> new Select(webElement), Common::getUnexpectedTagNameMessage, Common.getClickableWebElement(location));
         handleException(select::selectByVisibleText, Common::getNoSuchElementMessage, item);
     }
     
