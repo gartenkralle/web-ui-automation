@@ -143,12 +143,12 @@ final class Common
         {
             Common.contains(containmentValue, actualValue);
         }
-
+        
         public static void checked(By location)
         {
             Common.checked(location);
         }
-
+        
         public static void unchecked(By location)
         {
             Common.unchecked(location);
@@ -161,7 +161,7 @@ final class Common
         {
             
         }
-
+        
         public static boolean isChecked(By location)
         {
             return getClickableWebElement(location).isSelected();
@@ -193,16 +193,6 @@ final class Common
         }
     }
     
-    private static void checked(By location)
-    {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeSelected(location));
-    }
-    
-    private static void unchecked(By location)
-    {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.elementToBeSelected(location)));
-    }
-
     private static void _true(boolean condition)
     {
         Common.equals(true, condition);
@@ -231,14 +221,29 @@ final class Common
         ReflectionAssert.assertReflectionEquals(expectedValue, actualValue);
     }
     
-    private static void visitUrl(String url)
-    {
-        handleException((Consumer<String>)driver::get, Common::getTimeoutMessage, url);
-    }
-    
     private static void selectDefaultFrame()
     {
         driver.switchTo().defaultContent();
+    }
+    
+    private static Select getSelect(WebElement webElement)
+    {
+        return new Select(webElement);
+    }
+    
+    private static void checked(By location)
+    {
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeSelected(location));
+    }
+    
+    private static void unchecked(By location)
+    {
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.elementToBeSelected(location)));
+    }
+    
+    private static void visitUrl(String url)
+    {
+        handleException((Consumer<String>)driver::get, Common::getTimeoutMessage, url);
     }
     
     private static void selectFrame(String iframeNameOrId)
@@ -265,11 +270,6 @@ final class Common
     private static WebElement getClickableWebElement(By location)
     {
         return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeClickable(location));
-    }
-    
-    private static Select getSelect(WebElement webElement)
-    {
-        return new Select(webElement);
     }
     
     private static <T, R> R handleException(Function<T, R> executeFunction, Function<T, String> exceptionMessageFunction, T arg)
