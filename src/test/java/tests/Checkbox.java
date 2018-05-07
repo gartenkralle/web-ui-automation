@@ -14,7 +14,7 @@ public class Checkbox extends TestBase
     private final static By CHECKBOX = By.xpath("/html/body/form/input[2]");
     
     @Test
-    public void clickCheckbox()
+    public void checkCheckbox()
     {
         UserInterface.Action.visitUrl(CHECKBOXBUTTON_URL);
         UserInterface.Action.selectFrame(RESULT_IFRAME);

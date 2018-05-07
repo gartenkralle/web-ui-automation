@@ -146,12 +146,12 @@ final class Common
 
         public static void checked(By location)
         {
-            Common._true(DataReceive.isChecked(location));
+            Common.checked(location);
         }
 
         public static void unchecked(By location)
         {
-            Common._true(DataReceive.isUnchecked(location));
+            Common.unchecked(location);
         }
     }
     
@@ -193,6 +193,16 @@ final class Common
         }
     }
     
+    private static void checked(By location)
+    {
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeSelected(location));
+    }
+    
+    private static void unchecked(By location)
+    {
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.elementToBeSelected(location)));
+    }
+
     private static void _true(boolean condition)
     {
         Common.equals(true, condition);
