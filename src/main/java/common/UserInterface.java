@@ -158,7 +158,7 @@ public final class UserInterface
         
         public static void contains(List<String> expectedValues, List<String> actualValues)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.contains(expectedValues, actualValues);
         }
         
         public static void count(By location, int count)

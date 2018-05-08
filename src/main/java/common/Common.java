@@ -179,6 +179,11 @@ final class Common
         {
             Common.contains(expectedValue, actualValues);
         }
+
+        public static void contains(List<String> expectedValues, List<String> actualValues)
+        {
+            Common.contains(expectedValues, actualValues);
+        }
     }
     
     public static class DataReceive
@@ -255,6 +260,17 @@ final class Common
         if(!actualValues.contains(expectedValue))
         {
             errorMessage(getNotContainsMessage(expectedValue, actualValues));
+        }
+    }
+    
+    public static void contains(List<String> expectedValues, List<String> actualValues)
+    {
+        for(String expectedValue : actualValues)
+        {
+            if(!actualValues.contains(expectedValue))
+            {
+                errorMessage(getNotContainsMessage(expectedValue, actualValues));
+            }
         }
     }
     
