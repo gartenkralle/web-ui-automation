@@ -108,7 +108,7 @@ public final class UserInterface
         
         public static void disappeared(By location)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.disappeared(location);
         }
         
         public static void enabled(By location)

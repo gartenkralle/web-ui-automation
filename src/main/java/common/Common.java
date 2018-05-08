@@ -119,6 +119,11 @@ final class Common
             Common.getPresentWebElement(location);
         }
         
+        public static void disappeared(By location)
+        {
+            Common.disappeared(location);
+        }
+        
         public static <T> void equals(T expectedValue, T actualValue)
         {
             Common.equals(expectedValue, actualValue);
@@ -205,8 +210,6 @@ final class Common
             Common.driver = driver;
             
             Timeouts timeouts = driver.manage().timeouts();
-            
-            timeouts.implicitlyWait(STANDARD_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS);
             timeouts.pageLoadTimeout(STANDARD_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS);
             
             Common.wait = new WebDriverWait(driver, STANDARD_TIMEOUT_IN_SECONDS).pollingEvery(Duration.ofMillis(INTERVALL_IN_MILLISECONDS));
@@ -295,6 +298,11 @@ final class Common
     private static WebElement getClickableWebElement(By location)
     {
         return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeClickable(location));
+    }
+    
+    public static void disappeared(By location)
+    {
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.invisibilityOfElementLocated(location));
     }
     
     private static <T, R> R handleException(Function<T, R> executeFunction, Function<T, String> exceptionMessageFunction, T arg)
