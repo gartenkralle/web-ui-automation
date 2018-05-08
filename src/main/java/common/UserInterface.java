@@ -50,7 +50,7 @@ public final class UserInterface
         
         public static void moveSlider(By location, int pixel) 
         {
-            throw new UnsupportedOperationException();
+            Common.Action.moveSlider(location, pixel);
         }
         
         public static void moveSlider(By location, float percent) 
@@ -60,7 +60,7 @@ public final class UserInterface
         
         public static void mouseOver(By location)
         {
-            throw new UnsupportedOperationException();
+            Common.Action.mouseOver(location);
         }
         
         public static void pressEnter()
@@ -201,7 +201,7 @@ public final class UserInterface
         
         public static int getCount(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.getCount(location);
         }
         
         public static Table getTable(By location)

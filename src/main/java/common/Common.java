@@ -11,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Timeouts;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -100,6 +101,16 @@ final class Common
             {
                 getClickableWebElement(location).click();
             }
+        }
+
+        public static void moveSlider(By location, int pixel)
+        {
+            Common.moveSlider(location, pixel);
+        }
+
+        public static void mouseOver(By location)
+        {
+            Common.mouseOver(location);
         }
     }
     
@@ -197,25 +208,30 @@ final class Common
         {
             return Common.getVisibleWebElement(location).isSelected();
         }
-
+        
         public static boolean isUnchecked(By location)
         {
             return !Common.getVisibleWebElement(location).isSelected();
         }
-
+        
         public static boolean isEnabled(By location)
         {
             return Common.getVisibleWebElement(location).isEnabled();
         }
-
+        
         public static boolean isDisabled(By location)
         {
             return !Common.getVisibleWebElement(location).isEnabled();
         }
-
+        
         public static boolean isAvailable(By location)
         {
             return Common.isAvailable(location);
+        }
+        
+        public static int getCount(By location)
+        {
+            return Common.getCount(location);
         }
     }
     
@@ -242,6 +258,11 @@ final class Common
         Common.equals(true, condition);
     }
     
+    public static void mouseOver(By location)
+    {
+        new Actions(driver).moveToElement(driver.findElement(location)).build().perform();
+    }
+
     private static void _false(boolean condition)
     {
         Common.equals(false, condition);
@@ -260,7 +281,7 @@ final class Common
         }
     }
     
-    public static void contains(String expectedValue, List<String> actualValues)
+    private static void contains(String expectedValue, List<String> actualValues)
     {
         if(!actualValues.contains(expectedValue))
         {
@@ -268,7 +289,7 @@ final class Common
         }
     }
     
-    public static void contains(List<String> expectedValues, List<String> actualValues)
+    private static void contains(List<String> expectedValues, List<String> actualValues)
     {
         for(String expectedValue : actualValues)
         {
@@ -284,7 +305,7 @@ final class Common
         ReflectionAssert.assertReflectionEquals(expectedValue, actualValue);
     }
     
-    public static <T> void notEquals(T unexpectedValue, T actualValue)
+    private static <T> void notEquals(T unexpectedValue, T actualValue)
     {
         Assert.assertNotEquals(unexpectedValue, actualValue);
     }
@@ -294,9 +315,19 @@ final class Common
         driver.switchTo().defaultContent();
     }
     
-    public static boolean isAvailable(By location)
+    private static boolean isAvailable(By location)
     {
-        return driver.findElements(location).size() != 0;
+        return getCount(location) != 0;
+    }
+    
+    private static int getCount(By location)
+    {
+        return driver.findElements(location).size();
+    }
+    
+    private static void moveSlider(By location, int pixel)
+    {
+        new Actions(driver).clickAndHold(driver.findElement(location)).moveByOffset(pixel, 0).release().perform();
     }
     
     private static void enabled(By location)
@@ -350,7 +381,7 @@ final class Common
         return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeClickable(location));
     }
     
-    public static void disappeared(By location)
+    private static void disappeared(By location)
     {
         handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.invisibilityOfElementLocated(location));
     }
