@@ -153,6 +153,16 @@ final class Common
         {
             Common.unchecked(location);
         }
+        
+        public static void enabled(By location)
+        {
+            Common.enabled(location);
+        }
+
+        public static void disabled(By location)
+        {
+            Common.disabled(location);
+        }
     }
     
     public static class DataReceive
@@ -164,12 +174,22 @@ final class Common
         
         public static boolean isChecked(By location)
         {
-            return getClickableWebElement(location).isSelected();
+            return getVisibleWebElement(location).isSelected();
         }
 
         public static boolean isUnchecked(By location)
         {
-            return !getClickableWebElement(location).isSelected();
+            return !getVisibleWebElement(location).isSelected();
+        }
+
+        public static boolean isEnabled(By location)
+        {
+            return getVisibleWebElement(location).isEnabled();
+        }
+
+        public static boolean isDisabled(By location)
+        {
+            return !getVisibleWebElement(location).isEnabled();
         }
     }
     
@@ -224,6 +244,16 @@ final class Common
     private static void selectDefaultFrame()
     {
         driver.switchTo().defaultContent();
+    }
+    
+    public static void enabled(By location)
+    {
+        handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeClickable(location));
+    }
+    
+    public static void disabled(By location)
+    {
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.elementToBeClickable(location)));
     }
     
     private static void checked(By location)

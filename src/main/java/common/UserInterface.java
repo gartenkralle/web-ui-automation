@@ -113,12 +113,12 @@ public final class UserInterface
         
         public static void enabled(By location)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.enabled(location);
         }
         
         public static void disabled(By location)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.disabled(location);
         }
         
         public static void checked(By location)
@@ -236,12 +236,12 @@ public final class UserInterface
         
         public static boolean isEnabled(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.isEnabled(location);
         }
         
         public static boolean isDisabled(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.isDisabled(location);
         }
         
         public static boolean isChecked(By location)
