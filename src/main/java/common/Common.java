@@ -195,22 +195,27 @@ final class Common
         
         public static boolean isChecked(By location)
         {
-            return getVisibleWebElement(location).isSelected();
+            return Common.getVisibleWebElement(location).isSelected();
         }
 
         public static boolean isUnchecked(By location)
         {
-            return !getVisibleWebElement(location).isSelected();
+            return !Common.getVisibleWebElement(location).isSelected();
         }
 
         public static boolean isEnabled(By location)
         {
-            return getVisibleWebElement(location).isEnabled();
+            return Common.getVisibleWebElement(location).isEnabled();
         }
 
         public static boolean isDisabled(By location)
         {
-            return !getVisibleWebElement(location).isEnabled();
+            return !Common.getVisibleWebElement(location).isEnabled();
+        }
+
+        public static boolean isAvailable(By location)
+        {
+            return Common.isAvailable(location);
         }
     }
     
@@ -287,6 +292,11 @@ final class Common
     private static void selectDefaultFrame()
     {
         driver.switchTo().defaultContent();
+    }
+    
+    public static boolean isAvailable(By location)
+    {
+        return driver.findElements(location).size() != 0;
     }
     
     private static void enabled(By location)
