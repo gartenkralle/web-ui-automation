@@ -258,11 +258,6 @@ final class Common
         Common.equals(true, condition);
     }
     
-    public static void mouseOver(By location)
-    {
-        new Actions(driver).moveToElement(driver.findElement(location)).build().perform();
-    }
-
     private static void _false(boolean condition)
     {
         Common.equals(false, condition);
@@ -328,6 +323,11 @@ final class Common
     private static void moveSlider(By location, int pixel)
     {
         new Actions(driver).clickAndHold(driver.findElement(location)).moveByOffset(pixel, 0).release().perform();
+    }
+    
+    public static void mouseOver(By location)
+    {
+        new Actions(driver).moveToElement(driver.findElement(location)).build().perform();
     }
     
     private static void enabled(By location)
