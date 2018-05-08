@@ -153,7 +153,7 @@ public final class UserInterface
         
         public static void contains(String expectedValue, List<String> actualValues)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.contains(expectedValue, actualValues);
         }
         
         public static void contains(List<String> expectedValues, List<String> actualValues)

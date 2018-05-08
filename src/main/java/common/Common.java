@@ -1,6 +1,7 @@
 package common;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -168,6 +169,11 @@ final class Common
         {
             Common.disabled(location);
         }
+
+        public static void contains(String expectedValue, List<String> actualValues)
+        {
+            Common.contains(expectedValue, actualValues);
+        }
     }
     
     public static class DataReceive
@@ -236,6 +242,14 @@ final class Common
         if(!actualValue.contains(containment))
         {
             errorMessage(getNotContainsMessage(containment, actualValue));
+        }
+    }
+    
+    public static void contains(String expectedValue, List<String> actualValues)
+    {
+        if(!actualValues.contains(expectedValue))
+        {
+            errorMessage(getNotContainsMessage(expectedValue, actualValues));
         }
     }
     
