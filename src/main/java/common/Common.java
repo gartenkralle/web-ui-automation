@@ -249,12 +249,12 @@ final class Common
         driver.switchTo().defaultContent();
     }
     
-    public static void enabled(By location)
+    private static void enabled(By location)
     {
         handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeClickable(location));
     }
     
-    public static void disabled(By location)
+    private static void disabled(By location)
     {
         handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.elementToBeClickable(location)));
     }
