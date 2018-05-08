@@ -130,6 +130,11 @@ final class Common
             Common.equals(expectedValue, actualValue);
         }
         
+        public static <T> void notEquals(T unexpectedValue, T actualValue)
+        {
+            Common.notEquals(unexpectedValue, actualValue);
+        }
+        
         public static void _true(boolean condition)
         {
             Common._true(condition);
@@ -164,7 +169,7 @@ final class Common
         {
             Common.enabled(location);
         }
-
+        
         public static void disabled(By location)
         {
             Common.disabled(location);
@@ -256,6 +261,11 @@ final class Common
     private static <T> void equals(T expectedValue, T actualValue)
     {
         ReflectionAssert.assertReflectionEquals(expectedValue, actualValue);
+    }
+    
+    public static <T> void notEquals(T unexpectedValue, T actualValue)
+    {
+        Assert.assertNotEquals(unexpectedValue, actualValue);
     }
     
     private static void selectDefaultFrame()

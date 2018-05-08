@@ -141,9 +141,9 @@ public final class UserInterface
             Common.Verify.equals(expectedValue, actualValue);
         }
         
-        public static <T> void notEquals(T expectedValue, T actualValue)
+        public static <T> void notEquals(T unexpectedValue, T actualValue)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.notEquals(unexpectedValue, actualValue);
         }
         
         public static void contains(String containment, String actualValue)
