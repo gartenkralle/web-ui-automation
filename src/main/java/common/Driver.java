@@ -14,7 +14,9 @@ final class Driver
     
     public static void setup()
     {
-        Common.Setting.setup(new ChromeDriver());
+        driver = new ChromeDriver();
+        
+        Common.Setting.setup(driver);
     }
     
     public static void quit()
