@@ -13,9 +13,16 @@ public class Slider extends TestBase
     private final static By SLIDER = By.xpath("//*[@id='id2']");
     
     @Test
-    public void moveSlider()
+    public void moveSliderInPixel()
     {
         UserInterface.Action.visitUrl(SLIDER_URL);
         UserInterface.Action.moveSlider(SLIDER, 30);
+    }
+    
+    @Test
+    public void moveSliderInPercent()
+    {
+        UserInterface.Action.visitUrl(SLIDER_URL);
+        UserInterface.Action.moveSlider(SLIDER, 40.0f);
     }
 }

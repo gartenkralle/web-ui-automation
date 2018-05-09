@@ -111,6 +111,11 @@ final class Common
         {
             Common.mouseOver(location);
         }
+
+        public static void moveSlider(By location, float percent)
+        {
+            Common.moveSlider(location, percent);
+        }
     }
     
     public static class Verify
@@ -379,13 +384,20 @@ final class Common
     }
     
     private static int getCount(By location)
-    {
+    { 
         return driver.findElements(location).size();
     }
     
     private static void moveSlider(By location, int pixel)
     {
-        new Actions(driver).clickAndHold(driver.findElement(location)).moveByOffset(pixel, 0).release().perform();
+        new Actions(driver).clickAndHold(getVisibleWebElement(location)).moveByOffset(pixel, 0).release().perform();
+    }
+    
+    private static void moveSlider(By location, float percent)
+    {
+        int pixel = (int)(((float)getVisibleWebElement(location).getSize().width / 100) * percent);
+        
+        moveSlider(location, pixel);
     }
     
     private static void mouseOver(By location)

@@ -55,7 +55,7 @@ public final class UserInterface
         
         public static void moveSlider(By location, float percent) 
         {
-            throw new UnsupportedOperationException();
+            Common.Action.moveSlider(location, percent);
         }
         
         public static void mouseOver(By location)
