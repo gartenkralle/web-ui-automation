@@ -400,7 +400,7 @@ final class Common
         Table table = new Table();
         
         WebElement tableWebElement = getVisibleWebElement(location);
-        List<WebElement> rowWebElements = tableWebElement.findElements(By.xpath(".//tr"));
+        List<WebElement> rowWebElements = tableWebElement.findElements(By.xpath(StringCollection.XPath.ROW_SELECTOR_INSIDE));
         
         for(WebElement rowWebElement : rowWebElements)
         {
@@ -414,7 +414,7 @@ final class Common
     {
         Row row = new Row();
         
-        List<WebElement> colWebElements = rowWebElement.findElements(By.xpath(".//*"));
+        List<WebElement> colWebElements = rowWebElement.findElements(By.xpath(StringCollection.XPath.ANY_ELEMENT_INSIDE));
         
         for(WebElement colWebElement : colWebElements)
         {

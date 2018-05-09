@@ -68,4 +68,15 @@ public class DataReceive extends TestBase
         
         UserInterface.Verify.equals(expectedTable, actualTable);
     }
+    
+    @Test
+    public void getCount()
+    {
+        UserInterface.Action.visitUrl(TABLE_URL);
+        
+        int count = UserInterface.DataReceive.getCount(TABLE);
+        
+        UserInterface.Verify.equals(1, count);
+        
+    }
 }
