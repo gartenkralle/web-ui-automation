@@ -19,34 +19,13 @@ public class Table implements Iterable<Table.Row>
         rows.add(row);
     }
     
-    public static class Row implements Iterable<Row.Cell>
+    public static class Row
     {
-        private final List<Cell> cells = new ArrayList<>();
+        private final List<String> cols = new ArrayList<>();
         
-        @Override
-        public Iterator<Row.Cell> iterator()
+        public void add(String col)
         {
-            return cells.iterator();
-        }
-        
-        public void add(Cell cell)
-        {
-            cells.add(cell);
-        }
-        
-        public static class Cell
-        {
-            private String cell;
-            
-            public String get()
-            {
-                return cell;
-            }
-            
-            public void set(String cell)
-            {
-                this.cell = cell;
-            }
+            cols.add(col);
         }
     }
 }

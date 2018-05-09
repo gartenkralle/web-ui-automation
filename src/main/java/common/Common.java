@@ -20,7 +20,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.unitils.reflectionassert.ReflectionAssert;
 
 import common.Table.Row;
-import common.Table.Row.Cell;
 
 final class Common
 {
@@ -415,23 +414,19 @@ final class Common
     {
         Row row = new Row();
         
-        List<WebElement> dataWebElements = rowWebElement.findElements(By.xpath(".//*"));
+        List<WebElement> colWebElements = rowWebElement.findElements(By.xpath(".//*"));
         
-        for(WebElement dataWebElement : dataWebElements)
+        for(WebElement colWebElement : colWebElements)
         {
-            row.add(getData(dataWebElement));
+            row.add(getCol(colWebElement));
         }
         
         return row;
     }
     
-    private static Cell getData(WebElement dataWebElement)
+    private static String getCol(WebElement colWebElement)
     {
-        Cell cell = new Cell();
-        
-        cell.set(dataWebElement.getText());
-        
-        return cell;
+        return colWebElement.getText();
     }
     
     private static void moveSlider(By location, int pixel)
