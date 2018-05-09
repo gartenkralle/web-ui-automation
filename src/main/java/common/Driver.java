@@ -5,7 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 final class Driver
 {
-    private static WebDriver driver;
+    private static WebDriver instance;
     
     private Driver()
     {
@@ -14,13 +14,13 @@ final class Driver
     
     public static void setup()
     {
-        driver = new ChromeDriver();
+        Driver.instance = new ChromeDriver();
         
-        Common.Setting.setup(driver);
+        Common.Setting.setup(Driver.instance);
     }
     
     public static void quit()
     {
-        driver.quit();
+        Driver.instance.quit();
     }
 }
