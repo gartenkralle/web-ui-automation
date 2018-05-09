@@ -378,7 +378,7 @@ final class Common
         return result;
     }
     
-    public static void count(By location, int expected)
+    private static void count(By location, int expected)
     {
         equals(expected, getCount(location));
     }
@@ -395,7 +395,7 @@ final class Common
     
     private static void moveSlider(By location, float percent)
     {
-        int pixel = (int)(((float)getVisibleWebElement(location).getSize().width / 100) * percent);
+        int pixel = Math.round((((float)getVisibleWebElement(location).getSize().width / 100) * percent));
         
         moveSlider(location, pixel);
     }

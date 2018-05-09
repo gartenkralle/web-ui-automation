@@ -23,6 +23,6 @@ public class Slider extends TestBase
     public void moveSliderInPercent()
     {
         UserInterface.Action.visitUrl(SLIDER_URL);
-        UserInterface.Action.moveSlider(SLIDER, 40.0f);
+        UserInterface.Action.moveSlider(SLIDER, -30.0f);
     }
 }
