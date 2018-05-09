@@ -229,9 +229,9 @@ public final class UserInterface
             throw new UnsupportedOperationException();
         }
         
-        public static boolean isAvailable(By location)
+        public static boolean isPresent(By location)
         {
-            return Common.DataReceive.isAvailable(location);
+            return Common.DataReceive.isPresent(location);
         }
         
         public static boolean isEnabled(By location)

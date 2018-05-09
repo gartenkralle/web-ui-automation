@@ -233,9 +233,9 @@ final class Common
             return !Common.getVisibleWebElement(location).isEnabled();
         }
         
-        public static boolean isAvailable(By location)
+        public static boolean isPresent(By location)
         {
-            return Common.isAvailable(location);
+            return Common.isPresent(location);
         }
         
         public static int getCount(By location)
@@ -348,7 +348,7 @@ final class Common
         driver.switchTo().defaultContent();
     }
     
-    private static boolean isAvailable(By location)
+    private static boolean isPresent(By location)
     {
         return getCount(location) != 0;
     }
