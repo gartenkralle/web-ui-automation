@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="30a816c9-9ee0-4813-b4e4-df4b6d4857f2" name="Default" comment="" />
+    <list default="true" id="30a816c9-9ee0-4813-b4e4-df4b6d4857f2" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -144,19 +146,29 @@
     <history-entry file="run - 2018.05.06 at 00h 41m 08s.xml">
       <configuration name="run" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="run - 2018.05.10 at 00h 16m 20s.xml">
+      <configuration name="run" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="run - 2018.05.10 at 00h 16m 42s.xml">
+      <configuration name="run" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="run - 2018.05.10 at 00h 17m 46s.xml">
+      <configuration name="run" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="1089" y="360" width="1400" height="1000" extended-state="0" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Messages" order="7" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50289017" side_tool="true" visible="true" weight="0.3299435" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5036127" side_tool="true" visible="true" weight="0.3299435" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49710983" weight="0.3299435" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49638727" weight="0.3299435" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
@@ -173,7 +185,6 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Messages" order="7" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
