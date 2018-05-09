@@ -194,6 +194,11 @@ final class Common
         {
             Common.contains(expectedValues, actualValues);
         }
+
+        public static void count(By location, int expected)
+        {
+            Common.count(location, expected);
+        }
     }
     
     public static class DataReceive
@@ -366,6 +371,11 @@ final class Common
         }
         
         return result;
+    }
+    
+    public static void count(By location, int expected)
+    {
+        equals(expected, getCount(location));
     }
     
     private static int getCount(By location)

@@ -161,9 +161,9 @@ public final class UserInterface
             Common.Verify.contains(expectedValues, actualValues);
         }
         
-        public static void count(By location, int count)
+        public static void count(By location, int expected)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.count(location, expected);
         }
         
         public static <T> void notNull(T o)
