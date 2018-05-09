@@ -19,6 +19,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.unitils.reflectionassert.ReflectionAssert;
 
+import common.Table.Row;
+import common.Table.Row.Cell;
+
 final class Common
 {
     private static WebDriver driver;
@@ -247,6 +250,11 @@ final class Common
         {
             return Common.getText(location);
         }
+
+        public static Table getTable(By location)
+        {
+            return Common.getTable(location);
+        }
     }
     
     public static class Setting
@@ -386,6 +394,44 @@ final class Common
     private static int getCount(By location)
     { 
         return driver.findElements(location).size();
+    }
+    
+    private static Table getTable(By location)
+    {
+        Table table = new Table();
+        
+        WebElement tableWebElement = getVisibleWebElement(location);
+        List<WebElement> rowWebElements = tableWebElement.findElements(By.xpath(".//tr"));
+        
+        for(WebElement rowWebElement : rowWebElements)
+        {
+            table.add(getRow(rowWebElement));
+        }
+        
+        return table;
+    }
+    
+    private static Row getRow(WebElement rowWebElement)
+    {
+        Row row = new Row();
+        
+        List<WebElement> dataWebElements = rowWebElement.findElements(By.xpath(".//*"));
+        
+        for(WebElement dataWebElement : dataWebElements)
+        {
+            row.add(getData(dataWebElement));
+        }
+        
+        return row;
+    }
+    
+    private static Cell getData(WebElement dataWebElement)
+    {
+        Cell cell = new Cell();
+        
+        cell.set(dataWebElement.getText());
+        
+        return cell;
     }
     
     private static void moveSlider(By location, int pixel)

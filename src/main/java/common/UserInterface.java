@@ -206,7 +206,7 @@ public final class UserInterface
         
         public static Table getTable(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.getTable(location);
         }
         
         public static String getText(By location)
