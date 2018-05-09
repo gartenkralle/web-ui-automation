@@ -209,9 +209,9 @@ public final class UserInterface
             throw new UnsupportedOperationException();
         }
         
-        public static String getValue(By location)
+        public static String getText(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.getText(location);
         }
         
         public static String getValue(By location, String attribute)

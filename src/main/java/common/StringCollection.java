@@ -41,4 +41,16 @@ public class StringCollection
         public static final String NO_SUCH_ELEMENT_HEADER = "No such element: ";
         public static final String NOT_CONTAINS_HEADER = "Does not contain: ";
     }
+    
+    public static class ControlType
+    {
+        private ControlType()
+        {
+            
+        }
+        
+        public static final String INPUT = "input";
+        public static final String TEXTAREA = "textarea";
+        public static final String SELECT = "select";
+    }
 }

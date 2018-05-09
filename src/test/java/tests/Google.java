@@ -24,5 +24,9 @@ public class Google extends TestBase
         UserInterface.Action.pressEscape();
         UserInterface.Action.clickElement(SEARCH_BUTTON);
         UserInterface.Verify.disappeared(TITLE_PIC);
+        
+        String searchValue = UserInterface.DataReceive.getText(SEARCH_FIELD);
+        
+        UserInterface.Verify.equals("weather", searchValue);
     }
 }

@@ -233,6 +233,11 @@ final class Common
         {
             return Common.getCount(location);
         }
+
+        public static String getText(By location)
+        {
+            return Common.getText(location);
+        }
     }
     
     public static class Setting
@@ -313,6 +318,31 @@ final class Common
     private static boolean isAvailable(By location)
     {
         return getCount(location) != 0;
+    }
+    
+    public static String getText(By location)
+    {
+        String result = null;
+        
+        String inputType = getPresentWebElement(location).getTagName();
+        
+        switch(inputType)
+        {
+            case StringCollection.ControlType.INPUT:
+            case StringCollection.ControlType.TEXTAREA:
+                result = getVisibleWebElement(location).getAttribute("value");
+            break;
+            
+            case StringCollection.ControlType.SELECT:
+                result = new Select(getVisibleWebElement(location)).getFirstSelectedOption().getText();
+            break;
+            
+            default:
+                result = getVisibleWebElement(location).getText();
+            break;
+        }
+        
+        return result;
     }
     
     private static int getCount(By location)
