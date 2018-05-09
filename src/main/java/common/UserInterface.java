@@ -264,12 +264,12 @@ public final class UserInterface
         
         public static void setTimeout(int seconds)
         {
-            throw new UnsupportedOperationException();
+            Common.Setting.setTimeout(seconds);
         }
         
         public static void resetTimeout()
         {
-            throw new UnsupportedOperationException();
+            Common.Setting.resetTimeout();
         }
     }
 }

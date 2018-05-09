@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriver.Timeouts;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -249,12 +248,17 @@ final class Common
         
         public static void setup(WebDriver driver)
         {
-            Common.driver = driver;
-            
-            Timeouts timeouts = driver.manage().timeouts();
-            timeouts.pageLoadTimeout(STANDARD_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS);
-            
-            Common.wait = new WebDriverWait(driver, STANDARD_TIMEOUT_IN_SECONDS).pollingEvery(Duration.ofMillis(INTERVALL_IN_MILLISECONDS));
+            Common.setup(driver);
+        }
+
+        public static void setTimeout(int seconds)
+        {
+            Common.setTimeout(seconds);
+        }
+
+        public static void resetTimeout()
+        {
+            Common.resetTimeout();
         }
     }
     
@@ -266,6 +270,25 @@ final class Common
     private static void _false(boolean condition)
     {
         Common.equals(false, condition);
+    }
+    
+    private static void setup(WebDriver driver)
+    {
+        Common.driver = driver;
+        Common.wait = new WebDriverWait(driver, 0);
+        
+        setTimeout(Common.STANDARD_TIMEOUT_IN_SECONDS);
+    }
+    
+    private static void setTimeout(int seconds)
+    {
+        Common.driver.manage().timeouts().pageLoadTimeout(seconds, TimeUnit.SECONDS);
+        Common.wait.withTimeout(Duration.ofSeconds(seconds)).pollingEvery(Duration.ofMillis(Common.INTERVALL_IN_MILLISECONDS));
+    }
+    
+    private static void resetTimeout()
+    {
+        setTimeout(Common.STANDARD_TIMEOUT_IN_SECONDS);
     }
     
     private static void pressKey(Keys key)
