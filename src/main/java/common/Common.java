@@ -121,17 +121,17 @@ final class Common
             
         }
         
-        public static void appeared(By location)
+        public static void visible(By location)
         {
             Common.getVisibleWebElement(location);
         }
         
-        public static void available(By location)
+        public static void present(By location)
         {
             Common.getPresentWebElement(location);
         }
         
-        public static void disappeared(By location)
+        public static void invisible(By location)
         {
             Common.disappeared(location);
         }
