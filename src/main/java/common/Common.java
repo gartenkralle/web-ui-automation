@@ -67,9 +67,9 @@ final class Common
             Common.selectDefaultFrame();
         }
         
-        public static void selectFrame(String iframeNameOrId)
+        public static void selectFrame(String iFrameNameOrId)
         {
-            Common.selectFrame(iframeNameOrId);
+            Common.selectFrame(iFrameNameOrId);
         }
         
         public static void clickRadioButton(By location)
@@ -320,7 +320,7 @@ final class Common
         return getCount(location) != 0;
     }
     
-    public static String getText(By location)
+    private static String getText(By location)
     {
         String result = null;
         
@@ -330,7 +330,7 @@ final class Common
         {
             case StringCollection.ControlType.INPUT:
             case StringCollection.ControlType.TEXTAREA:
-                result = getVisibleWebElement(location).getAttribute("value");
+                result = getVisibleWebElement(location).getAttribute(StringCollection.AttributeType.VALUE);
             break;
             
             case StringCollection.ControlType.SELECT:
@@ -355,7 +355,7 @@ final class Common
         new Actions(driver).clickAndHold(driver.findElement(location)).moveByOffset(pixel, 0).release().perform();
     }
     
-    public static void mouseOver(By location)
+    private static void mouseOver(By location)
     {
         new Actions(driver).moveToElement(driver.findElement(location)).build().perform();
     }
@@ -385,9 +385,9 @@ final class Common
         handleException((Consumer<String>)driver::get, Common::getTimeoutMessage, url);
     }
     
-    private static void selectFrame(String iframeNameOrId)
+    private static void selectFrame(String iFrameNameOrId)
     {
-        handleException((Function<ExpectedCondition<WebDriver>, WebDriver>)wait::until, Common::getTimeoutMessage, ExpectedConditions.frameToBeAvailableAndSwitchToIt(iframeNameOrId));
+        handleException((Function<ExpectedCondition<WebDriver>, WebDriver>)wait::until, Common::getTimeoutMessage, ExpectedConditions.frameToBeAvailableAndSwitchToIt(iFrameNameOrId));
     }
 
     private static void chooseDropDownItem(By location, String item)

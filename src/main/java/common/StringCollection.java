@@ -53,4 +53,14 @@ public class StringCollection
         public static final String TEXTAREA = "textarea";
         public static final String SELECT = "select";
     }
+    
+    public static class AttributeType
+    {
+        private AttributeType()
+        {
+            
+        }
+        
+        public static final String VALUE = "value";
+    }
 }

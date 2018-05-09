@@ -78,9 +78,9 @@ public final class UserInterface
             Common.Action.selectDefaultFrame();
         }
         
-        public static void selectFrame(String iframeNameOrId)
+        public static void selectFrame(String iFrameNameOrId)
         {
-            Common.Action.selectFrame(iframeNameOrId);
+            Common.Action.selectFrame(iFrameNameOrId);
         }
         
         public static void visitUrl(String url)
