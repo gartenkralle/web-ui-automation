@@ -214,17 +214,17 @@ public final class UserInterface
             return Common.DataReceive.getText(location);
         }
         
-        public static String getValue(By location, String attribute)
+        public static List<String> getAllText(By location)
         {
             throw new UnsupportedOperationException();
         }
         
-        public static List<String> getAllValue(By location)
+        public static String getValue(By location, String attributeName)
         {
             throw new UnsupportedOperationException();
         }
         
-        public static List<String> getAllValue(By location, String attribute)
+        public static List<String> getAllValue(By location, String attributeName)
         {
             throw new UnsupportedOperationException();
         }
