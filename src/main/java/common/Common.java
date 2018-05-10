@@ -1,6 +1,7 @@
 package common;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
@@ -87,7 +88,7 @@ final class Common
         {
             Common.pressKey(Keys.ESCAPE);
         }
-
+        
         public static void checkCheckbox(By location)
         {
             if(!DataReceive.isChecked(location))
@@ -95,7 +96,7 @@ final class Common
                 getClickableWebElement(location).click();
             }
         }
-
+        
         public static void uncheckCheckbox(By location)
         {
             if(DataReceive.isChecked(location))
@@ -103,7 +104,7 @@ final class Common
                 getClickableWebElement(location).click();
             }
         }
-
+        
         public static void moveSlider(By location, int pixel)
         {
             Common.moveSlider(location, pixel);
@@ -113,7 +114,7 @@ final class Common
         {
             Common.mouseOver(location);
         }
-
+        
         public static void moveSlider(By location, float percent)
         {
             Common.moveSlider(location, percent);
@@ -191,17 +192,17 @@ final class Common
         {
             Common.disabled(location);
         }
-
+        
         public static void contains(String expectedValue, List<String> actualValues)
         {
             Common.contains(expectedValue, actualValues);
         }
-
+        
         public static void contains(List<String> expectedValues, List<String> actualValues)
         {
             Common.contains(expectedValues, actualValues);
         }
-
+        
         public static void count(By location, int expected)
         {
             Common.count(location, expected);
@@ -244,15 +245,20 @@ final class Common
         {
             return Common.getCount(location);
         }
-
+        
         public static String getText(By location)
         {
             return Common.getText(location);
         }
-
+        
         public static Table getTable(By location)
         {
             return Common.getTable(location);
+        }
+        
+        public static List<String> getAllText(By location)
+        {
+            return Common.getAllText(location);
         }
     }
     
@@ -267,12 +273,12 @@ final class Common
         {
             Common.setup(driver);
         }
-
+        
         public static void setTimeout(int seconds)
         {
             Common.setTimeout(seconds);
         }
-
+        
         public static void resetTimeout()
         {
             Common.resetTimeout();
@@ -362,27 +368,44 @@ final class Common
     
     private static String getText(By location)
     {
+        return getText(getVisibleWebElement(location));
+    }
+    
+    private static String getText(WebElement webElement)
+    {
         String result = null;
         
-        String inputType = getPresentWebElement(location).getTagName();
+        String inputType = webElement.getTagName();
         
         switch(inputType)
         {
             case StringCollection.ControlType.INPUT:
             case StringCollection.ControlType.TEXTAREA:
-                result = getVisibleWebElement(location).getAttribute(StringCollection.AttributeType.VALUE);
+                result = webElement.getAttribute(StringCollection.AttributeType.VALUE);
             break;
             
             case StringCollection.ControlType.SELECT:
-                result = new Select(getVisibleWebElement(location)).getFirstSelectedOption().getText();
+                result = new Select(webElement).getFirstSelectedOption().getText();
             break;
             
             default:
-                result = getVisibleWebElement(location).getText();
+                result = webElement.getText();
             break;
         }
         
         return result;
+    }
+    
+    private static List<String> getAllText(By location)
+    {
+        List<String> results = new ArrayList<>();
+        
+        for(WebElement webElement : getVisibleWebElements(location))
+        {
+            results.add(getText(webElement));
+        }
+        
+        return results;
     }
     
     private static void count(By location, int expected)
@@ -490,6 +513,11 @@ final class Common
     private static WebElement getVisibleWebElement(By location)
     {
         return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.visibilityOfElementLocated(location));
+    }
+    
+    private static List<WebElement> getVisibleWebElements(By location)
+    {
+        return handleException((Function<ExpectedCondition<List<WebElement>>, List<WebElement>>)wait::until, Common::getTimeoutMessage, ExpectedConditions.visibilityOfAllElementsLocatedBy(location));
     }
     
     private static WebElement getClickableWebElement(By location)

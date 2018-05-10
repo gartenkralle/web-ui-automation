@@ -216,7 +216,7 @@ public final class UserInterface
         
         public static List<String> getAllText(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.getAllText(location);
         }
         
         public static String getValue(By location, String attributeName)
