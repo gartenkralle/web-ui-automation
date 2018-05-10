@@ -15,7 +15,7 @@ public class DataReceive extends TestBase
     private final static By TABLE = By.xpath("//*[@id='customers']");
     
     @Test
-    public void getTable()
+    public void getTable1()
     {
         UserInterface.Action.visitUrl(TABLE_URL);
         
@@ -67,6 +67,17 @@ public class DataReceive extends TestBase
         expectedTable.add(row);
         
         UserInterface.Verify.equals(expectedTable, actualTable);
+    }
+    
+    @Test
+    public void getTable2()
+    {
+        UserInterface.Action.visitUrl(TABLE_URL);
+        
+        Table table = UserInterface.DataReceive.getTable(TABLE);
+        String actualValue = table.get(3).get(2);
+        
+        UserInterface.Verify.equals("Austria", actualValue);
     }
     
     @Test
