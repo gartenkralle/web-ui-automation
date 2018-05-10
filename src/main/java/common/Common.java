@@ -207,6 +207,11 @@ final class Common
         {
             Common.count(location, expected);
         }
+
+        public static void notEmpty(List<String> values)
+        {
+            Common.notEmpty(values);
+        }
     }
     
     public static class DataReceive
@@ -349,6 +354,11 @@ final class Common
     private static <T> void equals(T expectedValue, T actualValue)
     {
         ReflectionAssert.assertReflectionEquals(expectedValue, actualValue);
+    }
+    
+    private static void notEmpty(List<String> values)
+    {
+        notEquals(0, values.size());
     }
     
     private static <T> void notEquals(T unexpectedValue, T actualValue)
