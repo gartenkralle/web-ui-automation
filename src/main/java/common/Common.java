@@ -313,6 +313,8 @@ final class Common
     private static void setup(WebDriver driver)
     {
         Common.driver = driver;
+        Common.driver.manage().deleteAllCookies();
+        
         Common.wait = new WebDriverWait(driver, 0);
         
         setTimeout(Common.STANDARD_TIMEOUT_IN_SECONDS);
