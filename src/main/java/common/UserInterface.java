@@ -166,11 +166,6 @@ public final class UserInterface
             Common.Verify.count(location, expected);
         }
         
-        public static <T> void notNull(T o)
-        {
-            throw new UnsupportedOperationException();
-        }
-        
         public static void notEmpty(By location)
         {
             throw new UnsupportedOperationException();
