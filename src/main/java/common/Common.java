@@ -109,7 +109,7 @@ final class Common
         {
             Common.moveSlider(location, pixel);
         }
-
+        
         public static void mouseOver(By location)
         {
             Common.mouseOver(location);
@@ -207,7 +207,7 @@ final class Common
         {
             Common.count(location, expected);
         }
-
+        
         public static void notEmpty(List<String> values)
         {
             Common.notEmpty(values);
@@ -270,7 +270,7 @@ final class Common
         {
             return Common.getValue(location, attributeName);
         }
-
+        
         public static List<String> getAllValue(By location, String attributeName)
         {
             return Common.getAllValue(location, attributeName);
@@ -540,7 +540,7 @@ final class Common
     {
         handleException((Function<ExpectedCondition<WebDriver>, WebDriver>)wait::until, Common::getTimeoutMessage, ExpectedConditions.frameToBeAvailableAndSwitchToIt(iFrameNameOrId));
     }
-
+    
     private static void chooseDropDownItem(By location, String item)
     {
         Select select =  handleException((WebElement webElement) -> new Select(webElement), Common::getUnexpectedTagNameMessage, Common.getClickableWebElement(location));
