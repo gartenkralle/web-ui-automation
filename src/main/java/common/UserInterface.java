@@ -211,12 +211,12 @@ public final class UserInterface
         
         public static String getValue(By location, String attributeName)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.getValue(location, attributeName);
         }
         
         public static List<String> getAllValue(By location, String attributeName)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.getAllValue(location, attributeName);
         }
         
         public static boolean isPresent(By location)

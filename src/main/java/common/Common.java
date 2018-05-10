@@ -265,6 +265,16 @@ final class Common
         {
             return Common.getAllText(location);
         }
+        
+        public static String getValue(By location, String attributeName)
+        {
+            return Common.getValue(location, attributeName);
+        }
+
+        public static List<String> getAllValue(By location, String attributeName)
+        {
+            return Common.getAllValue(location, attributeName);
+        }
     }
     
     public static class Setting
@@ -381,6 +391,18 @@ final class Common
         return getText(getVisibleWebElement(location));
     }
     
+    private static List<String> getAllText(By location)
+    {
+        List<String> results = new ArrayList<>();
+        
+        for(WebElement webElement : getVisibleWebElements(location))
+        {
+            results.add(getText(webElement));
+        }
+        
+        return results;
+    }
+    
     private static String getText(WebElement webElement)
     {
         String result = null;
@@ -406,16 +428,26 @@ final class Common
         return result;
     }
     
-    private static List<String> getAllText(By location)
+    private static String getValue(By location, String attributeName)
+    {
+        return getValue(getPresentWebElement(location), attributeName);
+    }
+    
+    private static List<String> getAllValue(By location, String attributeName)
     {
         List<String> results = new ArrayList<>();
         
-        for(WebElement webElement : getVisibleWebElements(location))
+        for(WebElement webElement : getPresentWebElements(location))
         {
-            results.add(getText(webElement));
+            results.add(getValue(webElement, attributeName));
         }
         
         return results;
+    }
+    
+    private static String getValue(WebElement webElement, String attributeName)
+    {
+        return webElement.getAttribute(attributeName);
     }
     
     private static void count(By location, int expected)
@@ -518,6 +550,11 @@ final class Common
     private static WebElement getPresentWebElement(By location)
     {
         return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.presenceOfElementLocated(location));
+    }
+    
+    private static List<WebElement> getPresentWebElements(By location)
+    {
+        return handleException((Function<ExpectedCondition<List<WebElement>>, List<WebElement>>)wait::until, Common::getTimeoutMessage, ExpectedConditions.presenceOfAllElementsLocatedBy(location));
     }
     
     private static WebElement getVisibleWebElement(By location)
