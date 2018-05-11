@@ -123,12 +123,22 @@ public final class UserInterface
         
         public static void checked(By location)
         {
-            Common.Verify.checked(location);
+            Common.Verify.selected(location);
         }
         
         public static void unchecked(By location)
         {
-            Common.Verify.unchecked(location);
+            Common.Verify.unselected(location);
+        }
+        
+        public static void selected(By location)
+        {
+            Common.Verify.selected(location);
+        }
+        
+        public static void unselected(By location)
+        {
+            Common.Verify.unselected(location);
         }
         
         public static void url(String url)
@@ -161,9 +171,14 @@ public final class UserInterface
             Common.Verify.contains(expectedValues, actualValues);
         }
         
-        public static void count(By location, int expected)
+        public static void visibleCount(By location, int expected)
         {
-            Common.Verify.count(location, expected);
+            Common.Verify.visibleCount(location, expected);
+        }
+        
+        public static void presentCount(By location, int expected)
+        {
+            Common.Verify.presentCount(location, expected);
         }
         
         public static void notEmpty(List<String> values)
@@ -187,11 +202,6 @@ public final class UserInterface
         private DataReceive()
         {
             
-        }
-        
-        public static int getCount(By location)
-        {
-            return Common.DataReceive.getCount(location);
         }
         
         public static Table getTable(By location)
@@ -218,30 +228,35 @@ public final class UserInterface
         {
             return Common.DataReceive.getAllValue(location, attributeName);
         }
-        
-        public static boolean isPresent(By location)
+
+        public static int getVisibleCount(By location)
         {
-            return Common.DataReceive.isPresent(location);
+            return Common.DataReceive.getVisibleCount(location);
         }
         
-        public static boolean isEnabled(By location)
+        public static int getPresentCount(By location)
         {
-            return Common.DataReceive.isEnabled(location);
+            return Common.DataReceive.getPresentCount(location);
         }
-        
-        public static boolean isDisabled(By location)
-        {
-            return Common.DataReceive.isDisabled(location);
-        }
-        
+
         public static boolean isChecked(By location)
         {
             return Common.DataReceive.isChecked(location);
         }
-        
+
         public static boolean isUnchecked(By location)
         {
             return Common.DataReceive.isUnchecked(location);
+        }
+
+        public static boolean isEnabled(By location)
+        {
+            return Common.DataReceive.isEnabled(location);
+        }
+
+        public static boolean isDisabled(By location)
+        {
+            return Common.DataReceive.isDisabled(location);
         }
     }
     

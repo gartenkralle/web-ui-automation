@@ -91,7 +91,7 @@ final class Common
         
         public static void checkCheckbox(By location)
         {
-            if(!DataReceive.isChecked(location))
+            if(isUnchecked(location))
             {
                 getClickableWebElement(location).click();
             }
@@ -99,7 +99,7 @@ final class Common
         
         public static void uncheckCheckbox(By location)
         {
-            if(DataReceive.isChecked(location))
+            if(isChecked(location))
             {
                 getClickableWebElement(location).click();
             }
@@ -173,24 +173,24 @@ final class Common
             Common.contains(containmentValue, actualValue);
         }
         
-        public static void checked(By location)
+        public static void selected(By location)
         {
-            Common.checked(location);
+            Common.selected(location);
         }
         
-        public static void unchecked(By location)
+        public static void unselected(By location)
         {
-            Common.unchecked(location);
+            Common.unselected(location);
         }
         
         public static void enabled(By location)
         {
-            Common.enabled(location);
+            Common.clickable(location);
         }
         
         public static void disabled(By location)
         {
-            Common.disabled(location);
+            Common.notClickable(location);
         }
         
         public static void contains(String expectedValue, List<String> actualValues)
@@ -203,9 +203,14 @@ final class Common
             Common.contains(expectedValues, actualValues);
         }
         
-        public static void count(By location, int expected)
+        public static void visibleCount(By location, int expected)
         {
-            Common.count(location, expected);
+            Common.visibleCount(location, expected);
+        }
+        
+        public static void presentCount(By location, int expected)
+        {
+            Common.presentCount(location, expected);
         }
         
         public static void notEmpty(List<String> values)
@@ -221,16 +226,6 @@ final class Common
             
         }
         
-        public static boolean isChecked(By location)
-        {
-            return Common.getVisibleWebElement(location).isSelected();
-        }
-        
-        public static boolean isUnchecked(By location)
-        {
-            return !Common.getVisibleWebElement(location).isSelected();
-        }
-        
         public static boolean isEnabled(By location)
         {
             return Common.getVisibleWebElement(location).isEnabled();
@@ -241,14 +236,24 @@ final class Common
             return !Common.getVisibleWebElement(location).isEnabled();
         }
         
+        public static boolean isVisible(By location)
+        {
+            return Common.isVisible(location);
+        }
+        
         public static boolean isPresent(By location)
         {
             return Common.isPresent(location);
         }
         
-        public static int getCount(By location)
+        public static int getVisibleCount(By location)
         {
-            return Common.getCount(location);
+            return Common.getVisibleCount(location);
+        }
+        
+        public static int getPresentCount(By location)
+        {
+            return Common.getPresentCount(location);
         }
         
         public static String getText(By location)
@@ -275,6 +280,16 @@ final class Common
         {
             return Common.getAllValue(location, attributeName);
         }
+        
+        public static boolean isChecked(By location)
+        {
+            return Common.getVisibleWebElement(location).isSelected();
+        }
+        
+        public static boolean isUnchecked(By location)
+        {
+            return !Common.getVisibleWebElement(location).isSelected();
+        }
     }
     
     public static class Setting
@@ -298,6 +313,27 @@ final class Common
         {
             Common.resetTimeout();
         }
+    }
+    
+    private static boolean isChecked(By location)
+    {
+        return Common.getVisibleWebElement(location).isSelected();
+    }
+    
+    private static boolean isUnchecked(By location)
+    {
+        return !Common.getVisibleWebElement(location).isSelected();
+    }
+    
+    private static boolean isVisible(By location)
+    {
+        return getVisibleCount(location) != 0;
+    }
+    
+    
+    private static boolean isPresent(By location)
+    {
+        return getPresentCount(location) != 0;
     }
     
     private static void _true(boolean condition)
@@ -383,11 +419,6 @@ final class Common
         driver.switchTo().defaultContent();
     }
     
-    private static boolean isPresent(By location)
-    {
-        return getCount(location) != 0;
-    }
-    
     private static String getText(By location)
     {
         return getText(getVisibleWebElement(location));
@@ -452,14 +483,24 @@ final class Common
         return webElement.getAttribute(attributeName);
     }
     
-    private static void count(By location, int expected)
+    private static void visibleCount(By location, int expected)
     {
-        equals(expected, getCount(location));
+        equals(expected, getVisibleCount(location));
     }
     
-    private static int getCount(By location)
+    private static int getVisibleCount(By location)
     { 
-        return driver.findElements(location).size();
+        return getVisibleWebElements(location).size();
+    }
+    
+    private static void presentCount(By location, int expected)
+    {
+        equals(expected, getPresentCount(location));
+    }
+    
+    private static int getPresentCount(By location)
+    { 
+        return getPresentWebElements(location).size();
     }
     
     private static Table getTable(By location)
@@ -513,22 +554,22 @@ final class Common
         new Actions(driver).moveToElement(driver.findElement(location)).build().perform();
     }
     
-    private static void enabled(By location)
+    private static void clickable(By location)
     {
         handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeClickable(location));
     }
     
-    private static void disabled(By location)
+    private static void notClickable(By location)
     {
         handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.elementToBeClickable(location)));
     }
     
-    private static void checked(By location)
+    private static void selected(By location)
     {
         handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeSelected(location));
     }
     
-    private static void unchecked(By location)
+    private static void unselected(By location)
     {
         handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.elementToBeSelected(location)));
     }
