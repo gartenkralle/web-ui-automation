@@ -87,7 +87,7 @@ public class DataReceive extends TestBase
     {
         UserInterface.Action.visitUrl(TABLE_URL);
         
-        int count = UserInterface.DataReceive.getVisibleCount(TABLE);
+        int count = UserInterface.DataReceive.getAppearedCount(TABLE);
         
         UserInterface.Verify.equals(1, count);
         

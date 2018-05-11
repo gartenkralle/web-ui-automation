@@ -176,12 +176,12 @@ public final class UserInterface
             Common.Verify.contains(expectedValues, actualValues);
         }
         
-        public static void visibleCount(By location, int expected)
+        public static void appearedCount(By location, int expected)
         {
             Common.Verify.visibleCount(location, expected);
         }
         
-        public static void presentCount(By location, int expected)
+        public static void availableCount(By location, int expected)
         {
             Common.Verify.presentCount(location, expected);
         }
@@ -234,12 +234,12 @@ public final class UserInterface
             return Common.DataReceive.getAllValue(location, attributeName);
         }
 
-        public static int getVisibleCount(By location)
+        public static int getAppearedCount(By location)
         {
             return Common.DataReceive.getVisibleCount(location);
         }
         
-        public static int getPresentCount(By location)
+        public static int getAvailableCount(By location)
         {
             return Common.DataReceive.getPresentCount(location);
         }
