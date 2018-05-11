@@ -101,14 +101,19 @@ public final class UserInterface
             Common.Verify.visible(location);
         }
         
+        public static void notVisible(By location)
+        {
+            Common.Verify.notVisible(location);
+        }
+        
         public static void present(By location)
         {
             Common.Verify.present(location);
         }
         
-        public static void invisible(By location)
+        public static void notPresent(By location)
         {
-            Common.Verify.invisible(location);
+            Common.Verify.notPresent(location);
         }
         
         public static void enabled(By location)

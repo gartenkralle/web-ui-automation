@@ -133,14 +133,19 @@ final class Common
             Common.getVisibleWebElement(location);
         }
         
+        public static void notVisible(By location)
+        {
+            Common.invisible(location);
+        }
+        
         public static void present(By location)
         {
             Common.getPresentWebElement(location);
         }
         
-        public static void invisible(By location)
+        public static void notPresent(By location)
         {
-            Common.disappeared(location);
+            Common.notPresent(location);
         }
         
         public static <T> void equals(T expectedValue, T actualValue)
@@ -595,6 +600,11 @@ final class Common
         return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.presenceOfElementLocated(location));
     }
     
+    private static void notPresent(By location)
+    {
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.presenceOfElementLocated(location)));
+    }
+    
     private static List<WebElement> getPresentWebElements(By location)
     {
         return handleException((Function<ExpectedCondition<List<WebElement>>, List<WebElement>>)wait::until, Common::getTimeoutMessage, ExpectedConditions.presenceOfAllElementsLocatedBy(location));
@@ -605,6 +615,11 @@ final class Common
         return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.visibilityOfElementLocated(location));
     }
     
+    private static void invisible(By location)
+    {
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.invisibilityOfElementLocated(location));
+    }
+    
     private static List<WebElement> getVisibleWebElements(By location)
     {
         return handleException((Function<ExpectedCondition<List<WebElement>>, List<WebElement>>)wait::until, Common::getTimeoutMessage, ExpectedConditions.visibilityOfAllElementsLocatedBy(location));
@@ -613,11 +628,6 @@ final class Common
     private static WebElement getClickableWebElement(By location)
     {
         return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeClickable(location));
-    }
-    
-    private static void disappeared(By location)
-    {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.invisibilityOfElementLocated(location));
     }
     
     private static <T, R> R handleException(Function<T, R> executeFunction, Function<T, String> exceptionMessageFunction, T arg)
