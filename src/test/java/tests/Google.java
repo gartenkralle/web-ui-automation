@@ -23,7 +23,7 @@ public class Google extends TestBase
         UserInterface.Verify.visible(AUTO_COMPLETION_LIST_BOX);
         UserInterface.Action.pressEscape();
         UserInterface.Action.clickElement(SEARCH_BUTTON);
-        UserInterface.Verify.invisible(TITLE_PIC);
+        UserInterface.Verify.notVisible(TITLE_PIC);
         
         String searchValue = UserInterface.DataReceive.getText(SEARCH_FIELD);
         
