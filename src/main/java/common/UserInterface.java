@@ -96,22 +96,22 @@ public final class UserInterface
             
         }
         
-        public static void visible(By location)
+        public static void appeared(By location)
         {
             Common.Verify.visible(location);
         }
         
-        public static void notVisible(By location)
+        public static void disappeared(By location)
         {
             Common.Verify.notVisible(location);
         }
         
-        public static void present(By location)
+        public static void available(By location)
         {
             Common.Verify.present(location);
         }
         
-        public static void notPresent(By location)
+        public static void unavailable(By location)
         {
             Common.Verify.notPresent(location);
         }
