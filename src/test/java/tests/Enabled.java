@@ -20,16 +20,7 @@ public class Enabled extends TestBase
         UserInterface.Action.visitUrl(ENABLED_URL);
         UserInterface.Action.selectFrame(RESULT_IFRAME);
         
-        
         UserInterface.Verify.enabled(ENABLED);
-        
-        UserInterface.Verify._true(UserInterface.DataReceive.isEnabled(ENABLED));
-        UserInterface.Verify._false(UserInterface.DataReceive.isDisabled(ENABLED));
-        
-        
         UserInterface.Verify.disabled(DISABLED);
-        
-        UserInterface.Verify._true(UserInterface.DataReceive.isDisabled(DISABLED));
-        UserInterface.Verify._false(UserInterface.DataReceive.isEnabled(DISABLED));
     }
 }

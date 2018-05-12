@@ -21,18 +21,10 @@ public class Checkbox extends TestBase
         
         
         UserInterface.Action.checkCheckbox(CHECKBOX);
-        
         UserInterface.Verify.checked(CHECKBOX);
-        
-        UserInterface.Verify._true(UserInterface.DataReceive.isChecked(CHECKBOX));
-        UserInterface.Verify._false(UserInterface.DataReceive.isUnchecked(CHECKBOX));
         
         
         UserInterface.Action.uncheckCheckbox(CHECKBOX);
-        
         UserInterface.Verify.unchecked(CHECKBOX);
-        
-        UserInterface.Verify._true(UserInterface.DataReceive.isUnchecked(CHECKBOX));
-        UserInterface.Verify._false(UserInterface.DataReceive.isChecked(CHECKBOX));
     }
 }
