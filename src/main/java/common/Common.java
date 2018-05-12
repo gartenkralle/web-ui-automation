@@ -223,9 +223,9 @@ final class Common
             Common.notEmpty(values);
         }
 
-        public static void table(By actualTable, Table expectedTable)
+        public static void table(By actualTableLocation, Table expectedTable)
         {
-            Common.table(actualTable, expectedTable);
+            Common.table(actualTableLocation, expectedTable);
         }
     }
     
@@ -472,11 +472,11 @@ final class Common
         return getPresentWebElements(location).size();
     }
     
-    private static Table getTable(By location)
+    private static Table getTable(By tableLocation)
     {
         Table table = new Table();
         
-        WebElement tableWebElement = getVisibleWebElement(location);
+        WebElement tableWebElement = getVisibleWebElement(tableLocation);
         List<WebElement> rowWebElements = tableWebElement.findElements(By.xpath(StringCollection.XPath.ROW_SELECTOR_INSIDE));
         
         for(WebElement rowWebElement : rowWebElements)
@@ -506,9 +506,35 @@ final class Common
         return colWebElement.getText();
     }
     
-    public static void table(By actualTable, Table expectedTable)
+    private static void table(By actualTable, Table expectedTable)
     {
-        Verify.equals(expectedTable, getTable(actualTable));
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, tableToBe(actualTable, expectedTable));
+    }
+    
+    private static boolean isEquals(By actualTable, Table expectedTable)
+    {
+        return getTable(actualTable).equals(expectedTable);
+    }
+    
+    private static ExpectedCondition<Boolean> tableToBe(final By actualTableLocation, final Table expectedTable)
+    {
+        return new ExpectedCondition<Boolean>()
+        {
+            @Override
+            public Boolean apply(WebDriver driver)
+            {
+                return isEquals(actualTableLocation, expectedTable);
+            }
+            
+            @Override
+            public String toString()
+            {
+                Table actualTable = getTable(actualTableLocation);
+                
+                return System.lineSeparator() +  StringCollection.Identifier.ACTUAL_TABLE_HEADER + System.lineSeparator() + actualTable.toString() +
+                       System.lineSeparator() + StringCollection.Identifier.EXPECTED_TABLE_HEADER + System.lineSeparator() + expectedTable.toString();
+            }
+        };
     }
     
     private static void moveSlider(By location, int pixel)

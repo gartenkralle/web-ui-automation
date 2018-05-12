@@ -203,9 +203,9 @@ public final class UserInterface
             Common.Verify._false(condition);
         }
         
-        public static void table(By actualTable, Table expectedTable)
+        public static void table(By actualTableLocation, Table expectedTable)
         {
-            Common.Verify.table(actualTable, expectedTable);
+            Common.Verify.table(actualTableLocation, expectedTable);
         }
         
         public static void tableRow(By actualTable, Row expectedRow)
@@ -219,6 +219,11 @@ public final class UserInterface
         }
         
         public static void tableCell(By actualTable, String text, int row, int col)
+        {
+            throw new UnsupportedOperationException();
+        }
+        
+        public static void tooltip(By actualTooltipLocation, String expectedTooltip)
         {
             throw new UnsupportedOperationException();
         }

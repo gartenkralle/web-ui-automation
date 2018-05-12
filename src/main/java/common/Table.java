@@ -36,6 +36,49 @@ public class Table implements Iterable<Table.Row>
         return table;
     }
     
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o == null )
+        {
+            return false;
+        }
+        if (!o.getClass().equals(getClass()))
+        {
+            return false;
+        }
+      
+        Table table = (Table)o;
+      
+        if(rows.size() != table.rows.size())
+        {
+            return false;
+        }
+        
+        for(int i = 0; i < rows.size(); i++)
+        {
+            if(!rows.get(i).equals(table.rows.get(i)))
+            {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    @Override
+    public String toString()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        
+        for(Row row : rows)
+        {
+            stringBuilder.append(row.toString() + System.lineSeparator());
+        }
+        
+        return stringBuilder.toString();
+    }
+    
     public static class Row
     {
         private final List<String> cols = new ArrayList<>();
@@ -60,6 +103,52 @@ public class Table implements Iterable<Table.Row>
             }
             
             return row;
+        }
+        
+        @Override
+        public boolean equals(Object o)
+        {
+            if (o == null )
+            {
+                return false;
+            }
+            if (!o.getClass().equals(getClass()))
+            {
+                return false;
+            }
+          
+            Row row = (Row)o;
+            
+            if(cols.size() != row.cols.size())
+            {
+                return false;
+            }
+            
+            for(int i = 0; i < cols.size(); i++)
+            {
+                if(!cols.get(i).equals(row.cols.get(i)))
+                {
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+        
+        @Override
+        public String toString()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            List<String> row = new ArrayList<>();
+            
+            for(String col : cols)
+            {
+                row.add(col.toString());
+            }
+            
+            stringBuilder.append(String.join(StringCollection.General.SPACE, row));
+            
+            return stringBuilder.toString();
         }
     }
 }

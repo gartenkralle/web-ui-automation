@@ -7,6 +7,16 @@ public class StringCollection
         
     }
     
+    public static class General
+    {
+        private General()
+        {
+            
+        }
+        
+        public static final String SPACE = " ";
+    }
+    
     public static class XPath
     {
         private XPath()
@@ -29,6 +39,8 @@ public class StringCollection
         public static final String EXPECTED_VALUE = "Expected value: ";
         public static final String ACTUAL_VALUE = "Actual value: ";
         public static final String CONTAINMENT_VALUE = "Containment value: ";
+        public static final String ACTUAL_TABLE_HEADER = "Actual table: ";
+        public static final String EXPECTED_TABLE_HEADER = "Expected table: ";
     }
     
     public static class Error
