@@ -41,6 +41,7 @@ public class StringCollection
         public static final String CONTAINMENT_VALUE = "Containment value: ";
         public static final String ACTUAL_TABLE_HEADER = "Actual table: ";
         public static final String EXPECTED_TABLE_HEADER = "Expected table: ";
+        public static final String EXPECTED_ROW_HEADER = "Expected row: ";
     }
     
     public static class Error

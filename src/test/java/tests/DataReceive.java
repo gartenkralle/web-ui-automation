@@ -51,6 +51,16 @@ public class DataReceive extends TestBase
     }
     
     @Test
+    public void getTable4()
+    {
+        UserInterface.Action.visitUrl(TABLE_URL);
+        
+        Row expectedRow = Row.create("Island Trading", "Helen Bennett", "UK");
+        
+        UserInterface.Verify.tableRow(TABLE, expectedRow);
+    }
+    
+    @Test
     public void getTable2()
     {
         UserInterface.Action.visitUrl(TABLE_URL);

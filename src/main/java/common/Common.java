@@ -227,6 +227,11 @@ final class Common
         {
             Common.table(actualTableLocation, expectedTable);
         }
+
+        public static void tableRow(By actualTable, Row expectedRow)
+        {
+            Common.tableRow(actualTable, expectedRow);
+        }
     }
     
     public static class DataReceive
@@ -506,14 +511,34 @@ final class Common
         return colWebElement.getText();
     }
     
-    private static void table(By actualTable, Table expectedTable)
+    private static void table(By actualTableLocation, Table expectedTable)
     {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, tableToBe(actualTable, expectedTable));
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, tableToBe(actualTableLocation, expectedTable));
     }
     
-    private static boolean isEquals(By actualTable, Table expectedTable)
+    public static void tableRow(By actualTableLocation, Row expectedRow)
     {
-        return getTable(actualTable).equals(expectedTable);
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, tableRowToBe(actualTableLocation, expectedRow));
+    }
+    
+    private static boolean isEquals(By actualTableLocation, Table expectedTable)
+    {
+        return getTable(actualTableLocation).equals(expectedTable);
+    }
+    
+    private static boolean isEquals(By actualTableLocation, Row expectedRow)
+    {
+        Table actualTable = getTable(actualTableLocation);
+        
+        for(Row row : actualTable)
+        {
+            if(row.equals(expectedRow))
+            {
+                return true;
+            }
+        }
+        
+        return false;
     }
     
     private static ExpectedCondition<Boolean> tableToBe(final By actualTableLocation, final Table expectedTable)
@@ -533,6 +558,27 @@ final class Common
                 
                 return System.lineSeparator() +  StringCollection.Identifier.ACTUAL_TABLE_HEADER + System.lineSeparator() + actualTable.toString() +
                        System.lineSeparator() + StringCollection.Identifier.EXPECTED_TABLE_HEADER + System.lineSeparator() + expectedTable.toString();
+            }
+        };
+    }
+    
+    private static ExpectedCondition<Boolean> tableRowToBe(final By actualTableLocation, final Row expectedRow)
+    {
+        return new ExpectedCondition<Boolean>()
+        {
+            @Override
+            public Boolean apply(WebDriver driver)
+            {
+                return isEquals(actualTableLocation, expectedRow);
+            }
+            
+            @Override
+            public String toString()
+            {
+                Table actualTable = getTable(actualTableLocation);
+                
+                return System.lineSeparator() +  StringCollection.Identifier.ACTUAL_TABLE_HEADER + System.lineSeparator() + actualTable.toString() +
+                       System.lineSeparator() + StringCollection.Identifier.EXPECTED_ROW_HEADER + System.lineSeparator() + expectedRow.toString();
             }
         };
     }

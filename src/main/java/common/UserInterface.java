@@ -210,15 +210,15 @@ public final class UserInterface
         
         public static void tableRow(By actualTable, Row expectedRow)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.tableRow(actualTable, expectedRow);
         }
         
-        public static void tableRow(By actualTable, Row expectedRow, int row)
+        public static void tableCell(By actualTable, String text, int colIndex)
         {
             throw new UnsupportedOperationException();
         }
         
-        public static void tableCell(By actualTable, String text, int row, int col)
+        public static void tableCell(By actualTable, String text, int rowIndex, int colIndex)
         {
             throw new UnsupportedOperationException();
         }
