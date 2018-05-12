@@ -233,7 +233,7 @@ public final class UserInterface
         {
             return Common.DataReceive.getAllValue(location, attributeName);
         }
-
+        
         public static int getAppearedCount(By location)
         {
             return Common.DataReceive.getVisibleCount(location);
@@ -242,26 +242,6 @@ public final class UserInterface
         public static int getAvailableCount(By location)
         {
             return Common.DataReceive.getPresentCount(location);
-        }
-
-        public static boolean isChecked(By location)
-        {
-            return Common.DataReceive.isChecked(location);
-        }
-
-        public static boolean isUnchecked(By location)
-        {
-            return Common.DataReceive.isUnchecked(location);
-        }
-
-        public static boolean isEnabled(By location)
-        {
-            return Common.DataReceive.isEnabled(location);
-        }
-
-        public static boolean isDisabled(By location)
-        {
-            return Common.DataReceive.isDisabled(location);
         }
     }
     
