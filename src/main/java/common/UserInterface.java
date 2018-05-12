@@ -151,14 +151,14 @@ public final class UserInterface
             Common.Verify.url(url);
         }
         
-        public static <T> void equals(T expectedValue, T actualValue)
+        public static <T> void equals(T expected, T actual)
         {
-            Common.Verify.equals(expectedValue, actualValue);
+            Common.Verify.equals(expected, actual);
         }
         
-        public static <T> void notEquals(T unexpectedValue, T actualValue)
+        public static <T> void notEquals(T unexpected, T actual)
         {
-            Common.Verify.notEquals(unexpectedValue, actualValue);
+            Common.Verify.notEquals(unexpected, actual);
         }
         
         public static void contains(String containment, String actualValue)
@@ -199,6 +199,11 @@ public final class UserInterface
         public static void _false(boolean condition)
         {
             Common.Verify._false(condition);
+        }
+        
+        public static void table(By actualTable, Table expectedTable)
+        {
+            Common.Verify.table(actualTable, expectedTable);
         }
     }
     

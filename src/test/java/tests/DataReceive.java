@@ -35,6 +35,22 @@ public class DataReceive extends TestBase
     }
     
     @Test
+    public void getTable3()
+    {
+        UserInterface.Action.visitUrl(TABLE_URL);
+        
+        Table expectedTable = Table.create(Row.create("Company", "Contact", "Country"),
+                                           Row.create("Alfreds Futterkiste", "Maria Anders", "Germany"),
+                                           Row.create("Centro comercial Moctezuma", "Francisco Chang", "Mexico"),
+                                           Row.create("Ernst Handel", "Roland Mendel", "Austria"),
+                                           Row.create("Island Trading", "Helen Bennett", "UK"),
+                                           Row.create("Laughing Bacchus Winecellars", "Yoshi Tannamuri", "Canada"),
+                                           Row.create("Magazzini Alimentari Riuniti", "Giovanni Rovelli", "Italy"));
+        
+        UserInterface.Verify.table(TABLE, expectedTable);
+    }
+    
+    @Test
     public void getTable2()
     {
         UserInterface.Action.visitUrl(TABLE_URL);

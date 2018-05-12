@@ -148,14 +148,14 @@ final class Common
             Common.notPresent(location);
         }
         
-        public static <T> void equals(T expectedValue, T actualValue)
+        public static <T> void equals(T expected, T actual)
         {
-            Common.equals(expectedValue, actualValue);
+            Common.equals(expected, actual);
         }
         
-        public static <T> void notEquals(T unexpectedValue, T actualValue)
+        public static <T> void notEquals(T unexpected, T actual)
         {
-            Common.notEquals(unexpectedValue, actualValue);
+            Common.notEquals(unexpected, actual);
         }
         
         public static void _true(boolean condition)
@@ -221,6 +221,11 @@ final class Common
         public static void notEmpty(List<String> values)
         {
             Common.notEmpty(values);
+        }
+
+        public static void table(By actualTable, Table expectedTable)
+        {
+            Common.table(actualTable, expectedTable);
         }
     }
     
@@ -540,6 +545,11 @@ final class Common
     private static String getCol(WebElement colWebElement)
     {
         return colWebElement.getText();
+    }
+    
+    public static void table(By actualTable, Table expectedTable)
+    {
+        Verify.equals(expectedTable, getTable(actualTable));
     }
     
     private static void moveSlider(By location, int pixel)
