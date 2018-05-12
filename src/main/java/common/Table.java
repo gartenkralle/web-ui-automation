@@ -146,9 +146,7 @@ public class Table implements Iterable<Table.Row>
                 row.add(col.toString());
             }
             
-            stringBuilder.append(String.join(StringCollection.General.SPACE, row));
-            
-            return stringBuilder.toString();
+            return stringBuilder.append(String.join(StringCollection.General.SPACE, row)).toString();
         }
     }
 }
