@@ -236,26 +236,6 @@ final class Common
             
         }
         
-        public static boolean isEnabled(By location)
-        {
-            return Common.getVisibleWebElement(location).isEnabled();
-        }
-        
-        public static boolean isDisabled(By location)
-        {
-            return !Common.getVisibleWebElement(location).isEnabled();
-        }
-        
-        public static boolean isVisible(By location)
-        {
-            return Common.isVisible(location);
-        }
-        
-        public static boolean isPresent(By location)
-        {
-            return Common.isPresent(location);
-        }
-        
         public static int getVisibleCount(By location)
         {
             return Common.getVisibleCount(location);
@@ -290,16 +270,6 @@ final class Common
         {
             return Common.getAllValue(location, attributeName);
         }
-        
-        public static boolean isChecked(By location)
-        {
-            return Common.getVisibleWebElement(location).isSelected();
-        }
-        
-        public static boolean isUnchecked(By location)
-        {
-            return !Common.getVisibleWebElement(location).isSelected();
-        }
     }
     
     public static class Setting
@@ -333,17 +303,6 @@ final class Common
     private static boolean isUnchecked(By location)
     {
         return !Common.getVisibleWebElement(location).isSelected();
-    }
-    
-    private static boolean isVisible(By location)
-    {
-        return getVisibleCount(location) != 0;
-    }
-    
-    
-    private static boolean isPresent(By location)
-    {
-        return getPresentCount(location) != 0;
     }
     
     private static void _true(boolean condition)

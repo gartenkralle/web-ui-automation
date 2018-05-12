@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 
+import common.Table.Row;
+
 public final class UserInterface
 {
     private UserInterface()
@@ -204,6 +206,21 @@ public final class UserInterface
         public static void table(By actualTable, Table expectedTable)
         {
             Common.Verify.table(actualTable, expectedTable);
+        }
+        
+        public static void tableRow(By actualTable, Row expectedRow)
+        {
+            throw new UnsupportedOperationException();
+        }
+        
+        public static void tableRow(By actualTable, Row expectedRow, int row)
+        {
+            throw new UnsupportedOperationException();
+        }
+        
+        public static void tableCell(By actualTable, String text, int row, int col)
+        {
+            throw new UnsupportedOperationException();
         }
     }
     

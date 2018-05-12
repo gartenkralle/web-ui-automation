@@ -19,10 +19,8 @@ public class Checkbox extends TestBase
         UserInterface.Action.visitUrl(CHECKBOXBUTTON_URL);
         UserInterface.Action.selectFrame(RESULT_IFRAME);
         
-        
         UserInterface.Action.checkCheckbox(CHECKBOX);
         UserInterface.Verify.checked(CHECKBOX);
-        
         
         UserInterface.Action.uncheckCheckbox(CHECKBOX);
         UserInterface.Verify.unchecked(CHECKBOX);
