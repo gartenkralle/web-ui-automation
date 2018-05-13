@@ -263,7 +263,7 @@ public final class UserInterface
         
         public static String getSelection(By dropdownMenu)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.getSelection(dropdownMenu);
         }
         
         public static String getUrl()

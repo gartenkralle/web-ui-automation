@@ -310,6 +310,11 @@ final class Common
         {
             return !isSelected(location);
         }
+
+        public static String getSelection(By dropdownMenu)
+        {
+            return Common.getSelection(dropdownMenu);
+        }
     }
     
     public static class Compare
@@ -386,6 +391,11 @@ final class Common
         {
             Common.resetTimeout();
         }
+    }
+    
+    public static String getSelection(By dropdownMenu)
+    {
+        return new Select(getVisibleWebElement(dropdownMenu)).getFirstSelectedOption().getText();
     }
     
     private static boolean isChecked(By location)
