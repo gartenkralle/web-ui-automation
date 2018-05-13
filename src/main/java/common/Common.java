@@ -254,6 +254,16 @@ final class Common
             
         }
         
+        public static void _true(boolean condition)
+        {
+            Common._true(condition);
+        }
+        
+        public static void _false(boolean condition)
+        {
+            Common._false(condition);
+        }
+        
         public static void notEmpty(List<String> values)
         {
             Common.notEmpty(values);
@@ -282,16 +292,6 @@ final class Common
         public static <T> void notEquals(T unexpected, T actual)
         {
             Common.notEquals(unexpected, actual);
-        }
-        
-        public static void _true(boolean condition)
-        {
-            Common._true(condition);
-        }
-        
-        public static void _false(boolean condition)
-        {
-            Common._false(condition);
         }
     }
     

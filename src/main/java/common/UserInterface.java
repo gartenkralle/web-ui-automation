@@ -259,11 +259,6 @@ public final class UserInterface
             
         }
         
-        public static void notEmpty(List<String> values)
-        {
-            Common.Compare.notEmpty(values);
-        }
-        
         public static void _true(boolean condition)
         {
             Common.Compare._true(condition);
@@ -272,6 +267,11 @@ public final class UserInterface
         public static void _false(boolean condition)
         {
             Common.Compare._false(condition);
+        }
+        
+        public static void notEmpty(List<String> values)
+        {
+            Common.Compare.notEmpty(values);
         }
         
         public static <T> void equals(T expected, T actual)
