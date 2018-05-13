@@ -207,6 +207,11 @@ final class Common
         {
             Common.attributeValue(location, attributeName, expectedValue);
         }
+        
+        public static void selected(By dropdownMenu, String text)
+        {
+            Common.selected(dropdownMenu, text);
+        }
     }
     
     public static class DataReceive
@@ -310,7 +315,7 @@ final class Common
         {
             return !isSelected(location);
         }
-
+        
         public static String getSelection(By dropdownMenu)
         {
             return Common.getSelection(dropdownMenu);
@@ -393,11 +398,15 @@ final class Common
         }
     }
     
-    public static String getSelection(By dropdownMenu)
+    private static String getSelection(By dropdownMenu)
     {
         return new Select(getVisibleWebElement(dropdownMenu)).getFirstSelectedOption().getText();
     }
     
+    private static boolean isEquals(By location, String text)
+    {
+        return getSelection(location).equals(text);
+    }
     private static boolean isChecked(By location)
     {
         return Common.getVisibleWebElement(location).isSelected();
@@ -540,7 +549,7 @@ final class Common
     
     private static String getAttributeValue(By location, String attributeName)
     {
-        return getValue(getPresentWebElement(location), attributeName);
+        return getAttributeValue(getPresentWebElement(location), attributeName);
     }
     
     private static List<String> getAttributeValues(By location, String attributeName)
@@ -549,13 +558,13 @@ final class Common
         
         for(WebElement webElement : getPresentWebElements(location))
         {
-            results.add(getValue(webElement, attributeName));
+            results.add(getAttributeValue(webElement, attributeName));
         }
         
         return results;
     }
     
-    private static String getValue(WebElement webElement, String attributeName)
+    private static String getAttributeValue(WebElement webElement, String attributeName)
     {
         return webElement.getAttribute(attributeName);
     }
@@ -644,6 +653,25 @@ final class Common
         return false;
     }
     
+    private static ExpectedCondition<Boolean> selectionToBe(final By actualDropdownLocation, final String expectedText)
+    {
+        return new ExpectedCondition<Boolean>()
+        {
+            @Override
+            public Boolean apply(WebDriver driver)
+            {
+                return isEquals(actualDropdownLocation, expectedText);
+            }
+            
+            @Override
+            public String toString()
+            {
+                return System.lineSeparator() + StringCollection.Identifier.ACTUAL_VALUE + System.lineSeparator() + getSelection(actualDropdownLocation) +
+                       System.lineSeparator() + StringCollection.Identifier.EXPECTED_VALUE + System.lineSeparator() + expectedText;
+            }
+        };
+    }
+    
     private static ExpectedCondition<Boolean> tableToBe(final By actualTableLocation, final Table expectedTable)
     {
         return new ExpectedCondition<Boolean>()
@@ -659,7 +687,7 @@ final class Common
             {
                 Table actualTable = getTable(actualTableLocation);
                 
-                return System.lineSeparator() +  StringCollection.Identifier.ACTUAL_TABLE_HEADER + System.lineSeparator() + actualTable.toString() +
+                return System.lineSeparator() + StringCollection.Identifier.ACTUAL_TABLE_HEADER + System.lineSeparator() + actualTable.toString() +
                        System.lineSeparator() + StringCollection.Identifier.EXPECTED_TABLE_HEADER + System.lineSeparator() + expectedTable.toString();
             }
         };
@@ -680,7 +708,7 @@ final class Common
             {
                 Table actualTable = getTable(actualTableLocation);
                 
-                return System.lineSeparator() +  StringCollection.Identifier.ACTUAL_TABLE_HEADER + System.lineSeparator() + actualTable.toString() +
+                return System.lineSeparator() + StringCollection.Identifier.ACTUAL_TABLE_HEADER + System.lineSeparator() + actualTable.toString() +
                        System.lineSeparator() + StringCollection.Identifier.EXPECTED_ROW_HEADER + System.lineSeparator() + expectedRow.toString();
             }
         };
@@ -716,6 +744,11 @@ final class Common
     private static void selected(By location)
     {
         handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeSelected(location));
+    }
+    
+    private static void selected(By location, String text)
+    {
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, selectionToBe(location, text));
     }
     
     private static void unselected(By location)

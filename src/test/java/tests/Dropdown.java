@@ -19,5 +19,6 @@ public class Dropdown extends TestBase
         UserInterface.Action.visitUrl(DROPDOWN_URL);
         UserInterface.Action.selectFrame(RESULT_IFRAME);
         UserInterface.Action.chooseDropDownItem(DROPDOWN_MENU, "Audi");
+        UserInterface.Verify.selected(DROPDOWN_MENU, "Audi");
     }
 }

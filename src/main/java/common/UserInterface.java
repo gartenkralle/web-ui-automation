@@ -150,7 +150,7 @@ public final class UserInterface
         
         public static void selected(By dropdownMenu, String text)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.selected(dropdownMenu, text);
         }
         
         public static void url(String url)
@@ -299,11 +299,6 @@ public final class UserInterface
         public static List<String> getTexts(By location)
         {
             return Common.DataReceive.getTexts(location);
-        }
-        
-        public static List<String> getAttributes(By location)
-        {
-            throw new UnsupportedOperationException();
         }
         
         public static String getAttributeValue(By location, String attributeName)
