@@ -301,7 +301,7 @@ public final class UserInterface
             return Common.DataReceive.getTexts(location);
         }
         
-        public static List<String> attribute(By location)
+        public static List<String> getAttributes(By location)
         {
             throw new UnsupportedOperationException();
         }
