@@ -128,14 +128,14 @@ public final class UserInterface
             Common.Verify.disabled(location);
         }
         
-        public static void checked(By location)
+        public static void checked(By checkbox)
         {
-            Common.Verify.selected(location);
+            Common.Verify.selected(checkbox);
         }
         
-        public static void unchecked(By location)
+        public static void unchecked(By checkbox)
         {
-            Common.Verify.unselected(location);
+            Common.Verify.unselected(checkbox);
         }
         
         public static void selected(By location)
@@ -146,6 +146,11 @@ public final class UserInterface
         public static void unselected(By location)
         {
             Common.Verify.unselected(location);
+        }
+        
+        public static void selected(By dropdownMenu, String text)
+        {
+            throw new UnsupportedOperationException();
         }
         
         public static void url(String url)
@@ -259,6 +264,11 @@ public final class UserInterface
         public static boolean isUnselected(By location)
         {
             return Common.DataReceive.isUnselected(location);
+        }
+        
+        public static String getSelection(By dropdownMenu)
+        {
+            throw new UnsupportedOperationException();
         }
         
         public static String getUrl()
