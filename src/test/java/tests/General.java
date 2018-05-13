@@ -23,7 +23,7 @@ public class General extends TestBase
         
         String header = UserInterface.DataReceive.getText(HTML5_HEADER);
         
-        UserInterface.Verify.equals("HTML5 Tutorial", header);
+        UserInterface.Compare.equals("HTML5 Tutorial", header);
     }
     
     @Test
@@ -35,6 +35,6 @@ public class General extends TestBase
         
         List<String> expectedHeaders = Arrays.asList("Examples in Every Chapter", "HTML Examples", "HTML Exercises and Quiz Test", "HTML References", "HTML Exam - Get Your Diploma!", "W3Schools' Online Certification");
         
-        UserInterface.Verify.equals(expectedHeaders, actualHeaders);
+        UserInterface.Compare.equals(expectedHeaders, actualHeaders);
     }
 }

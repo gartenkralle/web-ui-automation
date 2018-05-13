@@ -153,31 +153,6 @@ public final class UserInterface
             Common.Verify.url(url);
         }
         
-        public static <T> void equals(T expected, T actual)
-        {
-            Common.Verify.equals(expected, actual);
-        }
-        
-        public static <T> void notEquals(T unexpected, T actual)
-        {
-            Common.Verify.notEquals(unexpected, actual);
-        }
-        
-        public static void contains(String containment, String actualValue)
-        {
-            Common.Verify.contains(containment, actualValue);
-        }
-        
-        public static void contains(String expectedValue, List<String> actualValues)
-        {
-            Common.Verify.contains(expectedValue, actualValues);
-        }
-        
-        public static void contains(List<String> expectedValues, List<String> actualValues)
-        {
-            Common.Verify.contains(expectedValues, actualValues);
-        }
-        
         public static void appearedCount(By location, int expected)
         {
             Common.Verify.visibleCount(location, expected);
@@ -186,21 +161,6 @@ public final class UserInterface
         public static void availableCount(By location, int expected)
         {
             Common.Verify.presentCount(location, expected);
-        }
-        
-        public static void notEmpty(List<String> values)
-        {
-            Common.Verify.notEmpty(values);
-        }
-        
-        public static void _true(boolean condition)
-        {
-            Common.Verify._true(condition);
-        }
-        
-        public static void _false(boolean condition)
-        {
-            Common.Verify._false(condition);
         }
         
         public static void table(By actualTableLocation, Table expectedTable)
@@ -289,6 +249,54 @@ public final class UserInterface
         public static int getAvailableCount(By location)
         {
             return Common.DataReceive.getPresentCount(location);
+        }
+    }
+    
+    public static class Compare
+    {
+        private Compare()
+        {
+            
+        }
+        
+        public static void notEmpty(List<String> values)
+        {
+            Common.Compare.notEmpty(values);
+        }
+        
+        public static void _true(boolean condition)
+        {
+            Common.Compare._true(condition);
+        }
+        
+        public static void _false(boolean condition)
+        {
+            Common.Compare._false(condition);
+        }
+        
+        public static <T> void equals(T expected, T actual)
+        {
+            Common.Compare.equals(expected, actual);
+        }
+        
+        public static <T> void notEquals(T unexpected, T actual)
+        {
+            Common.Compare.notEquals(unexpected, actual);
+        }
+        
+        public static void contains(String containment, String actualValue)
+        {
+            Common.Compare.contains(containment, actualValue);
+        }
+        
+        public static void contains(String expectedValue, List<String> actualValues)
+        {
+            Common.Compare.contains(expectedValue, actualValues);
+        }
+        
+        public static void contains(List<String> expectedValues, List<String> actualValues)
+        {
+            Common.Compare.contains(expectedValues, actualValues);
         }
     }
     

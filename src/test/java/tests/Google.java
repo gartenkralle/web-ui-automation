@@ -27,6 +27,6 @@ public class Google extends TestBase
         
         String searchValue = UserInterface.DataReceive.getText(SEARCH_FIELD);
         
-        UserInterface.Verify.equals("weather", searchValue);
+        UserInterface.Compare.equals("weather", searchValue);
     }
 }

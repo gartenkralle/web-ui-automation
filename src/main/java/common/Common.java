@@ -148,34 +148,9 @@ final class Common
             Common.notPresent(location);
         }
         
-        public static <T> void equals(T expected, T actual)
-        {
-            Common.equals(expected, actual);
-        }
-        
-        public static <T> void notEquals(T unexpected, T actual)
-        {
-            Common.notEquals(unexpected, actual);
-        }
-        
-        public static void _true(boolean condition)
-        {
-            Common._true(condition);
-        }
-        
-        public static void _false(boolean condition)
-        {
-            Common._false(condition);
-        }
-        
         public static void url(String url)
         {
             Common.equals(url, driver.getCurrentUrl());
-        }
-        
-        public static void contains(String containmentValue, String actualValue)
-        {
-            Common.contains(containmentValue, actualValue);
         }
         
         public static void selected(By location)
@@ -198,16 +173,6 @@ final class Common
             Common.notClickable(location);
         }
         
-        public static void contains(String expectedValue, List<String> actualValues)
-        {
-            Common.contains(expectedValue, actualValues);
-        }
-        
-        public static void contains(List<String> expectedValues, List<String> actualValues)
-        {
-            Common.contains(expectedValues, actualValues);
-        }
-        
         public static void visibleCount(By location, int expected)
         {
             Common.visibleCount(location, expected);
@@ -216,11 +181,6 @@ final class Common
         public static void presentCount(By location, int expected)
         {
             Common.presentCount(location, expected);
-        }
-        
-        public static void notEmpty(List<String> values)
-        {
-            Common.notEmpty(values);
         }
         
         public static void table(By actualTableLocation, Table expectedTable)
@@ -284,6 +244,54 @@ final class Common
         public static List<String> getAllValue(By location, String attributeName)
         {
             return Common.getAllValue(location, attributeName);
+        }
+    }
+    
+    public static class Compare
+    {
+        private Compare()
+        {
+            
+        }
+        
+        public static void notEmpty(List<String> values)
+        {
+            Common.notEmpty(values);
+        }
+        
+        public static void contains(String expectedValue, List<String> actualValues)
+        {
+            Common.contains(expectedValue, actualValues);
+        }
+        
+        public static void contains(List<String> expectedValues, List<String> actualValues)
+        {
+            Common.contains(expectedValues, actualValues);
+        }
+        
+        public static void contains(String containmentValue, String actualValue)
+        {
+            Common.contains(containmentValue, actualValue);
+        }
+        
+        public static <T> void equals(T expected, T actual)
+        {
+            Common.equals(expected, actual);
+        }
+        
+        public static <T> void notEquals(T unexpected, T actual)
+        {
+            Common.notEquals(unexpected, actual);
+        }
+        
+        public static void _true(boolean condition)
+        {
+            Common._true(condition);
+        }
+        
+        public static void _false(boolean condition)
+        {
+            Common._false(condition);
         }
     }
     

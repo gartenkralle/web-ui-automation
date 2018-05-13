@@ -31,7 +31,7 @@ public class DataReceive extends TestBase
         
         Table actualTable = UserInterface.DataReceive.getTable(TABLE);
         
-        UserInterface.Verify.equals(expectedTable, actualTable);
+        UserInterface.Compare.equals(expectedTable, actualTable);
     }
     
     @Test
@@ -68,7 +68,7 @@ public class DataReceive extends TestBase
         Table table = UserInterface.DataReceive.getTable(TABLE);
         String actualValue = table.get(3).get(2);
         
-        UserInterface.Verify.equals("Austria", actualValue);
+        UserInterface.Compare.equals("Austria", actualValue);
     }
     
     @Test
@@ -78,7 +78,7 @@ public class DataReceive extends TestBase
         
         int count = UserInterface.DataReceive.getAppearedCount(TABLE);
         
-        UserInterface.Verify.equals(1, count);
+        UserInterface.Compare.equals(1, count);
         
     }
     
@@ -90,7 +90,7 @@ public class DataReceive extends TestBase
         
         String buttonText = UserInterface.DataReceive.getText(TRY_IT_BUTTON);
         
-        UserInterface.Verify.equals("Try it", buttonText);
+        UserInterface.Compare.equals("Try it", buttonText);
         
         UserInterface.Verify.text(TRY_IT_BUTTON, "Try it");
     }
@@ -103,6 +103,6 @@ public class DataReceive extends TestBase
         
         String onClickValue = UserInterface.DataReceive.getValue(TRY_IT_BUTTON, "onclick");
         
-        UserInterface.Verify.equals("myFunction()", onClickValue);
+        UserInterface.Compare.equals("myFunction()", onClickValue);
     }
 }
