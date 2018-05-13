@@ -243,27 +243,27 @@ public final class UserInterface
         
         public static boolean isChecked(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.isChecked(location);
         }
         
         public static boolean isUnchecked(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.isUnchecked(location);
         }
         
         public static boolean isSelected(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.isSelected(location);
         }
         
         public static boolean isUnselected(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.isUnselected(location);
         }
         
         public static String getUrl()
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.getUrl();
         }
         
         public static int getAppearedCount(By location)

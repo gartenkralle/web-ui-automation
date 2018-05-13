@@ -265,25 +265,50 @@ final class Common
         {
             return getTable(table).get(rowIndex);
         }
-
+        
         public static boolean isEnabled(By location)
         {
             return getVisibleWebElement(location).isEnabled();
         }
-
+        
         public static boolean isDisabled(By location)
         {
             return !isEnabled(location);
         }
-
+        
         public static boolean isAvailable(By location)
         {
             return getPresentCount(location) != 0;
         }
-
+        
         public static boolean isUnavailable(By location)
         {
             return !isAvailable(location);
+        }
+        
+        public static String getUrl()
+        {
+            return driver.getCurrentUrl();
+        }
+        
+        public static boolean isSelected(By location)
+        {
+            return Common.getVisibleWebElement(location).isSelected();
+        }
+
+        public static boolean isUnselected(By location)
+        {
+            return !isSelected(location);
+        }
+        
+        public static boolean isChecked(By location)
+        {
+            return isSelected(location);
+        }
+
+        public static boolean isUnchecked(By location)
+        {
+            return !isSelected(location);
         }
     }
     
