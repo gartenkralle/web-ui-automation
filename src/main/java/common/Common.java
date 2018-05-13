@@ -275,6 +275,16 @@ final class Common
         {
             return !isEnabled(location);
         }
+
+        public static boolean isAvailable(By location)
+        {
+            return getPresentCount(location) != 0;
+        }
+
+        public static boolean isUnavailable(By location)
+        {
+            return !isAvailable(location);
+        }
     }
     
     public static class Compare

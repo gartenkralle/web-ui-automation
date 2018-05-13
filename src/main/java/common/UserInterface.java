@@ -223,12 +223,12 @@ public final class UserInterface
         
         public static boolean isAvailable(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.isAvailable(location);
         }
         
         public static boolean isUnavailable(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.isUnavailable(location);
         }
         
         public static boolean isEnabled(By location)
