@@ -295,7 +295,7 @@ final class Common
         {
             return Common.getVisibleWebElement(location).isSelected();
         }
-
+        
         public static boolean isUnselected(By location)
         {
             return !isSelected(location);
@@ -305,7 +305,7 @@ final class Common
         {
             return isSelected(location);
         }
-
+        
         public static boolean isUnchecked(By location)
         {
             return !isSelected(location);

@@ -178,11 +178,6 @@ public final class UserInterface
             Common.Verify.tableRow(actualTable, expectedRow);
         }
         
-        public static void tooltip(By actualTooltipLocation, String expectedTooltip)
-        {
-            throw new UnsupportedOperationException();
-        }
-        
         public static void text(By location, String expectedText)
         {
             Common.Verify.text(location, expectedText);
@@ -294,11 +289,6 @@ public final class UserInterface
         public static Row getTableRow(By table, int rowIndex)
         {
             return Common.DataReceive.getTableRow(table, rowIndex);
-        }
-        
-        public static String getTooltip(By tooltipLocation)
-        {
-            throw new UnsupportedOperationException();
         }
         
         public static String getText(By location)
