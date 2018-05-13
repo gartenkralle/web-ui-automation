@@ -213,12 +213,12 @@ public final class UserInterface
         
         public static boolean isAppeared(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.isAppeared(location);
         }
         
         public static boolean isDisappeared(By location)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.isDisappeared(location);
         }
         
         public static boolean isAvailable(By location)
@@ -283,7 +283,7 @@ public final class UserInterface
         
         public static Row getTableRow(By table, int rowIndex)
         {
-            throw new UnsupportedOperationException();
+            return Common.DataReceive.getTableRow(table, rowIndex);
         }
         
         public static String getTooltip(By tooltipLocation)

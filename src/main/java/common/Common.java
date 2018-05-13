@@ -250,6 +250,21 @@ final class Common
         {
             return Common.getAttributeValues(location, attributeName);
         }
+        
+        public static boolean isAppeared(By location)
+        {
+            return driver.findElement(location).isDisplayed();
+        }
+        
+        public static boolean isDisappeared(By location)
+        {
+            return !isAppeared(location);
+        }
+        
+        public static Row getTableRow(By table, int rowIndex)
+        {
+            return getTable(table).get(rowIndex);
+        }
     }
     
     public static class Compare
