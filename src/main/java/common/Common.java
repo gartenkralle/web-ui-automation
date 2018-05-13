@@ -236,19 +236,19 @@ final class Common
             return Common.getTable(location);
         }
         
-        public static List<String> getAllText(By location)
+        public static List<String> getTexts(By location)
         {
-            return Common.getAllText(location);
+            return Common.getTexts(location);
         }
         
-        public static String getValue(By location, String attributeName)
+        public static String getAttributeValue(By location, String attributeName)
         {
-            return Common.getValue(location, attributeName);
+            return Common.getAttributeValue(location, attributeName);
         }
         
-        public static List<String> getAllValue(By location, String attributeName)
+        public static List<String> getAttributeValues(By location, String attributeName)
         {
-            return Common.getAllValue(location, attributeName);
+            return Common.getAttributeValues(location, attributeName);
         }
     }
     
@@ -269,7 +269,12 @@ final class Common
             Common._false(condition);
         }
         
-        public static void notEmpty(List<String> values)
+        public static <T> void empty(List<T> values)
+        {
+            Common.empty(values);
+        }
+        
+        public static <T> void notEmpty(List<T> values)
         {
             Common.notEmpty(values);
         }
@@ -401,7 +406,12 @@ final class Common
         ReflectionAssert.assertReflectionEquals(expectedValue, actualValue);
     }
     
-    private static void notEmpty(List<String> values)
+    private static <T> void empty(List<T> values)
+    {
+        equals(0, values.size());
+    }
+    
+    private static <T> void notEmpty(List<T> values)
     {
         notEquals(0, values.size());
     }
@@ -421,7 +431,7 @@ final class Common
         return getText(getVisibleWebElement(location));
     }
     
-    private static List<String> getAllText(By location)
+    private static List<String> getTexts(By location)
     {
         List<String> results = new ArrayList<>();
         
@@ -458,12 +468,12 @@ final class Common
         return result;
     }
     
-    private static String getValue(By location, String attributeName)
+    private static String getAttributeValue(By location, String attributeName)
     {
         return getValue(getPresentWebElement(location), attributeName);
     }
     
-    private static List<String> getAllValue(By location, String attributeName)
+    private static List<String> getAttributeValues(By location, String attributeName)
     {
         List<String> results = new ArrayList<>();
         

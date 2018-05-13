@@ -221,29 +221,59 @@ public final class UserInterface
             
         }
         
-        public static Table getTable(By location)
+        public static boolean isAppeared(By location)
         {
-            return Common.DataReceive.getTable(location);
+            throw new UnsupportedOperationException();
         }
         
-        public static String getText(By location)
+        public static boolean isDisappeared(By location)
         {
-            return Common.DataReceive.getText(location);
+            throw new UnsupportedOperationException();
         }
         
-        public static List<String> getAllText(By location)
+        public static boolean isAvailable(By location)
         {
-            return Common.DataReceive.getAllText(location);
+            throw new UnsupportedOperationException();
         }
         
-        public static String getValue(By location, String attributeName)
+        public static boolean isUnavailable(By location)
         {
-            return Common.DataReceive.getValue(location, attributeName);
+            throw new UnsupportedOperationException();
         }
         
-        public static List<String> getAllValue(By location, String attributeName)
+        public static boolean isEnabled(By location)
         {
-            return Common.DataReceive.getAllValue(location, attributeName);
+            throw new UnsupportedOperationException();
+        }
+        
+        public static boolean isDisabled(By location)
+        {
+            throw new UnsupportedOperationException();
+        }
+        
+        public static boolean isChecked(By location)
+        {
+            throw new UnsupportedOperationException();
+        }
+        
+        public static boolean isUnchecked(By location)
+        {
+            throw new UnsupportedOperationException();
+        }
+        
+        public static boolean isSelected(By location)
+        {
+            throw new UnsupportedOperationException();
+        }
+        
+        public static boolean isUnselected(By location)
+        {
+            throw new UnsupportedOperationException();
+        }
+        
+        public static String getUrl()
+        {
+            throw new UnsupportedOperationException();
         }
         
         public static int getAppearedCount(By location)
@@ -254,6 +284,56 @@ public final class UserInterface
         public static int getAvailableCount(By location)
         {
             return Common.DataReceive.getPresentCount(location);
+        }
+        
+        public static Table getTable(By location)
+        {
+            return Common.DataReceive.getTable(location);
+        }
+        
+        public static Row getTableRow(By actualTable, Row expectedRow)
+        {
+            throw new UnsupportedOperationException();
+        }
+        
+        public static String getTableCell(By actualTable, String text, int colIndex)
+        {
+            throw new UnsupportedOperationException();
+        }
+        
+        public static String getTableCell(By actualTable, String text, int rowIndex, int colIndex)
+        {
+            throw new UnsupportedOperationException();
+        }
+        
+        public static String getTooltip(By actualTooltipLocation, String expectedTooltip)
+        {
+            throw new UnsupportedOperationException();
+        }
+        
+        public static String getText(By location)
+        {
+            return Common.DataReceive.getText(location);
+        }
+        
+        public static List<String> getTexts(By location)
+        {
+            return Common.DataReceive.getTexts(location);
+        }
+        
+        public static boolean attribute(By location, String expectedAttribute)
+        {
+            throw new UnsupportedOperationException();
+        }
+        
+        public static String getAttributeValue(By location, String attributeName)
+        {
+            return Common.DataReceive.getAttributeValue(location, attributeName);
+        }
+        
+        public static List<String> getAttributeValues(By location, String attributeName)
+        {
+            return Common.DataReceive.getAttributeValues(location, attributeName);
         }
     }
     
@@ -274,11 +354,6 @@ public final class UserInterface
             Common.Compare._false(condition);
         }
         
-        public static void notEmpty(List<String> values)
-        {
-            Common.Compare.notEmpty(values);
-        }
-        
         public static <T> void equals(T expected, T actual)
         {
             Common.Compare.equals(expected, actual);
@@ -287,6 +362,16 @@ public final class UserInterface
         public static <T> void notEquals(T unexpected, T actual)
         {
             Common.Compare.notEquals(unexpected, actual);
+        }
+        
+        public static <T> void empty(List<T> values)
+        {
+            Common.Compare.empty(values);
+        }
+        
+        public static <T> void notEmpty(List<T> values)
+        {
+            Common.Compare.notEmpty(values);
         }
         
         public static void contains(String containment, String actualValue)

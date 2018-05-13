@@ -101,7 +101,7 @@ public class DataReceive extends TestBase
         UserInterface.Action.visitUrl(INNER_TEXT_URL);
         UserInterface.Action.selectFrame("iframeResult");
         
-        String onClickValue = UserInterface.DataReceive.getValue(TRY_IT_BUTTON, "onclick");
+        String onClickValue = UserInterface.DataReceive.getAttributeValue(TRY_IT_BUTTON, "onclick");
         
         UserInterface.Compare.equals("myFunction()", onClickValue);
     }

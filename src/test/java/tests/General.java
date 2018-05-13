@@ -31,7 +31,7 @@ public class General extends TestBase
     {
         UserInterface.Action.visitUrl(GENERAL_URL);
         
-        List<String> actualHeaders = UserInterface.DataReceive.getAllText(H2_HEADERS);
+        List<String> actualHeaders = UserInterface.DataReceive.getTexts(H2_HEADERS);
         
         List<String> expectedHeaders = Arrays.asList("Examples in Every Chapter", "HTML Examples", "HTML Exercises and Quiz Test", "HTML References", "HTML Exam - Get Your Diploma!", "W3Schools' Online Certification");
         
