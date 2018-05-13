@@ -173,16 +173,6 @@ public final class UserInterface
             Common.Verify.tableRow(actualTable, expectedRow);
         }
         
-        public static void tableCell(By actualTable, String text, int colIndex)
-        {
-            throw new UnsupportedOperationException();
-        }
-        
-        public static void tableCell(By actualTable, String text, int rowIndex, int colIndex)
-        {
-            throw new UnsupportedOperationException();
-        }
-        
         public static void tooltip(By actualTooltipLocation, String expectedTooltip)
         {
             throw new UnsupportedOperationException();
@@ -286,27 +276,17 @@ public final class UserInterface
             return Common.DataReceive.getPresentCount(location);
         }
         
-        public static Table getTable(By location)
+        public static Table getTable(By table)
         {
-            return Common.DataReceive.getTable(location);
+            return Common.DataReceive.getTable(table);
         }
         
-        public static Row getTableRow(By actualTable, Row expectedRow)
-        {
-            throw new UnsupportedOperationException();
-        }
-        
-        public static String getTableCell(By actualTable, String text, int colIndex)
+        public static Row getTableRow(By table, int rowIndex)
         {
             throw new UnsupportedOperationException();
         }
         
-        public static String getTableCell(By actualTable, String text, int rowIndex, int colIndex)
-        {
-            throw new UnsupportedOperationException();
-        }
-        
-        public static String getTooltip(By actualTooltipLocation, String expectedTooltip)
+        public static String getTooltip(By tooltipLocation)
         {
             throw new UnsupportedOperationException();
         }
@@ -321,7 +301,7 @@ public final class UserInterface
             return Common.DataReceive.getTexts(location);
         }
         
-        public static boolean attribute(By location, String expectedAttribute)
+        public static List<String> attribute(By location)
         {
             throw new UnsupportedOperationException();
         }
