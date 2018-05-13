@@ -228,22 +228,22 @@ public final class UserInterface
             throw new UnsupportedOperationException();
         }
         
-        public static String text(By location, String expectedText)
+        public static void text(By location, String expectedText)
+        {
+            Common.Verify.text(location, expectedText);
+        }
+        
+        public static void texts(By location, List<String> expectedTexts)
         {
             throw new UnsupportedOperationException();
         }
         
-        public static List<String> allText(By location, List<String> expectedTexts)
+        public static void attributeValue(By location, String attributeName, String expectedValue)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.attributeValue(location, attributeName, expectedValue);
         }
         
-        public static String value(By location, String attributeName, String expectedValue)
-        {
-            throw new UnsupportedOperationException();
-        }
-        
-        public static List<String> allValue(By location, String attributeName, List<String> expectedValues)
+        public static void attributeValues(By location, String attributeName, List<String> expectedValues)
         {
             throw new UnsupportedOperationException();
         }

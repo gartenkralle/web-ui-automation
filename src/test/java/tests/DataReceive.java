@@ -35,7 +35,7 @@ public class DataReceive extends TestBase
     }
     
     @Test
-    public void getTable3()
+    public void getTable2()
     {
         UserInterface.Action.visitUrl(TABLE_URL);
         
@@ -51,7 +51,7 @@ public class DataReceive extends TestBase
     }
     
     @Test
-    public void getTable4()
+    public void getTable3()
     {
         UserInterface.Action.visitUrl(TABLE_URL);
         
@@ -61,7 +61,7 @@ public class DataReceive extends TestBase
     }
     
     @Test
-    public void getTable2()
+    public void getTable4()
     {
         UserInterface.Action.visitUrl(TABLE_URL);
         
@@ -91,5 +91,18 @@ public class DataReceive extends TestBase
         String buttonText = UserInterface.DataReceive.getText(TRY_IT_BUTTON);
         
         UserInterface.Verify.equals("Try it", buttonText);
+        
+        UserInterface.Verify.text(TRY_IT_BUTTON, "Try it");
+    }
+    
+    @Test
+    public void getValue()
+    {
+        UserInterface.Action.visitUrl(INNER_TEXT_URL);
+        UserInterface.Action.selectFrame("iframeResult");
+        
+        String onClickValue = UserInterface.DataReceive.getValue(TRY_IT_BUTTON, "onclick");
+        
+        UserInterface.Verify.equals("myFunction()", onClickValue);
     }
 }

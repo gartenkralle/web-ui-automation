@@ -222,15 +222,25 @@ final class Common
         {
             Common.notEmpty(values);
         }
-
+        
         public static void table(By actualTableLocation, Table expectedTable)
         {
             Common.table(actualTableLocation, expectedTable);
         }
-
+        
         public static void tableRow(By actualTable, Row expectedRow)
         {
             Common.tableRow(actualTable, expectedRow);
+        }
+        
+        public static void text(By location, String expectedText)
+        {
+            Common.text(location, expectedText);
+        }
+        
+        public static void attributeValue(By location, String attributeName, String expectedValue)
+        {
+            Common.attributeValue(location, attributeName, expectedValue);
         }
     }
     
@@ -639,6 +649,16 @@ final class Common
     private static WebElement getPresentWebElement(By location)
     {
         return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.presenceOfElementLocated(location));
+    }
+    
+    private static void text(By location, String expectedText)
+    {
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.textToBe(location, expectedText));
+    }
+    
+    private static void attributeValue(By location, String attributeName, String expectedValue)
+    {
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.attributeContains(location, attributeName, expectedValue));
     }
     
     private static void notPresent(By location)
