@@ -253,7 +253,7 @@ final class Common
         
         public static boolean isAppeared(By location)
         {
-            return driver.findElement(location).isDisplayed();
+            return getVisibleWebElement(location).isDisplayed();
         }
         
         public static boolean isDisappeared(By location)
@@ -264,6 +264,16 @@ final class Common
         public static Row getTableRow(By table, int rowIndex)
         {
             return getTable(table).get(rowIndex);
+        }
+
+        public static boolean isEnabled(By location)
+        {
+            return getVisibleWebElement(location).isEnabled();
+        }
+
+        public static boolean isDisabled(By location)
+        {
+            return !isEnabled(location);
         }
     }
     
