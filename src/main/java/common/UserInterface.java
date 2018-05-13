@@ -198,6 +198,11 @@ public final class UserInterface
             throw new UnsupportedOperationException();
         }
         
+        public static void attribute(By location, String expectedAttribute)
+        {
+            Common.Verify.attribute(location, expectedAttribute);
+        }
+        
         public static void attributeValue(By location, String attributeName, String expectedValue)
         {
             Common.Verify.attributeValue(location, attributeName, expectedValue);
