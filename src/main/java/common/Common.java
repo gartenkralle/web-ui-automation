@@ -61,7 +61,8 @@ final class Common
         
         public static void chooseDropDownItem(By location, String item)
         {
-            Common.chooseDropDownItem(location, item);
+            Select select =  handleException((WebElement webElement) -> new Select(webElement), Common::getUnexpectedTagNameMessage, Common.getClickableWebElement(location));
+            handleException(select::selectByVisibleText, Common::getNoSuchElementMessage, item);
         }
         
         public static void selectDefaultFrame()
@@ -91,7 +92,7 @@ final class Common
         
         public static void checkCheckbox(By location)
         {
-            if(isUnchecked(location))
+            if(!DataReceive.isChecked(location))
             {
                 getClickableWebElement(location).click();
             }
@@ -99,7 +100,7 @@ final class Common
         
         public static void uncheckCheckbox(By location)
         {
-            if(isChecked(location))
+            if(DataReceive.isChecked(location))
             {
                 getClickableWebElement(location).click();
             }
@@ -137,7 +138,7 @@ final class Common
         
         public static void notVisible(By location)
         {
-            Common.invisible(location);
+            handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.invisibilityOfElementLocated(location));
         }
         
         public static void present(By location)
@@ -147,7 +148,7 @@ final class Common
         
         public static void notPresent(By location)
         {
-            Common.notPresent(location);
+            handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.presenceOfElementLocated(location)));
         }
         
         public static void url(String url)
@@ -157,22 +158,22 @@ final class Common
         
         public static void selected(By location)
         {
-            Common.selected(location);
+            handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeSelected(location));
         }
         
         public static void unselected(By location)
         {
-            Common.unselected(location);
+            handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.elementToBeSelected(location)));
         }
         
         public static void enabled(By location)
         {
-            Common.clickable(location);
+            handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeClickable(location));
         }
         
         public static void disabled(By location)
         {
-            Common.notClickable(location);
+            handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.elementToBeClickable(location)));
         }
         
         public static void visibleCount(By location, int expected)
@@ -182,29 +183,29 @@ final class Common
         
         public static void presentCount(By location, int expected)
         {
-            Common.equals(expected, getPresentCount(location));
+            Common.equals(expected, DataReceive.getPresentCount(location));
         }
         
         public static void table(By actualTableLocation, Table expectedTable)
         {
-            Common.table(actualTableLocation, expectedTable);
+            handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, common.ExpectedConditions.tableToBe(actualTableLocation, expectedTable));
         }
         
-        public static void tableRow(By actualTable, Row expectedRow)
+        public static void tableRow(By actualTableLocation, Row expectedRow)
         {
-            Common.tableRow(actualTable, expectedRow);
+            handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, common.ExpectedConditions.tableRowToBe(actualTableLocation, expectedRow));
         }
         
         public static void text(By location, String expectedText)
         {
-            Common.text(location, expectedText);
+            handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.textToBe(location, expectedText));
         }
         
         public static void texts(By location, List<String> expectedTexts)
         {
             for(String expectedText : expectedTexts)
             {
-                Common.text(location, expectedText);
+                text(location, expectedText);
             }
         }
         
@@ -215,12 +216,15 @@ final class Common
         
         public static void attributeValues(By location, String attributeName, List<String> expectedValues)
         {
-            Common.attributeValues(location, attributeName, expectedValues);
+            for(String expectedValue : expectedValues)
+            {
+                attributeValue(location, attributeName, expectedValue);
+            }
         }
         
-        public static void selected(By dropdownMenu, String text)
+        public static void selected(By dropdownMenuLocation, String text)
         {
-            Common.selected(dropdownMenu, text);
+            handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, common.ExpectedConditions.selectionToBe(dropdownMenuLocation, text));
         }
     }
     
@@ -238,7 +242,7 @@ final class Common
         
         public static int getPresentCount(By location)
         {
-            return Common.getPresentCount(location);
+            return getPresentWebElements(location).size();
         }
         
         public static String getText(By location)
@@ -275,7 +279,7 @@ final class Common
         
         public static String getAttributeValue(By location, String attributeName)
         {
-            return Common.getAttributeValue(location, attributeName);
+            return Common.getAttributeValue(getPresentWebElement(location), attributeName);
         }
         
         public static List<String> getAttributeValues(By location, String attributeName)
@@ -385,7 +389,10 @@ final class Common
         
         public static void contains(String expectedValue, List<String> actualValues)
         {
-            Common.contains(expectedValue, actualValues);
+            if(!actualValues.contains(expectedValue))
+            {
+                errorMessage(getNotContainsMessage(expectedValue, actualValues));
+            }
         }
         
         public static void contains(List<String> expectedValues, List<String> actualValues)
@@ -438,16 +445,6 @@ final class Common
         }
     }
     
-    private static boolean isChecked(By location)
-    {
-        return Common.getVisibleWebElement(location).isSelected();
-    }
-    
-    private static boolean isUnchecked(By location)
-    {
-        return !isChecked(location);
-    }
-    
     private static void pressKey(Keys key)
     {
         getVisibleWebElement(ANY_ELEMENT).sendKeys(key);
@@ -458,14 +455,6 @@ final class Common
         if(!actualValue.contains(containment))
         {
             errorMessage(getNotContainsMessage(containment, actualValue));
-        }
-    }
-    
-    private static void contains(String expectedValue, List<String> actualValues)
-    {
-        if(!actualValues.contains(expectedValue))
-        {
-            errorMessage(getNotContainsMessage(expectedValue, actualValues));
         }
     }
     
@@ -510,27 +499,9 @@ final class Common
         return result;
     }
     
-    private static String getAttributeValue(By location, String attributeName)
-    {
-        return getAttributeValue(getPresentWebElement(location), attributeName);
-    }
-    
-    private static void attributeValues(By location, String attributeName, List<String> expectedValues)
-    {
-        for(String expectedValue : expectedValues)
-        {
-            attributeValue(location, attributeName, expectedValue);
-        }
-    }
-    
     private static String getAttributeValue(WebElement webElement, String attributeName)
     {
         return webElement.getAttribute(attributeName);
-    }
-    
-    private static int getPresentCount(By location)
-    { 
-        return getPresentWebElements(location).size();
     }
     
     private static Row getRow(WebElement rowWebElement)
@@ -552,65 +523,14 @@ final class Common
         return colWebElement.getText();
     }
     
-    private static void table(By actualTableLocation, Table expectedTable)
-    {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, common.ExpectedConditions.tableToBe(actualTableLocation, expectedTable));
-    }
-    
-    private static void tableRow(By actualTableLocation, Row expectedRow)
-    {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, common.ExpectedConditions.tableRowToBe(actualTableLocation, expectedRow));
-    }
-    
-    private static void clickable(By location)
-    {
-        handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeClickable(location));
-    }
-    
-    private static void notClickable(By location)
-    {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.elementToBeClickable(location)));
-    }
-    
-    private static void selected(By location)
-    {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeSelected(location));
-    }
-    
-    private static void selected(By location, String text)
-    {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, common.ExpectedConditions.selectionToBe(location, text));
-    }
-    
-    private static void unselected(By location)
-    {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.elementToBeSelected(location)));
-    }
-    
-    private static void chooseDropDownItem(By location, String item)
-    {
-        Select select =  handleException((WebElement webElement) -> new Select(webElement), Common::getUnexpectedTagNameMessage, Common.getClickableWebElement(location));
-        handleException(select::selectByVisibleText, Common::getNoSuchElementMessage, item);
-    }
-    
     private static WebElement getPresentWebElement(By location)
     {
         return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.presenceOfElementLocated(location));
     }
     
-    private static void text(By location, String expectedText)
-    {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.textToBe(location, expectedText));
-    }
-    
     private static void attributeValue(By location, String attributeName, String expectedValue)
     {
         handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.attributeContains(location, attributeName, expectedValue));
-    }
-    
-    private static void notPresent(By location)
-    {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.presenceOfElementLocated(location)));
     }
     
     private static List<WebElement> getPresentWebElements(By location)
@@ -621,11 +541,6 @@ final class Common
     private static WebElement getVisibleWebElement(By location)
     {
         return handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.visibilityOfElementLocated(location));
-    }
-    
-    private static void invisible(By location)
-    {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.invisibilityOfElementLocated(location));
     }
     
     private static List<WebElement> getVisibleWebElements(By location)
