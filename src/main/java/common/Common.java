@@ -397,12 +397,21 @@ final class Common
         
         public static void contains(List<String> expectedValues, List<String> actualValues)
         {
-            Common.contains(expectedValues, actualValues);
+            for(String expectedValue : actualValues)
+            {
+                if(!actualValues.contains(expectedValue))
+                {
+                    ExceptionHandler.errorMessage(ExceptionHandler.getNotContainsMessage(expectedValue, actualValues));
+                }
+            }
         }
         
-        public static void contains(String containmentValue, String actualValue)
+        public static void contains(String containmentText, String actualText)
         {
-            Common.contains(containmentValue, actualValue);
+            if(!actualText.contains(containmentText))
+            {
+                ExceptionHandler.errorMessage(ExceptionHandler.getNotContainsMessage(containmentText, actualText));
+            }
         }
         
         public static <T> void equals(T expected, T actual)
@@ -448,25 +457,6 @@ final class Common
     private static void pressKey(Keys key)
     {
         getVisibleWebElement(ANY_ELEMENT).sendKeys(key);
-    }
-    
-    private static void contains(String containment, String actualValue) 
-    {
-        if(!actualValue.contains(containment))
-        {
-            ExceptionHandler.errorMessage(ExceptionHandler.getNotContainsMessage(containment, actualValue));
-        }
-    }
-    
-    private static void contains(List<String> expectedValues, List<String> actualValues)
-    {
-        for(String expectedValue : actualValues)
-        {
-            if(!actualValues.contains(expectedValue))
-            {
-                ExceptionHandler.errorMessage(ExceptionHandler.getNotContainsMessage(expectedValue, actualValues));
-            }
-        }
     }
     
     private static <T> void equals(T expectedValue, T actualValue)
