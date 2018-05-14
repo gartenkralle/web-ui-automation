@@ -276,14 +276,14 @@ public final class UserInterface
             return Common.DataReceive.getPresentCount(location);
         }
         
-        public static Table getTable(By table)
+        public static Table getTable(By tableLocation)
         {
-            return Common.DataReceive.getTable(table);
+            return Common.DataReceive.getTable(tableLocation);
         }
         
-        public static Row getTableRow(By table, int rowIndex)
+        public static Row getTableRow(By tableLocation, int rowIndex)
         {
-            return Common.DataReceive.getTableRow(table, rowIndex);
+            return Common.DataReceive.getTableRow(tableLocation, rowIndex);
         }
         
         public static String getText(By location)

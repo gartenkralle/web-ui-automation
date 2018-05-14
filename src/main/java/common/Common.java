@@ -46,7 +46,7 @@ final class Common
         
         public static void visitUrl(String url)
         {
-            Common.visitUrl(url);
+            handleException((Consumer<String>)driver::get, Common::getTimeoutMessage, url);
         }
         
         public static <T> void fillField(By location, T value)
@@ -66,12 +66,12 @@ final class Common
         
         public static void selectDefaultFrame()
         {
-            Common.selectDefaultFrame();
+            driver.switchTo().defaultContent();
         }
         
         public static void selectFrame(String iFrameNameOrId)
         {
-            Common.selectFrame(iFrameNameOrId);
+            handleException((Function<ExpectedCondition<WebDriver>, WebDriver>)wait::until, Common::getTimeoutMessage, ExpectedConditions.frameToBeAvailableAndSwitchToIt(iFrameNameOrId));
         }
         
         public static void clickRadioButton(By location)
@@ -107,17 +107,19 @@ final class Common
         
         public static void moveSlider(By location, int pixel)
         {
-            Common.moveSlider(location, pixel);
+            new Actions(driver).clickAndHold(getVisibleWebElement(location)).moveByOffset(pixel, 0).release().perform();
         }
         
         public static void mouseOver(By location)
         {
-            Common.mouseOver(location);
+            new Actions(driver).moveToElement(driver.findElement(location)).build().perform();
         }
         
         public static void moveSlider(By location, float percent)
         {
-            Common.moveSlider(location, percent);
+            int pixel = Math.round((((float)getVisibleWebElement(location).getSize().width / 100) * percent));
+            
+            moveSlider(location, pixel);
         }
     }
     
@@ -175,12 +177,12 @@ final class Common
         
         public static void visibleCount(By location, int expected)
         {
-            Common.visibleCount(location, expected);
+            Common.equals(expected, DataReceive.getVisibleCount(location));
         }
         
         public static void presentCount(By location, int expected)
         {
-            Common.presentCount(location, expected);
+            Common.equals(expected, getPresentCount(location));
         }
         
         public static void table(By actualTableLocation, Table expectedTable)
@@ -231,7 +233,7 @@ final class Common
         
         public static int getVisibleCount(By location)
         {
-            return Common.getVisibleCount(location);
+            return getVisibleWebElements(location).size();
         }
         
         public static int getPresentCount(By location)
@@ -241,7 +243,7 @@ final class Common
         
         public static String getText(By location)
         {
-            return Common.getText(location);
+            return Common.getText(getVisibleWebElement(location));
         }
         
         public static Table getTable(By tableLocation)
@@ -261,7 +263,14 @@ final class Common
         
         public static List<String> getTexts(By location)
         {
-            return Common.getTexts(location);
+            List<String> results = new ArrayList<>();
+            
+            for(WebElement webElement : getVisibleWebElements(location))
+            {
+                results.add(Common.getText(webElement));
+            }
+            
+            return results;
         }
         
         public static String getAttributeValue(By location, String attributeName)
@@ -271,7 +280,14 @@ final class Common
         
         public static List<String> getAttributeValues(By location, String attributeName)
         {
-            return Common.getAttributeValues(location, attributeName);
+            List<String> results = new ArrayList<>();
+            
+            for(WebElement webElement : getPresentWebElements(location))
+            {
+                results.add(Common.getAttributeValue(webElement, attributeName));
+            }
+            
+            return results;
         }
         
         public static boolean isAppeared(By location)
@@ -349,22 +365,22 @@ final class Common
         
         public static void _true(boolean condition)
         {
-            Common._true(condition);
+            Common.equals(true, condition);
         }
         
         public static void _false(boolean condition)
         {
-            Common._false(condition);
+            Common.equals(false, condition);
         }
         
         public static <T> void empty(List<T> values)
         {
-            Common.empty(values);
+            equals(0, values.size());
         }
         
         public static <T> void notEmpty(List<T> values)
         {
-            Common.notEmpty(values);
+            notEquals(0, values.size());
         }
         
         public static void contains(String expectedValue, List<String> actualValues)
@@ -389,7 +405,7 @@ final class Common
         
         public static <T> void notEquals(T unexpected, T actual)
         {
-            Common.notEquals(unexpected, actual);
+            Assert.assertNotEquals(unexpected, actual);
         }
     }
     
@@ -402,17 +418,23 @@ final class Common
         
         public static void setup(WebDriver driver)
         {
-            Common.setup(driver);
+            Common.driver = driver;
+            Common.driver.manage().deleteAllCookies();
+            
+            Common.wait = new WebDriverWait(driver, 0);
+            
+            setTimeout(Common.STANDARD_TIMEOUT_IN_SECONDS);
         }
         
         public static void setTimeout(int seconds)
         {
-            Common.setTimeout(seconds);
+            Common.driver.manage().timeouts().pageLoadTimeout(seconds, TimeUnit.SECONDS);
+            Common.wait.withTimeout(Duration.ofSeconds(seconds)).pollingEvery(Duration.ofMillis(Common.INTERVALL_IN_MILLISECONDS));
         }
         
         public static void resetTimeout()
         {
-            Common.resetTimeout();
+            setTimeout(Common.STANDARD_TIMEOUT_IN_SECONDS);
         }
     }
     
@@ -423,38 +445,7 @@ final class Common
     
     private static boolean isUnchecked(By location)
     {
-        return !Common.getVisibleWebElement(location).isSelected();
-    }
-    
-    private static void _true(boolean condition)
-    {
-        Common.equals(true, condition);
-    }
-    
-    private static void _false(boolean condition)
-    {
-        Common.equals(false, condition);
-    }
-    
-    private static void setup(WebDriver driver)
-    {
-        Common.driver = driver;
-        Common.driver.manage().deleteAllCookies();
-        
-        Common.wait = new WebDriverWait(driver, 0);
-        
-        setTimeout(Common.STANDARD_TIMEOUT_IN_SECONDS);
-    }
-    
-    private static void setTimeout(int seconds)
-    {
-        Common.driver.manage().timeouts().pageLoadTimeout(seconds, TimeUnit.SECONDS);
-        Common.wait.withTimeout(Duration.ofSeconds(seconds)).pollingEvery(Duration.ofMillis(Common.INTERVALL_IN_MILLISECONDS));
-    }
-    
-    private static void resetTimeout()
-    {
-        setTimeout(Common.STANDARD_TIMEOUT_IN_SECONDS);
+        return !isChecked(location);
     }
     
     private static void pressKey(Keys key)
@@ -492,43 +483,6 @@ final class Common
     private static <T> void equals(T expectedValue, T actualValue)
     {
         ReflectionAssert.assertReflectionEquals(expectedValue, actualValue);
-    }
-    
-    private static <T> void empty(List<T> values)
-    {
-        equals(0, values.size());
-    }
-    
-    private static <T> void notEmpty(List<T> values)
-    {
-        notEquals(0, values.size());
-    }
-    
-    private static <T> void notEquals(T unexpectedValue, T actualValue)
-    {
-        Assert.assertNotEquals(unexpectedValue, actualValue);
-    }
-    
-    private static void selectDefaultFrame()
-    {
-        driver.switchTo().defaultContent();
-    }
-    
-    private static String getText(By location)
-    {
-        return getText(getVisibleWebElement(location));
-    }
-    
-    private static List<String> getTexts(By location)
-    {
-        List<String> results = new ArrayList<>();
-        
-        for(WebElement webElement : getVisibleWebElements(location))
-        {
-            results.add(getText(webElement));
-        }
-        
-        return results;
     }
     
     private static String getText(WebElement webElement)
@@ -569,36 +523,9 @@ final class Common
         }
     }
     
-    private static List<String> getAttributeValues(By location, String attributeName)
-    {
-        List<String> results = new ArrayList<>();
-        
-        for(WebElement webElement : getPresentWebElements(location))
-        {
-            results.add(getAttributeValue(webElement, attributeName));
-        }
-        
-        return results;
-    }
-    
     private static String getAttributeValue(WebElement webElement, String attributeName)
     {
         return webElement.getAttribute(attributeName);
-    }
-    
-    private static void visibleCount(By location, int expected)
-    {
-        equals(expected, getVisibleCount(location));
-    }
-    
-    private static int getVisibleCount(By location)
-    { 
-        return getVisibleWebElements(location).size();
-    }
-    
-    private static void presentCount(By location, int expected)
-    {
-        equals(expected, getPresentCount(location));
     }
     
     private static int getPresentCount(By location)
@@ -635,23 +562,6 @@ final class Common
         handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, common.ExpectedConditions.tableRowToBe(actualTableLocation, expectedRow));
     }
     
-    private static void moveSlider(By location, int pixel)
-    {
-        new Actions(driver).clickAndHold(getVisibleWebElement(location)).moveByOffset(pixel, 0).release().perform();
-    }
-    
-    private static void moveSlider(By location, float percent)
-    {
-        int pixel = Math.round((((float)getVisibleWebElement(location).getSize().width / 100) * percent));
-        
-        moveSlider(location, pixel);
-    }
-    
-    private static void mouseOver(By location)
-    {
-        new Actions(driver).moveToElement(driver.findElement(location)).build().perform();
-    }
-    
     private static void clickable(By location)
     {
         handleException((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, Common::getTimeoutMessage, ExpectedConditions.elementToBeClickable(location));
@@ -675,16 +585,6 @@ final class Common
     private static void unselected(By location)
     {
         handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.elementToBeSelected(location)));
-    }
-    
-    private static void visitUrl(String url)
-    {
-        handleException((Consumer<String>)driver::get, Common::getTimeoutMessage, url);
-    }
-    
-    private static void selectFrame(String iFrameNameOrId)
-    {
-        handleException((Function<ExpectedCondition<WebDriver>, WebDriver>)wait::until, Common::getTimeoutMessage, ExpectedConditions.frameToBeAvailableAndSwitchToIt(iFrameNameOrId));
     }
     
     private static void chooseDropDownItem(By location, String item)
