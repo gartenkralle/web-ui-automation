@@ -244,9 +244,19 @@ final class Common
             return Common.getText(location);
         }
         
-        public static Table getTable(By location)
+        public static Table getTable(By tableLocation)
         {
-            return Common.getTable(location);
+            Table table = new Table();
+            
+            WebElement tableWebElement = getVisibleWebElement(tableLocation);
+            List<WebElement> rowWebElements = tableWebElement.findElements(By.xpath(StringCollection.XPath.ROW_SELECTOR_INSIDE));
+            
+            for(WebElement rowWebElement : rowWebElements)
+            {
+                table.add(getRow(rowWebElement));
+            }
+            
+            return table;
         }
         
         public static List<String> getTexts(By location)
@@ -326,7 +336,7 @@ final class Common
         
         public static String getSelection(By dropdownMenu)
         {
-            return Common.getSelection(dropdownMenu);
+            return new Select(getVisibleWebElement(dropdownMenu)).getFirstSelectedOption().getText();
         }
     }
     
@@ -406,15 +416,6 @@ final class Common
         }
     }
     
-    private static String getSelection(By dropdownMenu)
-    {
-        return new Select(getVisibleWebElement(dropdownMenu)).getFirstSelectedOption().getText();
-    }
-    
-    private static boolean isEquals(By location, String text)
-    {
-        return getSelection(location).equals(text);
-    }
     private static boolean isChecked(By location)
     {
         return Common.getVisibleWebElement(location).isSelected();
@@ -605,21 +606,6 @@ final class Common
         return getPresentWebElements(location).size();
     }
     
-    private static Table getTable(By tableLocation)
-    {
-        Table table = new Table();
-        
-        WebElement tableWebElement = getVisibleWebElement(tableLocation);
-        List<WebElement> rowWebElements = tableWebElement.findElements(By.xpath(StringCollection.XPath.ROW_SELECTOR_INSIDE));
-        
-        for(WebElement rowWebElement : rowWebElements)
-        {
-            table.add(getRow(rowWebElement));
-        }
-        
-        return table;
-    }
-    
     private static Row getRow(WebElement rowWebElement)
     {
         Row row = new Row();
@@ -641,93 +627,12 @@ final class Common
     
     private static void table(By actualTableLocation, Table expectedTable)
     {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, tableToBe(actualTableLocation, expectedTable));
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, common.ExpectedConditions.tableToBe(actualTableLocation, expectedTable));
     }
     
     private static void tableRow(By actualTableLocation, Row expectedRow)
     {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, tableRowToBe(actualTableLocation, expectedRow));
-    }
-    
-    private static boolean isEquals(By actualTableLocation, Table expectedTable)
-    {
-        return getTable(actualTableLocation).equals(expectedTable);
-    }
-    
-    private static boolean isEquals(By actualTableLocation, Row expectedRow)
-    {
-        Table actualTable = getTable(actualTableLocation);
-        
-        for(Row row : actualTable)
-        {
-            if(row.equals(expectedRow))
-            {
-                return true;
-            }
-        }
-        
-        return false;
-    }
-    
-    private static ExpectedCondition<Boolean> selectionToBe(final By actualDropdownLocation, final String expectedText)
-    {
-        return new ExpectedCondition<Boolean>()
-        {
-            @Override
-            public Boolean apply(WebDriver driver)
-            {
-                return isEquals(actualDropdownLocation, expectedText);
-            }
-            
-            @Override
-            public String toString()
-            {
-                return System.lineSeparator() + StringCollection.Identifier.ACTUAL_VALUE + System.lineSeparator() + getSelection(actualDropdownLocation) +
-                       System.lineSeparator() + StringCollection.Identifier.EXPECTED_VALUE + System.lineSeparator() + expectedText;
-            }
-        };
-    }
-    
-    private static ExpectedCondition<Boolean> tableToBe(final By actualTableLocation, final Table expectedTable)
-    {
-        return new ExpectedCondition<Boolean>()
-        {
-            @Override
-            public Boolean apply(WebDriver driver)
-            {
-                return isEquals(actualTableLocation, expectedTable);
-            }
-            
-            @Override
-            public String toString()
-            {
-                Table actualTable = getTable(actualTableLocation);
-                
-                return System.lineSeparator() + StringCollection.Identifier.ACTUAL_TABLE_HEADER + System.lineSeparator() + actualTable.toString() +
-                       System.lineSeparator() + StringCollection.Identifier.EXPECTED_TABLE_HEADER + System.lineSeparator() + expectedTable.toString();
-            }
-        };
-    }
-    
-    private static ExpectedCondition<Boolean> tableRowToBe(final By actualTableLocation, final Row expectedRow)
-    {
-        return new ExpectedCondition<Boolean>()
-        {
-            @Override
-            public Boolean apply(WebDriver driver)
-            {
-                return isEquals(actualTableLocation, expectedRow);
-            }
-            
-            @Override
-            public String toString()
-            {
-                Table actualTable = getTable(actualTableLocation);
-                
-                return System.lineSeparator() + StringCollection.Identifier.ACTUAL_TABLE_HEADER + System.lineSeparator() + actualTable.toString() +
-                       System.lineSeparator() + StringCollection.Identifier.EXPECTED_ROW_HEADER + System.lineSeparator() + expectedRow.toString();
-            }
-        };
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, common.ExpectedConditions.tableRowToBe(actualTableLocation, expectedRow));
     }
     
     private static void moveSlider(By location, int pixel)
@@ -764,7 +669,7 @@ final class Common
     
     private static void selected(By location, String text)
     {
-        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, selectionToBe(location, text));
+        handleException((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, Common::getTimeoutMessage, common.ExpectedConditions.selectionToBe(location, text));
     }
     
     private static void unselected(By location)
