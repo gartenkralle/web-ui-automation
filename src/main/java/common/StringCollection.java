@@ -1,6 +1,6 @@
 package common;
 
-public class StringCollection
+final class StringCollection
 {
     private StringCollection()
     {
