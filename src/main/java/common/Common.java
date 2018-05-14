@@ -198,6 +198,14 @@ final class Common
             Common.text(location, expectedText);
         }
         
+        public static void texts(By location, List<String> expectedTexts)
+        {
+            for(String expectedText : expectedTexts)
+            {
+                Common.text(location, expectedText);
+            }
+        }
+        
         public static void attribute(By location, String expectedAttribute)
         {
             Common.attribute(getPresentWebElement(location), expectedAttribute);
@@ -206,6 +214,11 @@ final class Common
         public static void attributeValue(By location, String attributeName, String expectedValue)
         {
             Common.attributeValue(location, attributeName, expectedValue);
+        }
+        
+        public static void attributeValues(By location, String attributeName, List<String> expectedValues)
+        {
+            Common.attributeValues(location, attributeName, expectedValues);
         }
         
         public static void selected(By dropdownMenu, String text)
@@ -550,6 +563,14 @@ final class Common
     private static String getAttributeValue(By location, String attributeName)
     {
         return getAttributeValue(getPresentWebElement(location), attributeName);
+    }
+    
+    private static void attributeValues(By location, String attributeName, List<String> expectedValues)
+    {
+        for(String expectedValue : expectedValues)
+        {
+            attributeValue(location, attributeName, expectedValue);
+        }
     }
     
     private static List<String> getAttributeValues(By location, String attributeName)

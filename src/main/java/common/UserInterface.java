@@ -185,7 +185,7 @@ public final class UserInterface
         
         public static void texts(By location, List<String> expectedTexts)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.texts(location, expectedTexts);
         }
         
         public static void attribute(By location, String expectedAttribute)
@@ -200,7 +200,7 @@ public final class UserInterface
         
         public static void attributeValues(By location, String attributeName, List<String> expectedValues)
         {
-            throw new UnsupportedOperationException();
+            Common.Verify.attributeValues(location, attributeName, expectedValues);
         }
     }
     
