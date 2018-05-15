@@ -2,6 +2,10 @@
 
 This project simplifies test automation of a website. It is built on the top of Selenium.
 
+## Standalone JAR
+
+[Web-UI-Automation-1.0.1](https://github.com/gartenkralle/web-ui-automation/releases/download/1.0.1/web-ui-automation-1.0.1.jar)
+
 ## Usage
 
 ```
@@ -30,7 +34,3 @@ public class Google extends TestBase
     }
 }
 ```
-
-## Download Standalone JAR
-
-[Web-UI-Automation-1.0.1](https://github.com/gartenkralle/web-ui-automation/releases/download/1.0.1/web-ui-automation-1.0.1.jar)
