@@ -30,6 +30,11 @@ public final class UserInterface
             Common.Action.clickElement(location);
         }
         
+        public static void doubleClickElement(By location)
+        {
+            Common.Action.doubleClickElement(location);
+        }
+        
         public static void clickRadioButton(By location)
         {
             Common.Action.clickRadioButton(location);

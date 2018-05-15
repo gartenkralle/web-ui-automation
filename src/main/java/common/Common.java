@@ -59,6 +59,11 @@ final class Common
             Common.getClickableWebElement(location).click();
         }
         
+        public static void doubleClickElement(By location)
+        {
+            new Actions(driver).doubleClick(Common.getClickableWebElement(location)).perform();
+        }
+        
         public static void chooseDropDownItem(By location, String item)
         {
             Select select =  ExceptionHandler.apply((WebElement webElement) -> new Select(webElement), ExceptionHandler::getUnexpectedTagNameMessage, Common.getClickableWebElement(location));
