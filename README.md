@@ -2,10 +2,6 @@
 
 This project simplifies test automation of a website. It is built on the top of Selenium.
 
-## Standalone JAR
-
-[Web-UI-Automation-1.0.2](https://github.com/gartenkralle/web-ui-automation/releases/download/1.0.2/web-ui-automation-1.0.2.jar) (Windows, Chrome)
-
 ## Usage
 
 ```
