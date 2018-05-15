@@ -1,4 +1,4 @@
-# web-ui-automation
+# Web-UI-Automation
 
 This project simplifies test automation of a website. It is built on the top of Selenium.
 
