@@ -49,18 +49,27 @@ final class Driver
         {
             chromeDriver = getWindowsChromeDriver();
         }
+        else if(SystemUtils.IS_OS_MAC)
+        {
+            chromeDriver = getMacChromeDriver();
+        }
         
         return chromeDriver;
     }
     
     private static ChromeDriver getLinuxChromeDriver()
     {
-        return getChromeDriver("chromedriver");
+        return getChromeDriver("linux/chromedriver");
     }
     
     private static ChromeDriver getWindowsChromeDriver()
     {
-        return getChromeDriver("chromedriver.exe");
+        return getChromeDriver("windows/chromedriver.exe");
+    }
+    
+    private static ChromeDriver getMacChromeDriver()
+    {
+        return getChromeDriver("mac/chromedriver");
     }
     
     private static ChromeDriver getChromeDriver(String chromedriver)
@@ -73,7 +82,7 @@ final class Driver
         }
         else if(!new File(chromedriver).isFile())
         {
-            CopyResourceFileToChildProject(chromedriver);
+            copyResourceFileToChildProject(chromedriver);
         }
         
         if(SystemUtils.IS_OS_LINUX)
@@ -106,7 +115,7 @@ final class Driver
         }
     }
     
-    private static void CopyResourceFileToChildProject(String filename)
+    private static void copyResourceFileToChildProject(String filename)
     {
         try
         {
@@ -118,6 +127,7 @@ final class Driver
             inputStream.read(buffer);
             
             File file = new File(filename);
+            file.getParentFile().mkdirs();
             OutputStream outputStream = new FileOutputStream(file);
             outputStream.write(buffer);
             outputStream.flush();
