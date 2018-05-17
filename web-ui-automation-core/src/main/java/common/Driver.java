@@ -57,20 +57,14 @@ public abstract class Driver
     {
         String driverLocation = driverPath + "/" + driverName;
         
-        final String resource = Driver.class.getClassLoader().getResource(driverLocation).getFile();
-        
-        if(new File(resource).isFile())
-        {
-            driverLocation = resource;
-        }
-        else if(!new File(driverLocation).isFile())
+        if(!new File(driverLocation).isFile())
         {
             copyResourceFileToChildProject(driverLocation);
-        }
-        
-        if(SystemUtils.IS_OS_LINUX)
-        {
-            setExecutePermission(driverLocation);
+            
+            if(SystemUtils.IS_OS_LINUX)
+            {
+                setExecutePermission(driverLocation);
+            }
         }
         
         System.setProperty(property, driverLocation);

@@ -1,5 +1,6 @@
 package common;
 
+import org.apache.commons.lang.SystemUtils;
 import org.openqa.selenium.WebDriver;
 
 final class SafariDriver extends Driver
@@ -11,6 +12,13 @@ final class SafariDriver extends Driver
     
     public static WebDriver getDriver()
     {
-        return new org.openqa.selenium.safari.SafariDriver();
+        WebDriver webDriver = null;
+        
+        if(SystemUtils.IS_OS_MAC)
+        {
+            webDriver = new org.openqa.selenium.safari.SafariDriver();
+        }
+        
+        return webDriver;
     }
 }
