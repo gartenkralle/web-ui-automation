@@ -10,6 +10,7 @@
         <module>web-ui-automation-core</module>
         <module>web-ui-automation-chrome</module>
         <module>web-ui-automation-firefox</module>
+        <module>web-ui-automation-safari</module>
     </modules>
     
     <properties>

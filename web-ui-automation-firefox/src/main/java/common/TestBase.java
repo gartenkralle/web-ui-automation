@@ -2,7 +2,6 @@ package common;
 
 import org.junit.After;
 import org.junit.Before;
-import org.openqa.selenium.WebDriver;
 
 import common.Driver;
 
@@ -11,8 +10,7 @@ public abstract class TestBase
     @Before
     public void setup()
     {
-        WebDriver webdriver = FirefoxDriver.getDriver();
-        Driver.setup(webdriver);
+        Driver.setup(FirefoxDriver.getDriver());
     }
     
     @After

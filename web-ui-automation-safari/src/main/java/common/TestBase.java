@@ -10,7 +10,7 @@ public abstract class TestBase
     @Before
     public void setup()
     {
-        Driver.setup(ChromeDriver.getDriver());
+        Driver.setup(SafariDriver.getDriver());
     }
     
     @After
