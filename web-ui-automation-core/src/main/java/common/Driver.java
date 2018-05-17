@@ -14,6 +14,8 @@ import java.util.Set;
 
 import org.apache.commons.lang.SystemUtils;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 public abstract class Driver
 {
@@ -38,21 +40,23 @@ public abstract class Driver
     
     protected static WebDriver getLinuxDriver(String driverName, String property)
     {
-        return getDriver("linux/" + driverName, property);
+        return getDriver("linux", driverName, property);
     }
     
     protected static WebDriver getWindowsDriver(String driverName, String property)
     {
-        return getDriver("windows/" + driverName, property);
+        return getDriver("windows", driverName, property);
     }
     
     protected static WebDriver getMacDriver(String driverName, String property)
     {
-        return getDriver("mac/" + driverName, property);
+        return getDriver("mac", driverName, property);
     }
     
-    private static WebDriver getDriver(String driverLocation, String property)
+    private static WebDriver getDriver(String driverPath, String driverName, String property)
     {
+        String driverLocation = driverPath + "/" + driverName;
+        
         final String resource = Driver.class.getClassLoader().getResource(driverLocation).getFile();
         
         if(new File(resource).isFile())
@@ -71,7 +75,23 @@ public abstract class Driver
         
         System.setProperty(property, driverLocation);
         
-        return new org.openqa.selenium.chrome.ChromeDriver();
+        return getDriver(property);
+    }
+    
+    private static WebDriver getDriver(String property)
+    {
+        WebDriver webDriver = null;
+        
+        if(property.contains("chrome"))
+        {
+            return new ChromeDriver();
+        }
+        else if(property.contains("gecko"))
+        {
+            return new FirefoxDriver();
+        }
+        
+        return webDriver;
     }
     
     private static void copyResourceFileToChildProject(String filename)

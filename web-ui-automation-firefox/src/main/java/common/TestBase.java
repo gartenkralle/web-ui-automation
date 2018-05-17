@@ -11,7 +11,7 @@ public abstract class TestBase
     @Before
     public void setup()
     {
-        WebDriver webdriver = FirefoxDriver.getFirefoxDriver();
+        WebDriver webdriver = FirefoxDriver.getDriver();
         Driver.setup(webdriver);
     }
     

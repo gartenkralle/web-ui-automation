@@ -3,45 +3,32 @@ package common;
 import org.apache.commons.lang.SystemUtils;
 import org.openqa.selenium.WebDriver;
 
-final class FirefoxDriver
+final class FirefoxDriver extends Driver
 {
     private FirefoxDriver()
     {
         
     }
     
-    public static WebDriver getFirefoxDriver()
+    public static WebDriver getDriver()
     {
         WebDriver webDriver =  null;
         
+        String property = "webdriver.gecko.driver";
+        
         if(SystemUtils.IS_OS_LINUX)
         {
-            webDriver = getLinuxFirefoxDriver();
+            webDriver = getLinuxDriver("geckodriver", property);
         }
         else if(SystemUtils.IS_OS_WINDOWS)
         {
-            webDriver = getWindowsFirefoxDriver();
+            webDriver = getWindowsDriver("geckodriver.exe", property);
         }
         else if(SystemUtils.IS_OS_MAC)
         {
-            webDriver = getMacFirefoxDriver();
+            webDriver = getMacDriver("geckodriver", property);
         }
         
         return webDriver;
-    }
-    
-    private static WebDriver getLinuxFirefoxDriver()
-    {
-        throw new UnsupportedOperationException();
-    }
-    
-    private static WebDriver getWindowsFirefoxDriver()
-    {
-        throw new UnsupportedOperationException();
-    }
-    
-    private static WebDriver getMacFirefoxDriver()
-    {
-        throw new UnsupportedOperationException();
     }
 }
