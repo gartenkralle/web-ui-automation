@@ -11,7 +11,7 @@ public abstract class TestBase
     @Before
     public void setup()
     {
-        WebDriver webdriver = ChromeDriver.getChromeDriver();
+        WebDriver webdriver = ChromeDriver.getDriver();
         Driver.setup(webdriver);
     }
     
