@@ -6,11 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="web-ui-automation" />
+        <module name="web-ui-automation-chrome" />
+        <module name="web-ui-automation-core" />
+        <module name="web-ui-automation-firefox" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="web-ui-automation" target="1.8" />
+      <module name="web-ui-automation-chrome" target="1.8" />
+      <module name="web-ui-automation-core" target="1.8" />
+      <module name="web-ui-automation-firefox" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

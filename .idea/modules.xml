@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/web-ui-automation-chrome/src/main/main.iml" filepath="$PROJECT_DIR$/web-ui-automation-chrome/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-ui-automation-firefox/src/main/main1.iml" filepath="$PROJECT_DIR$/web-ui-automation-firefox/src/main/main1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-ui-automation-core/src/main/main2.iml" filepath="$PROJECT_DIR$/web-ui-automation-core/src/main/main2.iml" />
       <module fileurl="file://$PROJECT_DIR$/web-ui-automation.iml" filepath="$PROJECT_DIR$/web-ui-automation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-ui-automation-chrome/web-ui-automation-chrome.iml" filepath="$PROJECT_DIR$/web-ui-automation-chrome/web-ui-automation-chrome.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-ui-automation-core/web-ui-automation-core.iml" filepath="$PROJECT_DIR$/web-ui-automation-core/web-ui-automation-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-ui-automation-firefox/web-ui-automation-firefox.iml" filepath="$PROJECT_DIR$/web-ui-automation-firefox/web-ui-automation-firefox.iml" />
     </modules>
   </component>
 </project>
