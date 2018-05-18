@@ -57,7 +57,7 @@ public abstract class Driver
     {
         String driverLocation = driverPath + "/" + driverName;
         
-        if(!new File(driverLocation).isFile())
+        if(!isResourceInChildProject(driverLocation))
         {
             copyResourceFileToChildProject(driverLocation);
             
@@ -70,6 +70,11 @@ public abstract class Driver
         System.setProperty(property, driverLocation);
         
         return getDriver(property);
+    }
+    
+    private static boolean isResourceInChildProject(String pathname)
+    {
+        return new File(pathname).isFile();
     }
     
     private static WebDriver getDriver(String property)
