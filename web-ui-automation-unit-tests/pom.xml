@@ -8,6 +8,7 @@
   <artifactId>web-ui-automation-unit-tests</artifactId>
   
   <dependencies>
+  
     <dependency>
       <groupId>gartenkralle</groupId>
       <artifactId>web-ui-automation-chrome</artifactId>
