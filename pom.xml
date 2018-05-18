@@ -11,6 +11,7 @@
         <module>web-ui-automation-chrome</module>
         <module>web-ui-automation-firefox</module>
         <module>web-ui-automation-safari</module>
+        <module>web-ui-automation-unit-tests</module>
     </modules>
     
     <properties>
