@@ -68,4 +68,16 @@
 	        </plugins>
         </pluginManagement>
     </build>
+    
+    <developers>
+      <developer>
+        <name>Clemens Schneider</name>
+        <email>clemens.schneider@posteo.de</email>
+        <roles>
+          <role>architect</role>
+          <role>developer</role>
+        </roles>
+        <timezone>Europe/Berlin</timezone>
+      </developer>
+    </developers>
 </project>
