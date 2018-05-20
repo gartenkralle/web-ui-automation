@@ -9,6 +9,8 @@
         <module name="web-ui-automation-chrome" />
         <module name="web-ui-automation-core" />
         <module name="web-ui-automation-firefox" />
+        <module name="web-ui-automation-safari" />
+        <module name="web-ui-automation-unit-tests" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -16,6 +18,8 @@
       <module name="web-ui-automation-chrome" target="1.8" />
       <module name="web-ui-automation-core" target="1.8" />
       <module name="web-ui-automation-firefox" target="1.8" />
+      <module name="web-ui-automation-safari" target="1.8" />
+      <module name="web-ui-automation-unit-tests" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
