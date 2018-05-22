@@ -15,7 +15,7 @@ public abstract class TestBase
         
         if(webdriver == null)
         {
-            throw new UnsupportedOperationException("Your operating system is not supporting Safari.");
+            throw new UnsupportedOperationException("Your operating system is not supporting Internet Explorer.");
         }
         
         Driver.setup(webdriver);
