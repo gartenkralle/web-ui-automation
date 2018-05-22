@@ -16,6 +16,7 @@ import org.apache.commons.lang.SystemUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public abstract class Driver
 {
@@ -83,11 +84,15 @@ public abstract class Driver
         
         if(property.contains("chrome"))
         {
-            return new ChromeDriver();
+            webDriver = new ChromeDriver();
         }
         else if(property.contains("gecko"))
         {
-            return new FirefoxDriver();
+            webDriver = new FirefoxDriver();
+        }
+        else if(property.contains("ie"))
+        {
+            webDriver = new InternetExplorerDriver();
         }
         
         return webDriver;
