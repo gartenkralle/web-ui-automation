@@ -15,6 +15,7 @@ import java.util.Set;
 import org.apache.commons.lang.SystemUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
@@ -93,6 +94,10 @@ public abstract class Driver
         else if(property.contains("ie"))
         {
             webDriver = new InternetExplorerDriver();
+        }
+        else if(property.contains("edge"))
+        {
+            webDriver = new EdgeDriver();
         }
         
         return webDriver;
