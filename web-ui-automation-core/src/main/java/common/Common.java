@@ -30,8 +30,6 @@ final class Common
     private final static int STANDARD_TIMEOUT_IN_SECONDS = 10;
     private final static int INTERVALL_IN_MILLISECONDS = 200;
     
-    private final static By ANY_ELEMENT = By.xpath(StringCollection.XPath.ANY_ELEMENT);
-    
     private Common()
     {
         
@@ -461,7 +459,7 @@ final class Common
     
     private static void pressKey(Keys key)
     {
-        getVisibleWebElement(ANY_ELEMENT).sendKeys(key);
+        new Actions(driver).sendKeys(key).perform();
     }
     
     private static <T> void equals(T expectedValue, T actualValue)
