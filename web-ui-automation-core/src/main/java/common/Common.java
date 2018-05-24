@@ -501,7 +501,7 @@ final class Common
     {
         Row row = new Row();
         
-        List<WebElement> colWebElements = rowWebElement.findElements(By.xpath(StringCollection.XPath.ANY_ELEMENT_INSIDE));
+        List<WebElement> colWebElements = rowWebElement.findElements(By.xpath(StringCollection.XPath.CELL_SELECTOR));
         
         for(WebElement colWebElement : colWebElements)
         {

@@ -27,6 +27,7 @@ final class StringCollection
         public static final String ANY_ELEMENT = "//*";
         public static final String ANY_ELEMENT_INSIDE = ".//*";
         public static final String ROW_SELECTOR_INSIDE = ".//tr";
+        public static final String CELL_SELECTOR = ".//td|.//th";
     }
     
     public static class Identifier
