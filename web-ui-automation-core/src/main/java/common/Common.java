@@ -134,22 +134,22 @@ final class Common
             
         }
         
-        public static void visible(By location)
+        public static void appeared(By location)
         {
             Common.getVisibleWebElement(location);
         }
         
-        public static void notVisible(By location)
+        public static void disappeared(By location)
         {
             ExceptionHandler.apply((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.invisibilityOfElementLocated(location));
         }
         
-        public static void present(By location)
+        public static void available(By location)
         {
             Common.getPresentWebElement(location);
         }
         
-        public static void notPresent(By location)
+        public static void unavailable(By location)
         {
             ExceptionHandler.apply((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.presenceOfElementLocated(location)));
         }

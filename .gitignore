@@ -1,3 +1,5 @@
 
 *.jar
-web-ui-automation-unit-tests/windows/chromedriver.exe
+web-ui-automation-unit-tests/windows/*
+web-ui-automation-unit-tests/linux/*
+web-ui-automation-unit-tests/mac/*
