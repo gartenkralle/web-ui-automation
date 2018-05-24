@@ -79,9 +79,15 @@ public class Table implements Iterable<Table.Row>
         return stringBuilder.toString();
     }
     
-    public static class Row
+    public static class Row implements Iterable<String>
     {
         private final List<String> cols = new ArrayList<>();
+        
+        @Override
+        public Iterator<String> iterator()
+        {
+            return cols.iterator();
+        }
         
         public void add(String col)
         {
