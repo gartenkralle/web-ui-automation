@@ -1,4 +1,4 @@
-# Web-UI-Automation
+# Web-UI-Automation [![Build Status](https://travis-ci.org/gartenkralle/web-ui-automation.svg?branch=master)]{ float: right; }(https://travis-ci.org/gartenkralle/web-ui-automation)
 
 This project simplifies test automation of a website. It is built on the top of Selenium.
 
