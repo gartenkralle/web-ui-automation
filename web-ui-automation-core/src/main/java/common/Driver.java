@@ -109,7 +109,7 @@ public abstract class Driver
         ChromeOptions options = new ChromeOptions();
         
         String property = System.getProperty("headlessChrome");
-        
+        System.out.println(property);
         if((property != null) && (property.equals("true")))
         {
             options.addArguments("headless");
