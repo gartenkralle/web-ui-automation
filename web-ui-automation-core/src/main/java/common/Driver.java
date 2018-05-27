@@ -108,7 +108,7 @@ public abstract class Driver
     {
         ChromeOptions options = new ChromeOptions();
         
-        String property = System.getProperty("headlessChrome");
+        String property = System.getProperty("TRAVIS");
         System.out.println(property);
         if((property != null) && (property.equals("true")))
         {
