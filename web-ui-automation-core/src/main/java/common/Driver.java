@@ -15,6 +15,7 @@ import java.util.Set;
 import org.apache.commons.lang.SystemUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -85,7 +86,7 @@ public abstract class Driver
         
         if(property.contains("chrome"))
         {
-            webDriver = new ChromeDriver();
+            webDriver = new ChromeDriver(getChromeOptions());
         }
         else if(property.contains("gecko"))
         {
@@ -103,6 +104,20 @@ public abstract class Driver
         return webDriver;
     }
     
+    private static ChromeOptions getChromeOptions()
+    {
+        ChromeOptions options = new ChromeOptions();
+        
+        String property = System.getProperty("headlessChrome");
+        
+        if((property != null) && (property.equals("true")))
+        {
+            options.addArguments("headless");
+        }
+        
+        return options;
+    }
+
     private static void copyResourceFileToChildProject(String filename)
     {
         try
