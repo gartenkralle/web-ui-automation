@@ -110,7 +110,7 @@ public abstract class Driver
         
         String property = System.getProperty("headlessChrome");
         
-        //if((property != null) && (property.equals("true")))
+        if((property != null) && (property.equals("true")))
         {
             options.addArguments("headless");
         }
