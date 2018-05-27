@@ -1,5 +1,5 @@
 language: java
 
-sudo: required
+sudo: enabled
 addons:
   chrome: stable
