@@ -108,7 +108,7 @@ public abstract class Driver
     {
         ChromeOptions options = new ChromeOptions();
         
-        String property = System.getProperty("TRAVIS");
+        String property = System.getenv("TRAVIS");
         System.out.println(property);
         if((property != null) && (property.equals("true")))
         {
