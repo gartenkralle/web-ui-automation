@@ -1,4 +1,0 @@
-language: java
-
-env:
-  headlessChrome: true
