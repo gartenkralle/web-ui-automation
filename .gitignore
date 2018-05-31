@@ -3,3 +3,4 @@
 web-ui-automation-unit-tests/windows/*
 web-ui-automation-unit-tests/linux/*
 web-ui-automation-unit-tests/mac/*
+*.versionsBackup
