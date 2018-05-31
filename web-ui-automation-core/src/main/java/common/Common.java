@@ -1,11 +1,9 @@
 package common;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -13,11 +11,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.unitils.reflectionassert.ReflectionAssert;
 
 import common.Table.Row;
@@ -25,10 +19,8 @@ import common.Table.Row;
 final class Common
 {
     private static WebDriver driver;
-    private static FluentWait<WebDriver> wait;
     
     private final static int STANDARD_TIMEOUT_IN_SECONDS = 10;
-    private final static int INTERVALL_IN_MILLISECONDS = 200;
     
     private Common()
     {
@@ -49,22 +41,22 @@ final class Common
         
         public static <T> void fillField(By location, T value)
         {
-            Common.getVisibleWebElement(location).sendKeys(String.valueOf(value));
+            Wait.getVisibleWebElement(location).sendKeys(String.valueOf(value));
         }
         
         public static void clickElement(By location)
         {
-            Common.getClickableWebElement(location).click();
+            Wait.getClickableWebElement(location).click();
         }
         
         public static void doubleClickElement(By location)
         {
-            new Actions(driver).doubleClick(Common.getClickableWebElement(location)).perform();
+            new Actions(driver).doubleClick(Wait.getClickableWebElement(location)).perform();
         }
         
         public static void chooseDropDownItem(By location, String item)
         {
-            Select select =  ExceptionHandler.apply((WebElement webElement) -> new Select(webElement), ExceptionHandler::getUnexpectedTagNameMessage, Common.getClickableWebElement(location));
+            Select select =  ExceptionHandler.apply((WebElement webElement) -> new Select(webElement), ExceptionHandler::getUnexpectedTagNameMessage, Wait.getClickableWebElement(location));
             ExceptionHandler.apply(select::selectByVisibleText, ExceptionHandler::getNoSuchElementMessage, item);
         }
         
@@ -75,12 +67,12 @@ final class Common
         
         public static void selectFrame(String iFrameNameOrId)
         {
-            ExceptionHandler.apply((Function<ExpectedCondition<WebDriver>, WebDriver>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.frameToBeAvailableAndSwitchToIt(iFrameNameOrId));
+            Wait.frameToBeAvailableAndSwitchToIt(iFrameNameOrId);
         }
         
         public static void clickRadioButton(By location)
         {
-            Common.getClickableWebElement(location).click();
+            Wait.getClickableWebElement(location).click();
         }
         
         public static void pressEnter()
@@ -97,7 +89,7 @@ final class Common
         {
             if(!DataReceive.isChecked(location))
             {
-                getClickableWebElement(location).click();
+                Wait.getClickableWebElement(location).click();
             }
         }
         
@@ -105,13 +97,13 @@ final class Common
         {
             if(DataReceive.isChecked(location))
             {
-                getClickableWebElement(location).click();
+                Wait.getClickableWebElement(location).click();
             }
         }
         
         public static void moveSlider(By location, int pixel)
         {
-            new Actions(driver).clickAndHold(getVisibleWebElement(location)).moveByOffset(pixel, 0).release().perform();
+            new Actions(driver).clickAndHold(Wait.getVisibleWebElement(location)).moveByOffset(pixel, 0).release().perform();
         }
         
         public static void mouseOver(By location)
@@ -121,7 +113,7 @@ final class Common
         
         public static void moveSlider(By location, float percent)
         {
-            int pixel = Math.round((((float)getVisibleWebElement(location).getSize().width / 100) * percent));
+            int pixel = Math.round((((float)Wait.getVisibleWebElement(location).getSize().width / 100) * percent));
             
             moveSlider(location, pixel);
         }
@@ -136,22 +128,22 @@ final class Common
         
         public static void appeared(By location)
         {
-            Common.getVisibleWebElement(location);
+            Wait.getVisibleWebElement(location);
         }
         
         public static void disappeared(By location)
         {
-            ExceptionHandler.apply((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.invisibilityOfElementLocated(location));
+            Wait.invisibilityOfElementLocated(location);
         }
         
         public static void available(By location)
         {
-            Common.getPresentWebElement(location);
+            Wait.getPresentWebElement(location);
         }
         
         public static void unavailable(By location)
         {
-            ExceptionHandler.apply((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.presenceOfElementLocated(location)));
+            Wait.presenceOfElementLocated(location);
         }
         
         public static void url(String url)
@@ -161,22 +153,22 @@ final class Common
         
         public static void selected(By location)
         {
-            ExceptionHandler.apply((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.elementToBeSelected(location));
+            Wait.elementToBeSelected(location);
         }
         
         public static void unselected(By location)
         {
-            ExceptionHandler.apply((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.elementToBeSelected(location)));
+            Wait.notElementToBeSelected(location);
         }
         
         public static void enabled(By location)
         {
-            ExceptionHandler.apply((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.elementToBeClickable(location));
+            Wait.elementToBeClickable(location);
         }
         
         public static void disabled(By location)
         {
-            ExceptionHandler.apply((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.not(ExpectedConditions.elementToBeClickable(location)));
+            Wait.notElementToBeClickable(location);
         }
         
         public static void visibleCount(By location, int expected)
@@ -191,17 +183,17 @@ final class Common
         
         public static void table(By actualTableLocation, Table expectedTable)
         {
-            ExceptionHandler.apply((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, ExceptionHandler::getTimeoutMessage, common.ExpectedConditions.tableToBe(actualTableLocation, expectedTable));
+            Wait.tableToBe(actualTableLocation, expectedTable);
         }
         
         public static void tableRow(By actualTableLocation, Row expectedRow)
         {
-            ExceptionHandler.apply((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, ExceptionHandler::getTimeoutMessage, common.ExpectedConditions.tableRowToBe(actualTableLocation, expectedRow));
+            Wait.tableRowToBe(actualTableLocation, expectedRow);
         }
         
         public static void text(By location, String expectedText)
         {
-            ExceptionHandler.apply((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.textToBe(location, expectedText));
+            Wait.textToBe(location, expectedText);
         }
         
         public static void texts(By location, List<String> expectedTexts)
@@ -214,7 +206,7 @@ final class Common
         
         public static void attributeValue(By location, String attributeName, String expectedValue)
         {
-            ExceptionHandler.apply((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.attributeContains(location, attributeName, expectedValue));
+            Wait.attributeContains(location, attributeName, expectedValue);
         }
         
         public static void attributeValues(By location, String attributeName, List<String> expectedValues)
@@ -227,7 +219,7 @@ final class Common
         
         public static void selected(By dropdownMenuLocation, String text)
         {
-            ExceptionHandler.apply((Function<ExpectedCondition<Boolean>, Boolean>)wait::until, ExceptionHandler::getTimeoutMessage, common.ExpectedConditions.selectionToBe(dropdownMenuLocation, text));
+            Wait.selectionToBe(dropdownMenuLocation, text);
         }
     }
     
@@ -240,24 +232,24 @@ final class Common
         
         public static int getVisibleCount(By location)
         {
-            return getVisibleWebElements(location).size();
+            return Wait.getVisibleWebElements(location).size();
         }
         
         public static int getPresentCount(By location)
         {
-            return getPresentWebElements(location).size();
+            return Wait.getPresentWebElements(location).size();
         }
         
         public static String getText(By location)
         {
-            return Common.getText(getVisibleWebElement(location));
+            return Common.getText(Wait.getVisibleWebElement(location));
         }
         
         public static Table getTable(By tableLocation)
         {
             Table table = new Table();
             
-            WebElement tableWebElement = getVisibleWebElement(tableLocation);
+            WebElement tableWebElement = Wait.getVisibleWebElement(tableLocation);
             List<WebElement> rowWebElements = tableWebElement.findElements(By.xpath(StringCollection.XPath.ROW_SELECTOR_INSIDE));
             
             for(WebElement rowWebElement : rowWebElements)
@@ -272,7 +264,7 @@ final class Common
         {
             List<String> results = new ArrayList<>();
             
-            for(WebElement webElement : getVisibleWebElements(location))
+            for(WebElement webElement : Wait.getVisibleWebElements(location))
             {
                 results.add(Common.getText(webElement));
             }
@@ -282,14 +274,14 @@ final class Common
         
         public static String getAttributeValue(By location, String attributeName)
         {
-            return Common.getAttributeValue(getPresentWebElement(location), attributeName);
+            return Common.getAttributeValue(Wait.getPresentWebElement(location), attributeName);
         }
         
         public static List<String> getAttributeValues(By location, String attributeName)
         {
             List<String> results = new ArrayList<>();
             
-            for(WebElement webElement : getPresentWebElements(location))
+            for(WebElement webElement : Wait.getPresentWebElements(location))
             {
                 results.add(Common.getAttributeValue(webElement, attributeName));
             }
@@ -299,7 +291,7 @@ final class Common
         
         public static boolean isAppeared(By location)
         {
-            return getVisibleWebElement(location).isDisplayed();
+            return Wait.getVisibleWebElement(location).isDisplayed();
         }
         
         public static boolean isDisappeared(By location)
@@ -314,7 +306,7 @@ final class Common
         
         public static boolean isEnabled(By location)
         {
-            return getVisibleWebElement(location).isEnabled();
+            return Wait.getVisibleWebElement(location).isEnabled();
         }
         
         public static boolean isDisabled(By location)
@@ -339,7 +331,7 @@ final class Common
         
         public static boolean isSelected(By location)
         {
-            return Common.getVisibleWebElement(location).isSelected();
+            return Wait.getVisibleWebElement(location).isSelected();
         }
         
         public static boolean isUnselected(By location)
@@ -359,7 +351,7 @@ final class Common
         
         public static String getSelection(By dropdownMenu)
         {
-            return new Select(getVisibleWebElement(dropdownMenu)).getFirstSelectedOption().getText();
+            return new Select(Wait.getVisibleWebElement(dropdownMenu)).getFirstSelectedOption().getText();
         }
     }
     
@@ -440,7 +432,7 @@ final class Common
             Common.driver = driver;
             Common.driver.manage().deleteAllCookies();
             
-            Common.wait = new WebDriverWait(driver, 0);
+            Wait.setup(driver);
             
             setTimeout(Common.STANDARD_TIMEOUT_IN_SECONDS);
         }
@@ -448,7 +440,7 @@ final class Common
         public static void setTimeout(int seconds)
         {
             Common.driver.manage().timeouts().pageLoadTimeout(seconds, TimeUnit.SECONDS);
-            Common.wait.withTimeout(Duration.ofSeconds(seconds)).pollingEvery(Duration.ofMillis(Common.INTERVALL_IN_MILLISECONDS));
+            Wait.setTimeout(seconds);
         }
         
         public static void resetTimeout()
@@ -514,30 +506,5 @@ final class Common
     private static String getCol(WebElement colWebElement)
     {
         return colWebElement.getText();
-    }
-    
-    private static WebElement getPresentWebElement(By location)
-    {
-        return ExceptionHandler.apply((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.presenceOfElementLocated(location));
-    }
-    
-    private static List<WebElement> getPresentWebElements(By location)
-    {
-        return ExceptionHandler.apply((Function<ExpectedCondition<List<WebElement>>, List<WebElement>>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.presenceOfAllElementsLocatedBy(location));
-    }
-    
-    private static WebElement getVisibleWebElement(By location)
-    {
-        return ExceptionHandler.apply((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.visibilityOfElementLocated(location));
-    }
-    
-    private static List<WebElement> getVisibleWebElements(By location)
-    {
-        return ExceptionHandler.apply((Function<ExpectedCondition<List<WebElement>>, List<WebElement>>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.visibilityOfAllElementsLocatedBy(location));
-    }
-    
-    private static WebElement getClickableWebElement(By location)
-    {
-        return ExceptionHandler.apply((Function<ExpectedCondition<WebElement>, WebElement>)wait::until, ExceptionHandler::getTimeoutMessage, ExpectedConditions.elementToBeClickable(location));
     }
 }
