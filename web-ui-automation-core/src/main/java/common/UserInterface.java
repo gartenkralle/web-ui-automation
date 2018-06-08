@@ -55,12 +55,12 @@ public final class UserInterface
             Common.Action.chooseDropDownItem(location, item);
         }
         
-        public static void moveSlider(By location, int pixel) 
+        public static void moveSlider(By location, int pixel)
         {
             Common.Action.moveSlider(location, pixel);
         }
         
-        public static void moveSlider(By location, float percent) 
+        public static void moveSlider(By location, float percent)
         {
             Common.Action.moveSlider(location, percent);
         }
@@ -80,14 +80,14 @@ public final class UserInterface
             Common.Action.pressEscape();
         }
         
-        public static void selectDefaultFrame()
-        {
-            Common.Action.selectDefaultFrame();
-        }
-        
         public static void selectFrame(String iFrameNameOrId)
         {
             Common.Action.selectFrame(iFrameNameOrId);
+        }
+        
+        public static void selectDefaultFrame()
+        {
+            Common.Action.selectDefaultFrame();
         }
         
         public static void visitUrl(String url)
